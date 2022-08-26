@@ -18,15 +18,15 @@ create table member_detail(
 	mem_addr2 varchar2(100) not null,
 	mem_date date default sysdate not null,
 	mem_modify_date date,
-	mem_dpt varchar2(50) not null,
-	mem_rank varchar2(15) not null,
+	mem_dpt_num number not null,
+	mem_rank_num number not null,
 	mem_birthdate date not null,
 	mem_photo varchar2(100),
 	mem_type varchar2(50) not null,
 	constraint member_detail_pk primary key (mem_num),
 	constraint member_detail_fk1 foreign key(mem_num) references member(mem_num),
-	constraint member_detail_fk2 foreign key(mem_dpt) references mem_dpt(mem_dpt),
-	constraint member_detail_fk3 foreign key(mem_rank) references mem_rank(mem_rank)
+	constraint member_detail_fk2 foreign key(mem_dpt_num) references mem_dpt(mem_dpt_num),
+	constraint member_detail_fk3 foreign key(mem_rank_num) references mem_rank(mem_rank_num)
 );
 create sequence member_seq;
 
