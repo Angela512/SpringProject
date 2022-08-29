@@ -32,4 +32,23 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.selectMember(mem_num);
 	}
 
+	@Override
+	public void updateMember(MemberVO member) {
+		memberMapper.updateMember(member);
+		memberMapper.updateMember_detail(member);
+		
+	}
+
+	@Override
+	public void updatePassword(MemberVO member) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateProfile(MemberVO member) {
+		memberMapper.updateProfile(member);
+		
+	}
+
 }

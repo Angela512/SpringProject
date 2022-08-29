@@ -3,6 +3,7 @@ package kr.spring.member.dao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 
@@ -24,5 +25,16 @@ public interface MemberMapper {
 	
 	@Select("SELECT m.mem_num,m.mem_id,m.auth,d.mem_pw,d.mem_name,d.mem_photo FROM member m LEFT JOIN member_detail d ON m.mem_num=d.mem_num WHERE m.mem_id=#{mem_id}")
 	public MemberVO selectCheckMember(String mem_id);
+	
+	@Update("UPDATE member SET mem_name=#{mem_name} WHERE mem_num=#{mem_num}")
+	public void updateMember(MemberVO member);
+	
+	@Update("UPDATE member_detail SET mem_name=#{mem_name}, mem_phone=#{mem_phone}, mem_email=#{mem_email}, mem_zipcode=#{mem_zipcode}, mem_addr1=#{mem_addr1}, mem_addr2=#{mem_addr2}, mem_modify_date=SYSDATE "
+			+ "WHERE mem_num=#{mem_num}")
+	public void updateMember_detail(MemberVO member);
+	
+	//프로필 이미지 업데이트
+	@Update("UPDATE member_detail SET mem_photo=#{mem_photo}, mem_photo_name=#{mem_photo_name} WHERE mem_num=#{mem_num}")
+	public void updateProfile(MemberVO member);
 	
 }

@@ -49,7 +49,7 @@ public class MemberAjaxController {
 		
 		return mapAjax;
 	}
-	/*
+	
 	//프로필 사진 수정
 	@RequestMapping("/member/updateMyPhoto.do")
 	@ResponseBody
@@ -71,7 +71,7 @@ public class MemberAjaxController {
 		return mapAjax;
 	}
 	
-	*/
+	
 }
 
 
