@@ -39,4 +39,6 @@ constraint worklfow_sign_fk1_ foreign key (form_num) REFERENCES workflow_form (f
 constraint worklfow_sign_fk2_ foreign key (mem_num) REFERENCES member (mem_num)
 );
 
-
+create sequence workflow_form_seq;
+create sequence workflow_main_seq;
+create sequence workflow_sign_seq;

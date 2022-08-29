@@ -27,7 +27,7 @@
 		<a href="${pageContext.request.contextPath}/letter/main.do">쪽지</a>
 		<a href="${pageContext.request.contextPath}/reservation/main.do">회의실예약</a>
 		<a href="${pageContext.request.contextPath}/calendar/main.do">캘린더</a>
-		<a href="${pageContext.request.contextPath}/workflow/main.do">전자결재</a>
+		<a href="${pageContext.request.contextPath}/workflow/list.do">전자결재</a>
 		<a href="${pageContext.request.contextPath}/member/main.do">주소록</a>
 		
 	</c:if>
