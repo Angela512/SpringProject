@@ -33,7 +33,7 @@ public class AppConfig implements WebMvcConfigurer{
 		//해당 경로에 xml 설정 파일을 넣음
 		configurer.setDefinitions(new String[] {
 				"/WEB-INF/tiles-def/main.xml",
-				"/WEB-INF/tiles-def/first.xml",
+				"/WEB-INF/tiles-def/member.xml",
 				"/WEB-INF/tiles-def/second.xml",
 				"/WEB-INF/tiles-def/third.xml",
 				"/WEB-INF/tiles-def/forth.xml",

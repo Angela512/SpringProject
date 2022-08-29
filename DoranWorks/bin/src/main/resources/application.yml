@@ -1,0 +1,40 @@
+spring:
+  profiles: #실행환경(local(로컬),dev(개발),real(운영))
+    active: local
+      mvc:    view: #view 설정      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  datasource: #DB 접속
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@211.63.89.70:1521:xe
+    username: c##team02
+    password: 1234
+    hikari: #커넥션풀 구성
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+          messages: #메시지    basename: messages.validation
+    encoding: UTF-8
+      devtools:    livereload: #View reload      enabled: true
+          restart: # 컨트롤러, 모델단이 바뀌었을 때 재시작      enabled: true
+  servlet:    multipart: #파일업로드 설정      max-file-size: 50MB
+      max-request-size: 50MB
+      
+mybatis: #mybatis 설정  type-aliases-package: kr.spring.**.vo
+  mapper-locations: kr/spring/**/dao/*.xml
+  
+logging:  level: #로그 레벨 지정
+    '[kr.spring]': debug
+    
+server:  port: 8080
+  servlet:    context-path: /
+    encoding:      charset: UTF-8
+      enabled: true
+      force: true                    
+    
+  
+  
+  
+  
+  
+  
