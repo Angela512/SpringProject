@@ -2,7 +2,7 @@
 create table member(
 	mem_num number not null,
 	mem_id varchar2(20) not null,
-	auth number(1) not null, --0)탈퇴(휴직) 1)일반 2)관리자
+	auth number(1) default 1 not null, --0)탈퇴(휴직) 1)일반 2)관리자
 	constraint member_pk primary key (mem_num)
 );
 

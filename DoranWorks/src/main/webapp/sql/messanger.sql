@@ -3,7 +3,7 @@ create table message(
 	mem_num number not null,
 	chatroom_num number not null,
 	msg_content varchar2(4000) not null,
-	msg_sentTime date default sysdate not null,
+	msg_sendTime date default sysdate not null,
 	msg_openTime date,
 	msg_filename varchar2(100),
 	msg_uploadfile blob,
