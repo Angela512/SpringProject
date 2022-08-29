@@ -5,7 +5,7 @@ import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class MessageVO {
+public class MessangerVO {
 	private int msg_num;
 	private int mem_num;
 	private int chatroom_num;
