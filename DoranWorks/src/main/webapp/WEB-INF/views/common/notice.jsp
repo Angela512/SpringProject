@@ -21,12 +21,10 @@
 			</c:if>
 			<p>
 			<c:if test="${!empty accessUrl}">
-				<input type="button" value="${accessBtn}"
-				  onclick="location.href='${accessUrl}'">	
+				<input type="button" value="${accessBtn}" onclick="location.href='${accessUrl}'">	
 			</c:if>
 			<c:if test="${empty accessUrl}">
-				<input type="button" value="홈으로"
-				  onclick="location.href='${pageContext.request.contextPath}/main/main.do'">	
+				<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">	
 			</c:if>
 		</div>
 	</div>

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
@@ -30,6 +31,7 @@ public class MemberVO {
 	private String mem_addr1;
 	@NotEmpty
 	private String mem_addr2;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date mem_date;
 	private Date mem_modify_date;
 	private int mem_dpt_num;

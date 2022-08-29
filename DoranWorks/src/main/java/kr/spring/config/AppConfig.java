@@ -17,18 +17,14 @@ public class AppConfig implements WebMvcConfigurer{
 
 	//인터셉터 지정
 	@Override
-	public void addInterceptors(
-			       InterceptorRegistry registry) {
-		registry.addInterceptor(
-				    new LoginCheckInterceptor())
-		        .addPathPatterns("/member/myPage.do");
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/member/myPage.do");
 		
 	}
 	
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
-		final TilesConfigurer configurer = 
-				new TilesConfigurer();
+		final TilesConfigurer configurer = new TilesConfigurer();
 		
 		//해당 경로에 xml 설정 파일을 넣음
 		configurer.setDefinitions(new String[] {
@@ -45,8 +41,7 @@ public class AppConfig implements WebMvcConfigurer{
 	
 	@Bean
 	public TilesViewResolver tilesViewResolver() {
-		final TilesViewResolver tilesViewResolver =
-				new TilesViewResolver();
+		final TilesViewResolver tilesViewResolver = new TilesViewResolver();
 		tilesViewResolver.setViewClass(TilesView.class);
 		return tilesViewResolver;
 	}
