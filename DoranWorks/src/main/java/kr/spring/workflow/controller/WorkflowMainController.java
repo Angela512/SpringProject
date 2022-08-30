@@ -73,7 +73,7 @@ public class WorkflowMainController {
 //	flowVO.setIp(request.getRemoteAddr());
 	
 	//글쓰기
-	flowService.insertBoard(flowVO);
+//	flowService.insertBoard(flowVO);
 	
 	//View에 표시할 메시지
 	model.addAttribute(

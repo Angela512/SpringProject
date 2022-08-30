@@ -5,16 +5,16 @@
 <mapper namespace="kr.spring.workflow.dao.WorkflowMainMapper">  
   	<select id="selectRowCount" parameterType="map"
   	                    resultType="integer">
-		<!-- SELECT
+		 SELECT
 		  COUNT(*)
 		FROM workflow_main b JOIN member m
 		ON b.mem_num = m.mem_num
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<if test="keyfield == 1">
-					b.title LIKE '%' || #{keyword} || '%'
+					b.flow_title LIKE '%' || #{keyword} || '%'
 				</if>
-				<if test="keyfield == 2">
+				<!-- <if test="keyfield == 2">
 					m.id LIKE '%' || #{keyword} || '%' OR
 					m.nick_name LIKE '%' || #{keyword} || '%'
 				</if>
@@ -24,36 +24,35 @@
 				<if test="keyfield == 4">
 					b.title LIKE '%' || #{keyword} || '%' OR
 					b.content LIKE '%' || #{keyword} || '%'
-				</if>
+				</if> -->
 			</if>
-		</where>   -->	
+		</where>   	
   	</select>
   	<select id="selectList" parameterType="map"
   	                         resultType="WorkflowMainVO">
-  		<!-- SELECT
+  		 SELECT
   		   *
   		FROM (SELECT
   		        a.*,
   		        rownum rnum
   		      FROM (SELECT
-  		              b.board_num,
+  		              b.flow_num,
   		              <![CDATA[
-  		              REPLACE(REPLACE(b.title,'<','&lt;'),'>','&gt;') title,
+  		              REPLACE(REPLACE(b.flow_title,'<','&lt;'),'>','&gt;') flow_title,
   		              ]]>
-  		              b.hit,
-  		              b.filename,
-  		              b.reg_date,
+  		              b.flow_date,
+  		              b.flow_modify,
+  		              b.flow_sort,
   		              b.mem_num,
-  		              m.id,
-  		              m.nick_name
-  		            FROM spboard b JOIN spmember m
+  		              m.id
+  		            FROM workflow_main b JOIN member m
   		            ON b.mem_num = m.mem_num
-  		            <where>
+  		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
-								b.title LIKE '%' || #{keyword} || '%'
+								b.flow_title LIKE '%' || #{keyword} || '%'
 							</if>
-							<if test="keyfield == 2">
+							<!-- <if test="keyfield == 2">
 								m.id LIKE '%' || #{keyword} || '%' OR
 								m.nick_name LIKE '%' || #{keyword} || '%'
 							</if>
@@ -63,13 +62,13 @@
 							<if test="keyfield == 4">
 								b.title LIKE '%' || #{keyword} || '%' OR
 								b.content LIKE '%' || #{keyword} || '%'
-							</if>
+							</if> -->
 						</if>
-					</where> 
-  		            ORDER BY b.board_num DESC)a)
+					</where>  
+  		            ORDER BY b.flow_num DESC)a)
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
-  		]]> -->
+  		]]> 
   	</select>
   	
   	<!-- 글수정 -->

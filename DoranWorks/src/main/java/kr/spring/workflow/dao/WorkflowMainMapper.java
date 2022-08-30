@@ -22,7 +22,7 @@ public interface WorkflowMainMapper {
 				+ "flow_date,flow_modify,flow_sort,flow_state,form_no,form_mem,mem_num) "
 				+ "VALUES (workflow_main_seq.nextval,#{flow_title},"
 				+ "#{flow_date},#{flow_modify},#{flow_sort},#{flow_state},#{flow_no},"
-				+ "#{form_mem},#{mem_num})")
+				+ "#{form_num},#{mem_num})")
 		public void insertBoard(WorkflowMainVO flow);
 		@Select("SELECT * FROM workflow_main b JOIN member m "
 				+ "USING(mem_num) JOIN member_detail d "

@@ -22,15 +22,16 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		return flowMapper.selectList(map);
 	}
 
-	@Override
-	public int selectRowCount(Map<String, Object> map) {
-		return flowMapper.selectRowCount(map);
+	@Override 
+	public int selectRowCount(Map<String, Object> map) { 
+		return flowMapper.selectRowCount(map); 
 	}
-
-	@Override
-	public void insertBoard(WorkflowMainVO flow) {
-		flowMapper.insertBoard(flow);
-	}
+	 
+	/*
+	 * @Override public void insertBoard(WorkflowMainVO flow) {
+	 * flowMapper.insertBoard(flow); }
+	 */
+	 
 
 	@Override
 	public WorkflowMainVO selectBoard(Integer flow_num) {
@@ -39,11 +40,10 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 
 
 
-	@Override
-	public void updateBoard(WorkflowMainVO flow) {
-		flowMapper.updateBoard(flow);		
-	}
-
+	/*
+	 * @Override public void updateBoard(WorkflowMainVO flow) {
+	 * flowMapper.updateBoard(flow); }
+	 */
 
 	/*
 	 * @Override public void deleteFile(Integer flow_num) {
