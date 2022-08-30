@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.letter.dao.LetterMapper">  
+	<insert id="insertSend" parameterType="sendVO">
+		INSERT INTO letter_send 
+			(send_num,
+			 send_title,
+			 send_sender_num,
+			 send_receiver_num,
+			 send_reference_num,
+			 send_content,
+			 <if test="send_important!=null">
+			 send_important,
+			 </if>
+			 send_uploadfile1,
+			 send_uploadfile2,
+			 send_filename1,
+			 send_filename2,
+			 send_sender_id,
+			 send_receiver_id,
+			 send_reference_id)
+		 VALUES 
+		 	(send_seq.nextval,
+		 	 #{send_title},
+		 	 #{send_sender_num},
+		 	 #{send_receiver_num},
+		 	 #{send_reference_num},
+		 	 #{send_content},
+		 	 <if test="send_important!=null">
+		 	 #{send_important},
+		 	 </if>
+		 	 #{send_uploadfile1},
+		 	 #{send_uploadfile2},
+		 	 #{send_filename1},
+		 	 #{send_filename2},
+		 	 #{send_sender_id},
+		 	 #{send_receiver_id},
+		 	 #{send_reference_id})
+	</insert>
+	
+	<insert id="insertReceive" parameterType="sendVO">
+		INSERT INTO letter_receive
+			(rec_num,
+			 rec_title,
+			 rec_sender_num,
+			 rec_receiver_num,
+			 rec_reference_num,
+			 rec_content,
+			 <if test="send_important!=null">
+			 rec_important,
+			 </if>
+			 rec_uploadfile1,
+			 rec_uploadfile2,
+			 rec_filename1,
+			 rec_filename2,
+			 rec_sender_id,
+			 rec_receiver_id,
+			 rec_reference_id)
+		 VALUES 
+		 	(rec_seq.nextval,
+		 	 #{send_title},
+		 	 #{send_sender_num},
+		 	 #{send_receiver_num},
+		 	 #{send_reference_num},
+		 	 #{send_content},
+		 	 <if test="send_important!=null">
+		 	 #{send_important},
+		 	 </if>
+		 	 #{send_uploadfile1},
+		 	 #{send_uploadfile2},
+		 	 #{send_filename1},
+		 	 #{send_filename2},
+		 	 #{send_sender_id},
+		 	 #{send_receiver_id},
+		 	 #{send_reference_id})
+	</insert>
+</mapper>
+
+
+
+
+
+
+

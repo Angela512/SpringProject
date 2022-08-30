@@ -2,6 +2,7 @@ package kr.spring.letter.vo;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +10,7 @@ public class SendVO {
 	private int send_num;
 	private String send_title;
 	private int send_sender_num;
-	private int send_receiver_num;
+	private String send_receiver_num;
 	private int send_reference_num;
 	private Date send_date;
 	private String send_content;
@@ -22,6 +23,8 @@ public class SendVO {
 	private String send_sender_id;
 	private String send_receiver_id;
 	private String send_reference_id;
+	
+	private String[] rnames;
 	
 	//=======================이미지 BLOB 처리=========================//
 		//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -65,11 +68,13 @@ public class SendVO {
 			this.send_sender_num = send_sender_num;
 		}
 
-		public int getSend_receiver_num() {
+		
+		
+		public String getSend_receiver_num() {
 			return send_receiver_num;
 		}
 
-		public void setSend_receiver_num(int send_receiver_num) {
+		public void setSend_receiver_num(String send_receiver_num) {
 			this.send_receiver_num = send_receiver_num;
 		}
 
@@ -168,6 +173,16 @@ public class SendVO {
 		public void setSend_reference_id(String send_reference_id) {
 			this.send_reference_id = send_reference_id;
 		}
+		
+		
+
+		public String[] getRnames() {
+			return rnames;
+		}
+
+		public void setRnames(String[] rnames) {
+			this.rnames = rnames;
+		}
 
 		@Override
 		public String toString() {
@@ -176,8 +191,12 @@ public class SendVO {
 					+ send_reference_num + ", send_date=" + send_date + ", send_content=" + send_content
 					+ ", send_read=" + send_read + ", send_important=" + send_important + ", send_filename1="
 					+ send_filename1 + ", send_filename2=" + send_filename2 + ", send_sender_id=" + send_sender_id
-					+ ", send_receiver_id=" + send_receiver_id + ", send_reference_id=" + send_reference_id + "]";
+					+ ", send_receiver_id=" + send_receiver_id + ", send_reference_id=" + send_reference_id
+					+ ", rnames=" + Arrays.toString(rnames) + "]";
 		}
+
+
+		
 		
 		
 		

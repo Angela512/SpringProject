@@ -5,10 +5,16 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="" extends="main">
-    	<put-attribute name="title" value="게시판목록"/>
+    <definition name="letterList" extends="main">
+    	<put-attribute name="title" value="쪽지목록"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/board/boardList.jsp"/>                   
+    	  value="/WEB-INF/views/letter/letterList.jsp"/>                   
+    </definition>
+
+    <definition name="letterWrite" extends="main">
+    	<put-attribute name="title" value="쪽지쓰기"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterWrite.jsp"/>                   
     </definition>
 </tiles-definitions>
 

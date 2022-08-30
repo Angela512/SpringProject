@@ -3,7 +3,7 @@ create table letter_send(
 	send_num number not null,
 	send_title varchar2(50) not null,
 	send_sender_num number not null,
-	send_receiver_num number not null,
+	send_receiver_num varchar2(20) not null,
 	send_reference_num number,
 	send_date date default sysdate not null,
 	send_content varchar2(500) not null,
@@ -18,8 +18,6 @@ create table letter_send(
 	send_reference_id varchar2(50),
 	constraint send_pk primary key (send_num),
 	constraint send_fk1 foreign key (send_sender_num) references member (mem_num),
-	constraint send_fk2 foreign key (send_receiver_num) references member (mem_num),
-	constraint send_fk3 foreign key (send_reference_num) references member (mem_num)
 );
 
 create sequence send_seq;
@@ -44,8 +42,7 @@ create table letter_receive(
 	rec_reference_id varchar2(50),
 	constraint rec_pk primary key (rec_num),
 	constraint rec_fk1 foreign key (rec_sender_num) references member (mem_num),
-	constraint rec_fk2 foreign key (rec_receiver_num) references member (mem_num),
-	constraint rec_fk3 foreign key (rec_reference_num) references member (mem_num)
+	constraint rec_fk2 foreign key (rec_receiver_num) references member (mem_num)
 );
 
 create sequence rec_seq;
