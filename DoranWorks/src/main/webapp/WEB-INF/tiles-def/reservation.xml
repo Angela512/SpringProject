@@ -5,11 +5,12 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="test4" extends="main">
-    	<put-attribute name="title" value="게시판목록"/>
+    <definition name="reservationMain" extends="main">
+    	<put-attribute name="title" value="회의실예약"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/board/boardList.jsp"/>                   
+    	  value="/WEB-INF/views/reservation/reservationMain.jsp"/>                   
     </definition>
+
 </tiles-definitions>
 
 

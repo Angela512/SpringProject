@@ -3,12 +3,12 @@ package kr.spring.reservation.vo;
 import java.sql.Date;
 
 public class ReservationVO {
-	private int reserve_num;
-	private int mem_num;
-	private String reserve_title;
-	private Date reserve_date;
-	private String reserve_room;
-	private int reserve_room_seat;
+	private int reserve_num;  //회의실 번호
+	private int mem_num;    //회원번호
+	private String reserve_title;  //회의제목
+	private Date reserve_date;  //예약일
+	private String reserve_room; //회의실명
+	private int reserve_room_seat;  //수용인원
 	
 	public int getReserve_num() {
 		return reserve_num;
