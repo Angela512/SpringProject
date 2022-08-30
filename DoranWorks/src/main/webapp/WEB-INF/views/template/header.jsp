@@ -23,7 +23,7 @@
 	</c:if>
 	<c:if test="${!empty user}">
 		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
-		<a href="${pageContext.request.contextPath}/messanger/main.do">메신저</a>
+		<a href="${pageContext.request.contextPath}/messanger/write.do">메신저</a>
 		<a href="${pageContext.request.contextPath}/letter/main.do">쪽지</a>
 		<a href="${pageContext.request.contextPath}/reservation/main.do">회의실예약</a>
 		<a href="${pageContext.request.contextPath}/calendar/main.do">캘린더</a>
