@@ -23,7 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public void insertReservation(ReservationVO reservation) {
 		reservationMapper.insertReservation(reservation);
@@ -40,5 +40,9 @@ public class ReservationServiceImpl implements ReservationService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	
 
 }
