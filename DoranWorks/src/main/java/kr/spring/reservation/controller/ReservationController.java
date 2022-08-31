@@ -40,21 +40,21 @@ public class ReservationController {
 		return new ReservationVO();
 	}
 	
-	//===========게시판 글 등록============//
-	//등록 폼
-	@GetMapping("/reservation/main.do")
+	//===========예약하기============//
+	//예약 폼
+	@GetMapping("/reservation/write.do")
 	public String form() {
-		return "reservationMain";
+		return "reservationWrite";
 	}
-	//등록 폼에서 전송된 데이터 처리
-	@PostMapping("/reservation/main.do")
+	//예약 폼에서 전송된 데이터 처리
+	@PostMapping("/reservation/write.do")
 	public String submit(@Valid ReservationVO reservationVO,
 			      BindingResult result,
 			      HttpServletRequest request,
 			      HttpSession session,
 			      Model model) {
 		
-		logger.debug("<<게시판 글 저장>> : " + reservationVO);
+		logger.debug("<<예약 내용 저장>> : " + reservationVO);
 		
 		//유효성 검사 결과 오류가 있으면 폼 호출
 		if(result.hasErrors()) {
@@ -66,7 +66,7 @@ public class ReservationController {
 		//회원번호 셋팅
 		reservationVO.setMem_num(user.getMem_num());
 		
-		//글쓰기
+		//예약하기
 		reservationService.insertReservation(reservationVO);
 		
 		//View에 표시할 메시지
@@ -77,6 +77,22 @@ public class ReservationController {
 		
 		return "common/resultView";
 	}
+	
+	//======================예약 목록====================//
+		@RequestMapping("/reservation/main.do")
+		public ModelAndView process() {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("reservationMain");
+			
+			return mav;
+		}
+	
+	
 }
+
+
+
+
+
 	
 	

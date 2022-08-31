@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.letter.vo.SendVO;
 import kr.spring.reservation.vo.ReservationVO;
 
 public interface ReservationService {
 	//회의실 예약
 	public List<ReservationVO> selectList(Map<String,Object> map);
-	
 	public void insertReservation(ReservationVO Reservation);
 	
 	public ReservationVO selectReservation(Integer reserve_num);
@@ -22,3 +22,7 @@ public interface ReservationService {
 	 */
 	public void deleteReservation(Integer reserve_num);
 }
+
+
+
+
