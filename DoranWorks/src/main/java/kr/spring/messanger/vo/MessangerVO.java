@@ -14,7 +14,6 @@ public class MessangerVO {
 	private Date msg_openTime;
 	private String msg_filename;
 	private byte[] msg_uploadfile;
-	private int msg_count;
 	
 	//이미지 BLOB 처리
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -72,17 +71,11 @@ public class MessangerVO {
 	public void setMsg_uploadfile(byte[] msg_uploadfile) {
 		this.msg_uploadfile = msg_uploadfile;
 	}
-	public int getMsg_count() {
-		return msg_count;
-	}
-	public void setMsg_count(int msg_count) {
-		this.msg_count = msg_count;
-	}
 	@Override
 	public String toString() {
-		return "MessageVO [msg_num=" + msg_num + ", mem_num=" + mem_num + ", chatroom_num=" + chatroom_num
+		return "MessangerVO [msg_num=" + msg_num + ", mem_num=" + mem_num + ", chatroom_num=" + chatroom_num
 				+ ", msg_content=" + msg_content + ", msg_sendTime=" + msg_sendTime + ", msg_openTime=" + msg_openTime
-				+ ", msg_filename=" + msg_filename + ", msg_count=" + msg_count + "]";
+				+ ", msg_filename=" + msg_filename + "]";
 	}
 	
 	

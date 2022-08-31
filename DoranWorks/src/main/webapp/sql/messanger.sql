@@ -7,7 +7,6 @@ create table message(
 	msg_opentime date,
 	msg_filename varchar2(100),
 	msg_uploadfile blob,
-	msg_count number not null,
 	constraint message_pk primary key(msg_num),
 	constraint message_fk1 foreign key(mem_num) references member(mem_num),
 	constraint message_fk2 foreign key(chatroom_num) references chatroom(chatroom_num)
@@ -32,12 +31,12 @@ create table chatroom(
 create sequence chatroom_seq;
 
 create table chatmem(
-	chatmem_num number not null,
 	chatroom_num number not null,
+	msg_num number not null,
 	mem_num number not null,
-	constraint chatmem_pk primary key(chatmem_num),
 	constraint chatmem_fk1 foreign key(chatroom_num) references chatroom(chatroom_num),
-	constraint chatmem_fk2 foreign key(mem_num) references member(mem_num)
+	constraint chatmem_fk2 foreign key(mem_num) references member(mem_num),
+	constraint chatmem_fk3 foreign key(msg_num) references message(msg_num)
 );
 create sequence chatmem_seq;
 

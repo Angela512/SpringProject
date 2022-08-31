@@ -5,11 +5,21 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+
+	<definition name="msgList" extends="main">
+    	<put-attribute name="title" value="채팅방"/>
+    	<put-attribute name="body" value="/WEB-INF/views/messanger/msgList.jsp"/>                 
+    </definition>
+
 	<definition name="msgWrite" extends="main">
     	<put-attribute name="title" value="메시지쓰기"/>
     	<put-attribute name="body" value="/WEB-INF/views/messanger/msgWrite.jsp"/>                 
     </definition>
     
+    <definition name="createChatroom" extends="main">
+    	<put-attribute name="title" value="채팅방 생성"/>
+    	<put-attribute name="body" value="/WEB-INF/views/messanger/createChatroom.jsp"/>                 
+    </definition>
     
 </tiles-definitions>
 
