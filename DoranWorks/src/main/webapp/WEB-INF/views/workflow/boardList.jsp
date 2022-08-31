@@ -59,6 +59,7 @@
 			</c:if>
 			<td>${flow.flow_sort}</td>
 			<td>${flow.flow_date}</td> 
+			
 		</tr>
 		
 		</c:forEach>
