@@ -27,10 +27,11 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		return flowMapper.selectRowCount(map); 
 	}
 	 
-	/*
-	 * @Override public void insertBoard(WorkflowMainVO flow) {
-	 * flowMapper.insertBoard(flow); }
-	 */
+	@Override 
+	public void insertBoard(WorkflowMainVO flow) {
+		flowMapper.insertBoard(flow); 
+	 }
+	 
 	 
 
 	@Override

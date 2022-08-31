@@ -29,7 +29,7 @@
 		</where>   	
   	</select>
   	<select id="selectList" parameterType="map"
-  	                         resultType="WorkflowMainVO">
+  	                         resultType="workflowMainVO">
   		 SELECT
   		   *
   		FROM (SELECT
@@ -40,13 +40,17 @@
   		              <![CDATA[
   		              REPLACE(REPLACE(b.flow_title,'<','&lt;'),'>','&gt;') flow_title,
   		              ]]>
+  		              b.flow_content,
   		              b.flow_date,
-  		              b.flow_modify,
   		              b.flow_sort,
+  		              b.flow_state, 		           
   		              b.mem_num,
-  		              m.id
-  		            FROM workflow_main b JOIN member m
+  		              m.mem_name,
+  		              c.mem_rank
+  		            FROM workflow_main b JOIN member_detail m
   		            ON b.mem_num = m.mem_num
+  		            JOIN mem_rank c 
+  		            ON m.mem_num = c.mem_rank_num
   		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
@@ -72,7 +76,7 @@
   	</select>
   	
   	<!-- 글수정 -->
-  	<update id="updateBoard" parameterType="WorkflowMainVO">
+  	<update id="updateBoard" parameterType="workflowMainVO">
   		<!-- UPDATE spboard SET
   		    <if test="filename != ''">
   		    uploadfile=#{uploadfile},

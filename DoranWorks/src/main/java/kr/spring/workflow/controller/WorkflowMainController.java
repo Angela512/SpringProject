@@ -48,10 +48,10 @@ public class WorkflowMainController {
 	//등록 폼
 	@GetMapping("/workflow/write.do")
 	public String form() {
-	return "flowWrite";
+	return "boardWrite";
 	}
 	//등록 폼에서 전송된 데이터 처리
-	@PostMapping("/flow/write.do")
+	@PostMapping("/workflow/write.do")
 	public String submit(@Valid WorkflowMainVO flowVO,
 		      BindingResult result,
 		      HttpServletRequest request,
@@ -71,15 +71,15 @@ public class WorkflowMainController {
 	flowVO.setMem_num(user.getMem_num());
 	//ip셋팅
 //	flowVO.setIp(request.getRemoteAddr());
-	
+	System.out.println("하이 : "+flowVO);
 	//글쓰기
-//	flowService.insertBoard(flowVO);
+	flowService.insertBoard(flowVO);
 	
 	//View에 표시할 메시지
 	model.addAttribute(
 			"message", "글 등록이 완료되었습니다.");
 	model.addAttribute(
-	"url", request.getContextPath()+"/board/list.do");
+	"url", request.getContextPath()+"/workflow/list.do");
 	
 	return "common/resultView";
 	}
@@ -102,7 +102,6 @@ public class WorkflowMainController {
 	
 	//글의 총개수(검색된 글의 개수)
 	int count = flowService.selectRowCount(map);
-	
 	logger.debug("<<count>> : " + count);
 	
 	//페이지 처리
@@ -120,6 +119,7 @@ public class WorkflowMainController {
 		list = flowService.selectList(map);
 	}
 	
+	
 	ModelAndView mav = new ModelAndView();
 	mav.setViewName("boardList"); //////////////////////////////////
 	mav.addObject("count", count);
@@ -129,34 +129,34 @@ public class WorkflowMainController {
 	return mav;
 	}
 	
-//	
-//	
-//	//========게시판 글상세===========//
-//	@RequestMapping("/board/detail.do")
-//	public ModelAndView detail(
-//		          @RequestParam int board_num) {
-//	
-//	logger.debug("<<board_num>> : " + board_num);
-//	
-//	//해당 글의 조회수 증가
-//	boardService.updateHit(board_num);
-//	
-//	BoardVO board = 
-//			boardService.selectBoard(board_num);
-//	
-//	//제목에 태그를 허용하지 않음
-//	board.setTitle(
-//		 StringUtil.useNoHtml(board.getTitle()));
-//	//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
-//	//ckeditor 사용시 아래 코드 주석 처리
-//	/*
-//	board.setContent(
-//	StringUtil.useBrNoHtml(board.getContent()));
-//	*/
-//	                         //뷰 이름    속성명   속성값
-//	return new ModelAndView("boardView","board",board);
-//	}
-//	
+	
+	
+	//========게시판 글상세===========//
+	@RequestMapping("/workflow/detail.do")
+	public ModelAndView detail(
+		          @RequestParam int flow_num) {
+	
+	logger.debug("<<board_num>> : " + flow_num);
+	
+	//해당 글의 조회수 증가
+//	boardService.updateHit(flow_num);
+	
+	WorkflowMainVO workflow_main = 
+			flowService.selectBoard(flow_num);
+	
+	//제목에 태그를 허용하지 않음
+	workflow_main.setFlow_title(
+		 StringUtil.useNoHtml(workflow_main.getFlow_title()));
+	//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
+	//ckeditor 사용시 아래 코드 주석 처리
+	/*
+	board.setContent(
+	StringUtil.useBrNoHtml(board.getContent()));
+	*/
+	                         //뷰 이름    속성명   속성값
+	return new ModelAndView("boardView","workflow_main",workflow_main);
+	}
+	
 //	//===========파일다운로드===========//
 //	@RequestMapping("/board/file.do")
 //	public ModelAndView download(

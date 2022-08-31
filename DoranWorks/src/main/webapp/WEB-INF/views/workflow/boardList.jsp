@@ -30,7 +30,7 @@
 	</form>
 	<c:if test="${!empty user}">
 	<div class="align-right">
-		<input type="button" value="글쓰기"
+		<input type="button" value="새 결재 진행 "
 		          onclick="location.href='write.do'">
 	</div>
 	</c:if>
@@ -40,23 +40,27 @@
 	<c:if test="${count > 0}">
 	<table>
 		<tr>
-			<th>번호</th>
+			<th>문서번호</th>
 			<th width="400">제목</th>
 			<th>작성자</th>
+			<th>결재 종류</th>
 			<th>작성일</th>
-			<th>조회수</th>
 		</tr>
-		<c:forEach var="board" items="${list}">
+		<c:forEach var="flow" items="${list}">
+		
 		<tr>
-			<td>${board.board_num}</td>
-			<td><a href="detail.do?board_num=${board.board_num}">${board.title}</a></td>
-			<td>
-				<c:if test="${empty board.nick_name}">${board.id}</c:if>
-				<c:if test="${!empty board.nick_name}">${board.nick_name}</c:if>
-			</td>
-			<td>${board.reg_date}</td>
-			<td>${board.hit}</td>
+			<td>${flow.flow_num}</td>
+			<td><a href="detail.do?flow_num=${flow.flow_num}">${flow.flow_title}</a></td>
+			<c:if test="${!(flow.mem_num == 1)}">
+			<td>${flow.mem_name} ${flow.mem_rank}</td>
+			</c:if>
+			<c:if test="${flow.mem_num == 1}">
+			<td>${flow.mem_name} </td>
+			</c:if>
+			<td>${flow.flow_sort}</td>
+			<td>${flow.flow_date}</td> 
 		</tr>
+		
 		</c:forEach>
 	</table>
 	<div class="align-center">${page}</div>

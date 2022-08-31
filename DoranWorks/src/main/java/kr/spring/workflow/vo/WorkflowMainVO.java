@@ -13,8 +13,38 @@ public class WorkflowMainVO {
 	private String flow_sort;
 	private String flow_state;
 	private String flow_no;
+	private String flow_content;
 	
+	private String mem_name;
+	private String mem_dpt;
+	private String mem_rank;
+	private String mem_photo_name;
 	
+	public String getMem_photo_name() {
+		return mem_photo_name;
+	}
+	public void setMem_photo_name(String mem_photo_name) {
+		this.mem_photo_name = mem_photo_name;
+	}
+	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+	public String getMem_dpt() {
+		return mem_dpt;
+	}
+	public void setMem_dpt(String mem_dpt) {
+		this.mem_dpt = mem_dpt;
+	}
+	public String getMem_rank() {
+		return mem_rank;
+	}
+	public void setMem_rank(String mem_rank) {
+		this.mem_rank = mem_rank;
+	}
 	public int getFlow_num() {
 		return flow_num;
 	}
@@ -69,6 +99,20 @@ public class WorkflowMainVO {
 	public void setFlow_no(String flow_no) {
 		this.flow_no = flow_no;
 	}
+	public String getFlow_content() {
+		return flow_content;
+	}
+	public void setFlow_content(String flow_content) {
+		this.flow_content = flow_content;
+	}
+	@Override
+	public String toString() {
+		return "WorkflowMainVO [flow_num=" + flow_num + ", form_num=" + form_num + ", mem_num=" + mem_num
+				+ ", flow_title=" + flow_title + ", flow_date=" + flow_date + ", flow_modify=" + flow_modify
+				+ ", flow_sort=" + flow_sort + ", flow_state=" + flow_state + ", flow_no=" + flow_no + ", flow_content="
+				+ flow_content + "]";
+	}
+	
 	
 	
 	
