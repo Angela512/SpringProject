@@ -362,7 +362,7 @@
 	</ul>
 	<hr size="1" width="100%">
 	<p>
-		${workflow_main.flow_content}
+		
 	</p>
 </div>
     
@@ -465,7 +465,7 @@
       <tr>
         <td height="200" colspan="2" align="center" bgcolor="#D9E2F3"  class="form10b">신청사유<br>
           (자세히)</td>
-        <td colspan="3" align="left" valign="top" class="form10" onClick="javascript:as2.focus();"><DIV  tms_edit id="as2" style="padding:3px;"><DIV></td>
+        <td colspan="3" align="left" valign="top" class="form10" onClick="javascript:as2.focus();"><DIV  tms_edit id="as2" style="padding:3px;"><DIV>${workflow_main.flow_content}</td>
       </tr>
       <tr>
         <td height="40" colspan="2" align="center" bgcolor="#D9E2F3"  class="form10b">긴급연락처</td>

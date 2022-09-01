@@ -68,7 +68,10 @@
 			</li>
 			<br>
 			<li>
-				휴가기간
+				<label for="flow_start">휴가기간</label>
+				<input type="date" name="flow_start" value="flow_start">
+				-
+				<input type="date" name="flow_end" value="flow_end">
 			</li>
 			<li>
 				결재정보
