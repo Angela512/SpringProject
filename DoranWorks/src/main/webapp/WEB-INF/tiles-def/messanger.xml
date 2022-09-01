@@ -21,6 +21,8 @@
     	<put-attribute name="body" value="/WEB-INF/views/messanger/createChatroom.jsp"/>                 
     </definition>
     
+    
+    
 </tiles-definitions>
 
 

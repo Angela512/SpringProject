@@ -24,15 +24,21 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.spring.messanger.service.MessangerService;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
+import kr.spring.util.PagingUtil;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.controller.MessangerController;
 
 @Controller
 public class MessangerController {
 	private static final Logger logger = LoggerFactory.getLogger(MessangerController.class);
+	private int rowCount = 20;
+	private int pageCount = 10;
 	
 	@Autowired
 	private MessangerService messangerService;
+	@Autowired
+	private MemberService memberService;
 	
 	//자바빈 초기화
 	@ModelAttribute 
@@ -44,19 +50,41 @@ public class MessangerController {
 		return new ChatroomVO();
 	}
 	
-	//==============채팅방 생성
-	@GetMapping("/messanger/createChatroom.do")
-	public String chatForm() {
-		return "createChatroom"; //tiles
-	}
-	
-	@PostMapping("/messanger/createChatroom.do")
-	public String createChatroom(ChatroomVO chatroomVO) {
-		logger.debug("<<채팅방 생성>> : " + chatroomVO);
-		
-		messangerService.insertChatroom(chatroomVO);
-		
-		return "msgWrite"; 
+	//==============채팅방 생성===============
+	//멤버 리스트
+	@RequestMapping("/messanger/createChatroom.do")
+	public ModelAndView chatroomProcess(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
+										@RequestParam(value="keyfield", defaultValue="") String keyfield,
+										@RequestParam(value="keyword", defaultValue="") String keyword) {
+		//파라미터들 맵으로 묶어서 보냄
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+
+		//총 멤버 수
+		int count = memberService.selectRowCount(map);
+
+		logger.debug("<<count>> : " + count);
+
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount, pageCount, "list.do");
+
+		List<MemberVO> list = null;
+		if(count > 0) {
+			//page == 0이면 필요없는 작업이니까 이 안으로 넣음
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+
+			list = memberService.selectList(map);
+		}
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("createChatroom"); //tiles 식별자 명
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page", page.getPage());
+
+		return mav;
 	}
 	
 	
@@ -95,28 +123,27 @@ public class MessangerController {
 	}
 	
 	//==========채팅방 목록==========
-	@RequestMapping("/messanger/list.do") 
-	public ModelAndView process(@RequestParam(value="keyfield", defaultValue="") String keyfield,
-								@RequestParam(value="keyword", defaultValue="") String keyword) {
-
-		//파라미터들 맵으로 묶어서 보냄
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("keyfield", keyfield);
-		map.put("keyword", keyword);
-
-
-		List<ChatroomVO> list = null;
-		
-
-		list = messangerService.selectChatroomList(map);
-		
-
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("msgList"); //tiles 식별자 명
-		mav.addObject("list", list);
-
-		return mav;
-	}
+	/*
+	 * @RequestMapping("/messanger/list.do") public ModelAndView
+	 * process(@RequestParam(value="keyfield", defaultValue="") String keyfield,
+	 * 
+	 * @RequestParam(value="keyword", defaultValue="") String keyword) {
+	 * 
+	 * //파라미터들 맵으로 묶어서 보냄 Map<String,Object> map = new HashMap<String,Object>();
+	 * map.put("keyfield", keyfield); map.put("keyword", keyword);
+	 * 
+	 * 
+	 * List<ChatroomVO> list = null;
+	 * 
+	 * 
+	 * list = messangerService.selectChatroomList(map);
+	 * 
+	 * 
+	 * ModelAndView mav = new ModelAndView(); mav.setViewName("msgList"); //tiles
+	 * 식별자 명 mav.addObject("list", list);
+	 * 
+	 * return mav; }
+	 */
 	
 	
 	

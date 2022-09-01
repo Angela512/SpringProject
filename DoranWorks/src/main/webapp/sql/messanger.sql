@@ -32,11 +32,9 @@ create sequence chatroom_seq;
 
 create table chatmem(
 	chatroom_num number not null,
-	msg_num number not null,
 	mem_num number not null,
 	constraint chatmem_fk1 foreign key(chatroom_num) references chatroom(chatroom_num),
 	constraint chatmem_fk2 foreign key(mem_num) references member(mem_num),
-	constraint chatmem_fk3 foreign key(msg_num) references message(msg_num)
 );
 create sequence chatmem_seq;
 

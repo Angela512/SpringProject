@@ -41,6 +41,9 @@ public class MemberVO {
 	private String mem_photo_name;
 	private String mem_type;
 	
+	private String mem_dpt;
+	private String mem_rank;
+	
 	
 	//=================================비밀번호 일치 여부 체크===================//
 	public boolean isCheckedPasswd(String userPasswd) {
@@ -61,6 +64,18 @@ public class MemberVO {
 		setMem_photo_name(upload.getOriginalFilename());
 	}
 	
+	public String getMem_dpt() {
+		return mem_dpt;
+	}
+	public void setMem_dpt(String mem_dpt) {
+		this.mem_dpt = mem_dpt;
+	}
+	public String getMem_rank() {
+		return mem_rank;
+	}
+	public void setMem_rank(String mem_rank) {
+		this.mem_rank = mem_rank;
+	}
 	public int getMem_num() {
 		return mem_num;
 	}
