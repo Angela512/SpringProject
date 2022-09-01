@@ -25,7 +25,8 @@ public interface WorkflowMainMapper {
 		@Select("SELECT * FROM workflow_main b JOIN member m "
 				+ "USING(mem_num) JOIN member_detail d "
 				+ "USING(mem_num) JOIN mem_rank c "
-				+ "USING(mem_rank_num) WHERE b.flow_num=#{flow_num}")
+				+ "USING(mem_rank_num) JOIN mem_dpt s "
+				+ "USING(mem_dpt_num) WHERE b.flow_num=#{flow_num}")
 		public WorkflowMainVO selectBoard(Integer flow_num);
 //		@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 //		public void updateHit(Integer board_num);

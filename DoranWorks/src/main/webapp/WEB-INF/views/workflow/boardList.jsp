@@ -5,7 +5,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.js"></script>
 <div class="page-main">
-	<h2>게시판 목록</h2>
+	<h2>결재 상황</h2>
 	<form action="list.do" id="search_form" 
 	                                   method="get">
 		<ul class="search">
@@ -51,14 +51,11 @@
 		<tr>
 			<td>${flow.flow_num}</td>
 			<td><a href="detail.do?flow_num=${flow.flow_num}">${flow.flow_title}</a></td>
-			<c:if test="${!(flow.mem_num == 1)}">
+		
 			<td>${flow.mem_name} ${flow.mem_rank}</td>
-			</c:if>
-			<c:if test="${flow.mem_num == 1}">
-			<td>${flow.mem_name} </td>
-			</c:if>
 			<td>${flow.flow_sort}</td>
 			<td>${flow.flow_date}</td> 
+			
 			
 		</tr>
 		

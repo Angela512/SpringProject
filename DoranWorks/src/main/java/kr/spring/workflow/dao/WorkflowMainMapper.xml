@@ -50,7 +50,9 @@
   		            FROM workflow_main b JOIN member_detail m
   		            ON b.mem_num = m.mem_num
   		            JOIN mem_rank c 
-  		            ON m.mem_num = c.mem_rank_num
+                    ON m.mem_rank_num = c.mem_rank_num
+                    <!-- join mem_dpt d
+					ON m.mem_dpt_num = d.mem_dpt_num -->
   		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
