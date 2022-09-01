@@ -18,7 +18,11 @@ public class AppConfig implements WebMvcConfigurer{
 	//인터셉터 지정
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/member/myPage.do");
+		registry.addInterceptor(
+				new LoginCheckInterceptor())
+			.addPathPatterns("/member/myPage.do")
+			.addPathPatterns("/member/update.do")
+			.addPathPatterns("/reservation/write.do");  //0831_여기 추가함
 		
 	}
 	

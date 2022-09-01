@@ -1,5 +1,7 @@
 package kr.spring.reservation.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,12 +43,13 @@ public class ReservationController {
 		return new ReservationVO();
 	}
 	
-	//===========예약하기============//
+	//===========회의실 예약============//
 	//예약 폼
 	@GetMapping("/reservation/write.do")
 	public String form() {
 		return "reservationWrite";
 	}
+	
 	//예약 폼에서 전송된 데이터 처리
 	@PostMapping("/reservation/write.do")
 	public String submit(@Valid ReservationVO reservationVO,
@@ -79,15 +83,14 @@ public class ReservationController {
 	}
 	
 	//======================예약 목록====================//
-		@RequestMapping("/reservation/main.do")
+		@RequestMapping("/reservation/main.do")   //헤더에서 정의한 경로
 		public ModelAndView process() {
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("reservationMain");
+			mav.setViewName("reservationMain");   //xml의 name과 동일하게
 			
 			return mav;
 		}
-	
-	
+
 }
 
 

@@ -2,11 +2,15 @@ package kr.spring.reservation.vo;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 public class ReservationVO {
 	private int reserve_num;  //회의실 번호
 	private int mem_num;    //회원번호
+	@NotEmpty
 	private String reserve_title;  //회의제목
 	private Date reserve_date;  //예약일
+	@NotEmpty
 	private String reserve_room; //회의실명
 	private int reserve_room_seat;  //수용인원
 	

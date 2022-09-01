@@ -1,40 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 내용 시작 -->
 <div class="page-main">
-	<h2>회의실예약하기</h2>
-	<form action="write.do" id="register_form" enctype="multipart/form-data" method="post">
-		<div class="align-right">
-			<button>예약</button>
-		</div>
-		
+	<h2>예약하기</h2>
+	<form:form action="write.do" modelAttribute="reservationVO"
+	        id="register_form"
+	        enctype="multipart/form-data">
+	    <form:errors element="div" cssClass="error-color"/>    
 		<ul>
 			<li>
-				<label for="send_receiver_id">회의명</label>
-				<input type="text" id="send_receiver_id" name="send_receiver_id">
-			</li>
-
-			<li>
-				<label for="send_reference_id">일시</label>
-				<input type="text" id="send_reference_id" name="send_reference_id">
-			</li>
-
-			<li>
-				<input type="checkbox" value="1" name="send_important" id="send_important"> 중요!
-				<label for="send_title">회의실</label>
-				<input type="text" id="send_title" name="send_title">
+				<label for="reserve_title">회의명</label>
+				<form:input path="reserve_title"/>
+				<form:errors path="reserve_title" 
+				             cssClass="error-color"/>
 			</li>
 			<li>
-				<input type="checkbox" value="1" name="send_important" id="send_important"> 중요!
-				<label for="send_title">참석자</label>
-				<input type="text" id="send_title" name="send_title">
+				<label for="reserve_title">일시</label>
+				<form:input path="reserve_title"/>
+				<form:errors path="reserve_title" 
+				             cssClass="error-color"/>
 			</li>
-			
-			
 			<li>
-				<textarea rows="5" cols="30" name="send_content"></textarea>
+				<label for="reserve_title">회의실</label>
+				<form:input path="reserve_title"/>
+				<form:errors path="reserve_title" 
+				             cssClass="error-color"/>
 			</li>
-		</ul>
-	</form>
+			<li>
+				<label for="reserve_title">참석자</label>
+				<form:input path="reserve_title"/>
+				<form:errors path="reserve_title" 
+				             cssClass="error-color"/>
+			</li>
+		</ul>    
+		<div class="align-center">
+			<form:button>확인</form:button>
+			<input type="button" value="취소" onclick="location.href='main.do'">
+		</div>    
+	</form:form>
 </div>
 <!-- 내용 끝 -->
