@@ -90,6 +90,14 @@ public class ReservationController {
 			
 			return mav;
 		}
+		
+		
+		/*
+		 * @RequestMapping("/") 
+		 * public String Calendar() { 
+		 * return "reservationMain"; 
+		 * }
+		 */
 
 }
 
