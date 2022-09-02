@@ -43,7 +43,10 @@
   		              b.flow_content,
   		              b.flow_date,
   		              b.flow_sort,
-  		              b.flow_state, 		           
+  		              b.flow_state,
+  		              b.flow_start,
+  		              b.flow_end,
+  		              b.flow_subsort, 		           
   		              b.mem_num,
   		              m.mem_name,
   		              c.mem_rank

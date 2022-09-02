@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+
 <!-- 내용 시작 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.js"></script>
@@ -49,7 +51,7 @@
 		<c:forEach var="flow" items="${list}">
 		
 		<tr>
-			<td>${flow.flow_num}</td>
+			<td><fmt:formatDate value="${flow.flow_date}" pattern="yyyyMMdd"/>-${flow.flow_num}</td>
 			<td><a href="detail.do?flow_num=${flow.flow_num}">${flow.flow_title}</a></td>
 		
 			<td>${flow.mem_name} ${flow.mem_rank}</td>

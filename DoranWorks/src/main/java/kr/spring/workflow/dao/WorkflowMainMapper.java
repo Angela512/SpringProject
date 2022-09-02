@@ -18,9 +18,9 @@ public interface WorkflowMainMapper {
 		//부모글
 		public List<WorkflowMainVO> selectList(Map<String,Object> map);
 		public int selectRowCount(Map<String,Object> map);
-		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,mem_num"
+		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,flow_start,flow_end,flow_subsort,mem_num"
 				+ ") "
-				+ "VALUES (workflow_main_seq.nextval,#{flow_title},#{flow_content},#{flow_sort},#{mem_num})")
+				+ "VALUES (workflow_main_seq.nextval,#{flow_title},#{flow_content},#{flow_sort},#{flow_start},#{flow_end},#{flow_subsort},#{mem_num})")
 		public void insertBoard(WorkflowMainVO flow);
 		@Select("SELECT * FROM workflow_main b JOIN member m "
 				+ "USING(mem_num) JOIN member_detail d "
