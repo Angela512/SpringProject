@@ -49,16 +49,18 @@
 	
 	<!-- 선택된 멤버 리스트 시작 -->
 	<hr size="1" width="100%">
-	<div class="checked_div">
-	</div>
-	
+	<form action="confirm.do" method="post">
+	    <input type="hidden" name="members" value="${user.mem_num}">
+		<div class="checked_div"></div>
+		
 	<!-- 선택된 멤버 리스트 끝 -->
-	
-	<c:if test="${!empty user}">
-	<div class="align-right">
-		<input type="button" value="확인" onclick="location.href='confirm.do'">
-	</div>
-	</c:if>
+		
+		<c:if test="${!empty user}">
+		<div class="align-right">
+			<input type="submit" value="확인">
+		</div>
+		</c:if>
+	</form>
 	
 	<!-- 
 	<form:form action="createChatroom.do" modelAttribute="chatroomVO" id="register_form">

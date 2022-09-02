@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.dao.MessangerMapper;
+import kr.spring.messanger.vo.ChatmemVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
 
@@ -34,9 +36,17 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 
 	@Override
-	public void insertChatroom(ChatroomVO chatroom) {
-		msgMapper.insertChatroom(chatroom);
+	public void insertChatroom(ChatroomVO chatroomVO) {
+		chatroomVO.setChatroom_num(msgMapper.selectChatroom_num());
+		msgMapper.insertChatroom(chatroomVO);
 		
+		ChatmemVO chatmemVO = new ChatmemVO();
+		for(int mem_num : chatroomVO.getMembers()) {
+			chatmemVO.setChatroom_num(chatroomVO.getChatroom_num());
+			chatmemVO.setMem_num(mem_num);
+			
+			msgMapper.insertChatmem(chatmemVO);
+		}
 	}
 
 	@Override

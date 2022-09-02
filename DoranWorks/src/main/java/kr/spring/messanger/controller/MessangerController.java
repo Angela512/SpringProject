@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.messanger.service.MessangerService;
+import kr.spring.messanger.vo.ChatmemVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
 import kr.spring.util.PagingUtil;
@@ -48,6 +49,10 @@ public class MessangerController {
 	@ModelAttribute 
 	public ChatroomVO initChatroomCommand() {
 		return new ChatroomVO();
+	}
+	@ModelAttribute 
+	public ChatmemVO initChatmemCommand() {
+		return new ChatmemVO();
 	}
 	
 	//==============채팅방 생성===============
@@ -91,28 +96,18 @@ public class MessangerController {
 	}
 	
 	//채팅방 멤버 선택 후 메시지방 생성하기
-	@RequestMapping("/messanger/confirm.do")
-	public ModelAndView createChatroom(@RequestParam int chatroom_num) {
-		logger.debug("<<chatroom_num>> : " + chatroom_num);
+	@RequestMapping("/messanger/confirm.do")		//members[]
+	public ModelAndView createChatroom(ChatroomVO chatroomVO) {
 		
-		//파라미터들 맵으로 묶어서 보냄
-		Map<String,Object> map = new HashMap<String,Object>();
+		logger.debug("<<선택된 멤버>> : " + chatroomVO);
 		
-		//선택된 총 멤버 수
-		int count = messangerService.selectRowCount(map);
+		//채팅방번호, 채팅방이름 생성
+		messangerService.insertChatroom(chatroomVO);
 		
-		logger.debug("<<checked member count>> : " + count);
-		
-		List<MessangerVO> list = null;
-		if(count > 0) {
-			
-			list = messangerService.selectList(map);
-		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("msgWrite"); //tiles 식별자 명
-		mav.addObject("count", count);
-		mav.addObject("list", list);
+		
 		
 		return mav;
 	}

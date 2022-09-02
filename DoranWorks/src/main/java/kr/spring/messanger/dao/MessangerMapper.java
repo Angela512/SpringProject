@@ -14,9 +14,19 @@ import kr.spring.messanger.vo.MessangerVO;
 @Mapper
 public interface MessangerMapper {
 	
-	//채팅방
-	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (chatroom_seq.nextval, #{chatroom_name})")
-	public void insertChatroom(ChatroomVO chatroom);//채팅방 생성(채팅방번호 생성됨)
+//==========채팅방==========//
+	//채팅방 생성(채팅방번호 생성됨)
+	@Select("SELECT chatroom_seq.nextval FROM dual")
+	public int selectChatroom_num();
+	
+	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_num})")
+	public void insertChatroom(ChatroomVO chatroomVO);
+	
+	//채팅멤버 생성
+	@Insert("INSERT INTO chatmem (chatroom_num, mem_num) VALUES (#{chatroom_num}, #{mem_num})")
+	public void insertChatmem(ChatmemVO chatmemVO);
+	
+	
 	
 	public List<ChatroomVO> selectChatroomList(Map<String,Object> map);
 	public int selectChatroomRowCount(Map<String, Object> map);
