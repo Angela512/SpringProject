@@ -16,7 +16,7 @@ public interface MemberService {
 	//프로필 이미지 업데이트
 	public void updateProfile(MemberVO member);
 	
-	//멤버 리스트
+	//회원관리 - 관리자
 	public List<MemberVO> selectList(Map<String,Object> map);
 	public int selectRowCount(Map<String,Object> map);
 	public void updateByAdmin(MemberVO member);

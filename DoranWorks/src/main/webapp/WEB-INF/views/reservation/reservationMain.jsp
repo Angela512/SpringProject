@@ -3,13 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 내용 시작 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/board.js"></script>
 
 <link href='${pageContext.request.contextPath}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 <script src='${pageContext.request.contextPath}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script type='text/javascript'>
-	document.addEventListener('DOMContentLoaded', function() {
-		
+document.addEventListener('DOMContentLoaded', function() {
+	
 	  var calendarEl = document.getElementById('calendar');
 	
 	  var calendar = new FullCalendar.Calendar(calendarEl, {
