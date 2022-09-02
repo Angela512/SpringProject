@@ -13,21 +13,22 @@ $(function(){
 	$('.checkedMember').click(function(){
 		//체크된 회원번호 받음(이벤트가 발생한 태그에서 받아옴)
 		let mem_num = $(this).attr('data-num');
-		let isChecked = $(this).attr("checked", true);
 		let modifyUI = '';
-		if(isChecked){ //클릭되었으면
-			//댓글 수정폼 UI
-			modifyUI += '<input type="text" name="members" value="'+ mem_num +'">';
+		let isChecked = $(this).attr("checked");
+		if(isChecked){ //이미 체크되어있으면 체크 해제
+			isChecked = $(this).attr("checked", false);
 			
-			//체크된 멤버 노출
-			$('.checked_div').append(modifyUI);
-		}else if(!isChecked){//클릭 안되어있거나 해제되었으면
+			$('#'+mem_num).remove();
+		}else{ //체크 안되어 있으면 체크하기
+			isChecked = $(this).attr("checked", true);
 			//댓글 수정폼 UI
-			modifyUI += '<input type="text" name="members" value="False!!">';
+			modifyUI += '<input type="text" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
 			
 			//체크된 멤버 노출
 			$('.checked_div').append(modifyUI);
 		}
+		
+		
 		
 		
 		

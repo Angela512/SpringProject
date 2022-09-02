@@ -36,7 +36,7 @@
 		<c:forEach var="member" items="${list}">
 			<tr>
 				<td>
-				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" class="checkedMember"><!-- checked="checked">--> 
+				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" class="checkedMember">
 				</td>
 				<td><a href="detail.do?mem_num=${member.mem_num}">${member.mem_name}</a></td>
 				<td>${member.mem_dpt}</td>
