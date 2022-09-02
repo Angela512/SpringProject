@@ -22,7 +22,8 @@ public interface MessangerMapper {
 	public int selectChatroomRowCount(Map<String, Object> map);
 	
 	//채팅방 생성 시 멤버 선택
-	public List<ChatmemVO> selectChatmem(Map<String,Object> map);
+	public int selectCheckedMemberCount(Map<String, Object> map);
+	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map);
 	
 	//메시지 
 	public List<MessangerVO> selectList(Map<String, Object> map);

@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- 내용 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
 	<h2>멤버 선택</h2>
-	<form action="createChatroom.do" id="search_form" method="get">
+	<form action="list.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield" id="keyfield"> <!-- request.getparameter : 전송된 파라미터 읽어들임 -->
@@ -32,7 +35,9 @@
 	<table>
 		<c:forEach var="member" items="${list}">
 			<tr>
-				<td>${member.mem_num}</td>
+				<td>
+				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" class="checkedMember"><!-- checked="checked">--> 
+				</td>
 				<td><a href="detail.do?mem_num=${member.mem_num}">${member.mem_name}</a></td>
 				<td>${member.mem_dpt}</td>
 			</tr>
@@ -41,6 +46,13 @@
 	<div class="align-center">${page}</div>
 	</c:if>
 	<!-- 멤버 리스트 끝 -->
+	
+	<!-- 선택된 멤버 리스트 시작 -->
+	<hr size="1" width="100%">
+	<div class="checked_div">
+	</div>
+	
+	<!-- 선택된 멤버 리스트 끝 -->
 	
 	<c:if test="${!empty user}">
 	<div class="align-right">

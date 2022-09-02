@@ -49,4 +49,15 @@ public class MessangerServiceImpl implements MessangerService{
 		return msgMapper.selectChatroomRowCount(map);
 	}
 
+	@Override
+	public int selectCheckedMemberCount(Map<String, Object> map) {
+		return 0;
+	}
+
+	@Override
+	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

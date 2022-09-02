@@ -13,4 +13,6 @@ public interface MessangerService {
 	public List<MessangerVO> selectList(Map<String, Object> map);
 	public int selectRowCount(Map<String, Object> map);
 	public void insertMessage(MessangerVO messanger);
+	public int selectCheckedMemberCount(Map<String,Object> map);
+	public List<ChatroomVO> selectCheckedMemberList(Map<String,Object> map);
 }

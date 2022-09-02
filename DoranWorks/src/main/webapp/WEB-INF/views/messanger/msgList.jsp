@@ -28,7 +28,7 @@
 	</form>
 	<c:if test="${!empty user}">
 	<div class="align-right">
-		<input type="button" value="채팅방생성" onclick="location.href='createChatroom.do'">
+		<input type="button" value="채팅방 만들기" onclick="location.href='createChatroom.do'">
 	</div>
 	</c:if>
 	<table>

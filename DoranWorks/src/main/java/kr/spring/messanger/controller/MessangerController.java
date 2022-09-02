@@ -52,7 +52,7 @@ public class MessangerController {
 	
 	//==============채팅방 생성===============
 	//멤버 리스트
-	@RequestMapping("/messanger/createChatroom.do")
+	@RequestMapping("/messanger/list.do")
 	public ModelAndView chatroomProcess(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 										@RequestParam(value="keyfield", defaultValue="") String keyfield,
 										@RequestParam(value="keyword", defaultValue="") String keyword) {
@@ -70,6 +70,8 @@ public class MessangerController {
 		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount, pageCount, "list.do");
 
 		List<MemberVO> list = null;
+		List<ChatroomVO> clist = null;
+		
 		if(count > 0) {
 			//page == 0이면 필요없는 작업이니까 이 안으로 넣음
 			map.put("start", page.getStartRow());
@@ -83,7 +85,35 @@ public class MessangerController {
 		mav.addObject("count", count);
 		mav.addObject("list", list);
 		mav.addObject("page", page.getPage());
+		mav.addObject("clist", clist);
 
+		return mav;
+	}
+	
+	//채팅방 멤버 선택 후 메시지방 생성하기
+	@RequestMapping("/messanger/confirm.do")
+	public ModelAndView createChatroom(@RequestParam int chatroom_num) {
+		logger.debug("<<chatroom_num>> : " + chatroom_num);
+		
+		//파라미터들 맵으로 묶어서 보냄
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		//선택된 총 멤버 수
+		int count = messangerService.selectRowCount(map);
+		
+		logger.debug("<<checked member count>> : " + count);
+		
+		List<MessangerVO> list = null;
+		if(count > 0) {
+			
+			list = messangerService.selectList(map);
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("msgWrite"); //tiles 식별자 명
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		
 		return mav;
 	}
 	

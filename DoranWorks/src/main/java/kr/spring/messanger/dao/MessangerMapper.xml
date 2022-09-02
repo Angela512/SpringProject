@@ -77,7 +77,30 @@
 			</where> -->	
 		  		ORDER BY c.chatroom_num DESC)a)
   	</select>
-
+  	
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+	  	SELECT COUNT(*)
+	  	FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
+	  	ON dpt.mem_dpt_num = d.mem_dpt_num
+	  	<where>
+	  		<if test="keyword != null and keyword != ''">
+	  			<if test="keyfield == 1">
+	  				d.mem_name LIKE '%' || #{keyword} || '%'
+	  			</if>
+	  			<if test="keyfield == 2">
+	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
+	  			</if>
+	  			<if test="keyfield == 3">
+	  				d.mem_email LIKE '%' || #{keyword} || '%'
+	  			</if>
+	  			<if test="keyfield == 4">
+	  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
+	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+	  				d.mem_email LIKE '%' || #{keyword} || '%' 
+	  			</if>
+	  		</if>
+	  	</where>
+ 	</select>
   	
   	
 </mapper>

@@ -1,6 +1,7 @@
 package kr.spring.messanger.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class ChatroomVO {
 	private int chatroom_num;
@@ -11,6 +12,7 @@ public class ChatroomVO {
 	private byte[] mem_photo;
 	private String mem_photo_name;
 	
+	private int[] members;
 	
 	public byte[] getMem_photo() {
 		return mem_photo;
@@ -48,10 +50,16 @@ public class ChatroomVO {
 	public void setChatroom_name(String chatroom_name) {
 		this.chatroom_name = chatroom_name;
 	}
+	public int[] getMembers() {
+		return members;
+	}
+	public void setMembers(int[] members) {
+		this.members = members;
+	}
 	@Override
 	public String toString() {
 		return "ChatroomVO [chatroom_num=" + chatroom_num + ", chatroom_name=" + chatroom_name + ", mem_name="
-				+ mem_name + ", msg_sendtime=" + msg_sendtime + "]";
+				+ mem_name + ", msg_sendtime=" + msg_sendtime + ", mem_photo_name=" + mem_photo_name + "]";
 	}
 	
 }
