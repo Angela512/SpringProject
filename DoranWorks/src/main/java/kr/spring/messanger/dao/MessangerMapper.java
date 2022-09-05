@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.vo.ChatmemVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
@@ -36,7 +37,7 @@ public interface MessangerMapper {
 	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map);
 	
 	//메시지 
-	public List<MessangerVO> selectList(Map<String, Object> map);
+	public List<MemberVO> selectList(Map<String, Object> map);
 	public int selectRowCount(Map<String, Object> map);
 	
 	@Insert("INSERT INTO message (msg_num, chatroom_num, msg_content, msg_uploadfile, msg_filename, mem_num) "

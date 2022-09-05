@@ -5,48 +5,6 @@
 <mapper namespace="kr.spring.messanger.dao.MessangerMapper">  
   	<!-- MessangerMapper.java랑 파일명 / 메소드명 같아야함 -->
   				<!--	타입,			 반환타입 -->
-  	<select id="selectList" parameterType="map" resultType="messangerVO">
-  		SELECT 
-  			*
-  		FROM (SELECT
-  				a.*,
-  				rownum rnum
-  			  FROM (SELECT
-  			  			msg.msg_num,
-  			  		<!-- 	<![CDATA[
-  			  			REPLACE(REPLACE(b.title,'<','&lt;'),'>','&gt;') title,
-  			  			]]> -->
-  			  			msg.msg_filename,
-  			  			msg.mem_num,
-  			  			m.mem_name
-  			  		FROM message msg JOIN member_detail m
-  			  		ON msg.mem_num = m.mem_num
-				<!-- <where>
-						<if test="keyword != null and keyword != ''">
-							<if test="keyfield == 1">
-								b.title LIKE '%' || #{keyword} || '%'
-							</if>
-							<if test="keyfield == 2">
-								m.id LIKE '%' || #{keyword} || '%' 
-								OR 
-  								m.nick_name LIKE '%' || #{keyword} || '%'
-							</if>
-							<if test="keyfield == 3">
-								b.content LIKE '%' || #{keyword} || '%'
-							</if>
-							<if test="keyfield == 4">
-								b.title LIKE '%' || #{keyword} || '%' 
-								OR 
-								b.content LIKE '%' || #{keyword} || '%'
-							</if>
-						</if>
-					</where> -->	
-  			  		ORDER BY msg.msg_num DESC)a)
-  			  <![CDATA[
-  			  WHERE rnum >= #{start} AND rnum <= #{end}
-  			  ]]>
-  	</select>
-  	
   	<select id="selectChatroomList" parameterType="map" resultType="chatroomVO">
   		SELECT 
 		*
@@ -78,29 +36,7 @@
 		  		ORDER BY c.chatroom_num DESC)a)
   	</select>
   	
-	<select id="selectRowCount" parameterType="map" resultType="integer">
-	  	SELECT COUNT(*)
-	  	FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
-	  	ON dpt.mem_dpt_num = d.mem_dpt_num
-	  	<where>
-	  		<if test="keyword != null and keyword != ''">
-	  			<if test="keyfield == 1">
-	  				d.mem_name LIKE '%' || #{keyword} || '%'
-	  			</if>
-	  			<if test="keyfield == 2">
-	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
-	  			</if>
-	  			<if test="keyfield == 3">
-	  				d.mem_email LIKE '%' || #{keyword} || '%'
-	  			</if>
-	  			<if test="keyfield == 4">
-	  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
-	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
-	  				d.mem_email LIKE '%' || #{keyword} || '%' 
-	  			</if>
-	  		</if>
-	  	</where>
- 	</select>
+	
 
  	
   	

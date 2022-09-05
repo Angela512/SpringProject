@@ -20,4 +20,7 @@ public interface MemberService {
 	public List<MemberVO> selectList(Map<String,Object> map);
 	public int selectRowCount(Map<String,Object> map);
 	public void updateByAdmin(MemberVO member);
+	
+	public List<MemberVO> selectMessageList(Map<String,Object> map);
+	public int selectMessageRowCount(Map<String,Object> map);
 }

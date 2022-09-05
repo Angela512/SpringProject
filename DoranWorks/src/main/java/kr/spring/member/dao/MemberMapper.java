@@ -44,4 +44,8 @@ public interface MemberMapper {
 	public List<MemberVO> selectList(Map<String,Object> map);
 	public int selectRowCount(Map<String,Object> map);
 	public void updateByAdmin(MemberVO member);
+	
+	//메신저 회원 목록 호출
+	public List<MemberVO> selectMessageList(Map<String,Object> map);
+	public int selectMessageRowCount(Map<String,Object> map);
 }

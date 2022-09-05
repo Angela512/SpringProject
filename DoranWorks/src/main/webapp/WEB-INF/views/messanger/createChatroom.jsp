@@ -7,16 +7,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
 	<h2>멤버 선택</h2>
-	<form action="list.do" id="search_form" method="get">
+	<form action="createChatroom.do" id="search_form" method="get">
 		<ul class="search">
-			<li>
-				<select name="keyfield" id="keyfield"> <!-- request.getparameter : 전송된 파라미터 읽어들임 -->
-					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>이름</option>
-					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>부서</option>
-					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>이메일</option>
-					<option value="4" <c:if test="${param.keyfield == 4}">selected</c:if>>이름/부서/이메일</option>
-				</select>
-			</li>
 			<li>												<!-- 검색하는 내용 보여져야되니까 -->
 				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 			</li>
@@ -31,16 +23,21 @@
 	<c:if test="${count == 0}">
 	<div class="result-display">회원이 없습니다.</div>
 	</c:if>
-	<c:if test="${count > 0}">
+	<c:if test="${empty user}">
+	<div class="result-display">로그인 후 사용하세요.</div>
+	</c:if>
+	<c:if test="${count > 0 && !empty user}">
 	<table>
 		<c:forEach var="member" items="${list}">
+		<c:if test="${member.mem_num != user.mem_num}">
 			<tr>
 				<td>
-				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" class="checkedMember">
+				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" id="${member.mem_name}" class="checkedMember">
 				</td>
 				<td><a href="detail.do?mem_num=${member.mem_num}">${member.mem_name}</a></td>
 				<td>${member.mem_dpt}</td>
 			</tr>
+		</c:if>
 		</c:forEach>
 	</table>
 	<div class="align-center">${page}</div>
@@ -49,7 +46,7 @@
 	
 	<!-- 선택된 멤버 리스트 시작 -->
 	<hr size="1" width="100%">
-	<form action="confirm.do" method="post">
+	<form action="confirm.do" method="post" id="checked_form" style="display:none;">
 	    <input type="hidden" name="members" value="${user.mem_num}">
 		<div class="checked_div"></div>
 		

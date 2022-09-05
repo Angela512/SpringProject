@@ -59,7 +59,35 @@
   	
   	</select>
 
+	<select id="selectMessageRowCount" parameterType="map" resultType="integer">
+	  	SELECT COUNT(*)
+	  	FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
+	  	ON dpt.mem_dpt_num = d.mem_dpt_num
+	  	
+ 	</select>			
+  				
+  	<select id="selectMessageList" parameterType="map" resultType="memberVO">
+  		SELECT 
+  			*
+  		FROM (SELECT
+  				a.*,
+  				rownum rnum
+  			  FROM (SELECT
+  			  			dpt.mem_dpt,
+  			  		<!-- 	<![CDATA[
+  			  			REPLACE(REPLACE(b.title,'<','&lt;'),'>','&gt;') title,
+  			  			]]> -->
+  			  			d.mem_num,
+  			  			d.mem_name,
+  			  			d.mem_email
+  			  		FROM mem_dpt dpt JOIN member_detail d
+  			  		ON dpt.mem_dpt_num = d.mem_dpt_num
+					
+  			  		ORDER BY d.mem_name ASC)a)
+  			
+  	</select>
 
+	
 
 </mapper>
 

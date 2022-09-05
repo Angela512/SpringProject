@@ -24,17 +24,7 @@ public class MessangerServiceImpl implements MessangerService{
 		msgMapper.insertMessage(messanger);
 		
 	}
-
-	@Override
-	public List<MessangerVO> selectList(Map<String, Object> map) {
-		return msgMapper.selectList(map);
-	}
-
-	@Override
-	public int selectRowCount(Map<String, Object> map) {
-		return msgMapper.selectRowCount(map);
-	}
-
+	
 	@Override
 	public void insertChatroom(ChatroomVO chatroomVO) {
 		chatroomVO.setChatroom_num(msgMapper.selectChatroom_num());
