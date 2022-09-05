@@ -3,79 +3,352 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.letter.dao.LetterMapper">  
-	<insert id="insertSend" parameterType="sendVO">
+	<insert id="insertSend" parameterType="letterVO">
 		INSERT INTO letter_send 
-			(send_num,
-			 send_title,
-			 send_sender_num,
-			 send_receiver_num,
-			 send_reference_num,
-			 send_content,
-			 <if test="send_important!=null">
-			 send_important,
+			(lt_num,
+			 lt_title,
+			 lt_sender_num,
+			 lt_receiver_num,
+			 lt_content,
+			 <if test="lt_important!=null">
+			 lt_important,
 			 </if>
-			 send_uploadfile1,
-			 send_uploadfile2,
-			 send_filename1,
-			 send_filename2,
-			 send_sender_id,
-			 send_receiver_id,
-			 send_reference_id)
+			 lt_uploadfile1,
+			 lt_uploadfile2,
+			 lt_filename1,
+			 lt_filename2,
+			 lt_sender_id,
+			 lt_receiver_id,
+			 lt_reference_id)
 		 VALUES 
-		 	(send_seq.nextval,
-		 	 #{send_title},
-		 	 #{send_sender_num},
-		 	 #{send_receiver_num},
-		 	 #{send_reference_num},
-		 	 #{send_content},
-		 	 <if test="send_important!=null">
-		 	 #{send_important},
+		 	(#{lt_num},
+		 	 #{lt_title},
+		 	 #{lt_sender_num},
+		 	 #{lt_receiver_num},
+		 	 #{lt_content},
+		 	 <if test="lt_important!=null">
+		 	 #{lt_important},
 		 	 </if>
-		 	 #{send_uploadfile1},
-		 	 #{send_uploadfile2},
-		 	 #{send_filename1},
-		 	 #{send_filename2},
-		 	 #{send_sender_id},
-		 	 #{send_receiver_id},
-		 	 #{send_reference_id})
+		 	 #{lt_uploadfile1},
+		 	 #{lt_uploadfile2},
+		 	 #{lt_filename1},
+		 	 #{lt_filename2},
+		 	 #{lt_sender_id},
+		 	 #{lt_receiver_id},
+		 	 #{lt_reference_id})
 	</insert>
 	
-	<insert id="insertReceive" parameterType="sendVO">
+	<insert id="insertReceive" parameterType="letterVO">
 		INSERT INTO letter_receive
-			(rec_num,
-			 rec_title,
-			 rec_sender_num,
-			 rec_receiver_num,
-			 rec_reference_num,
-			 rec_content,
-			 <if test="send_important!=null">
-			 rec_important,
+			(lt_num,
+			 lt_title,
+			 lt_sender_num,
+			 lt_receiver_num,
+			 lt_content,
+			 <if test="lt_important!=null">
+			 lt_important,
 			 </if>
-			 rec_uploadfile1,
-			 rec_uploadfile2,
-			 rec_filename1,
-			 rec_filename2,
-			 rec_sender_id,
-			 rec_receiver_id,
-			 rec_reference_id)
+			 lt_uploadfile1,
+			 lt_uploadfile2,
+			 lt_filename1,
+			 lt_filename2,
+			 lt_sender_id,
+			 lt_receiver_id,
+			 snum)
 		 VALUES 
 		 	(rec_seq.nextval,
-		 	 #{send_title},
-		 	 #{send_sender_num},
-		 	 #{send_receiver_num},
-		 	 #{send_reference_num},
-		 	 #{send_content},
-		 	 <if test="send_important!=null">
-		 	 #{send_important},
+		 	 #{lt_title},
+		 	 #{lt_sender_num},
+		 	 #{lt_receiver_num},
+		 	 #{lt_content},
+		 	 <if test="lt_important!=null">
+		 	 #{lt_important},
 		 	 </if>
-		 	 #{send_uploadfile1},
-		 	 #{send_uploadfile2},
-		 	 #{send_filename1},
-		 	 #{send_filename2},
-		 	 #{send_sender_id},
-		 	 #{send_receiver_id},
-		 	 #{send_reference_id})
+		 	 #{lt_uploadfile1},
+		 	 #{lt_uploadfile2},
+		 	 #{lt_filename1},
+		 	 #{lt_filename2},
+		 	 #{lt_sender_id},
+		 	 #{lt_receiver_id},
+		 	 #{snum})
 	</insert>
+	
+	<select id="selectAllRowCount" parameterType="map" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM
+		   (SELECT 
+		   		lt_sender_id,
+		   		lt_receiver_id,
+		   		lt_title,
+		   		lt_content
+		    FROM
+		    	letter_send
+		    WHERE
+		    	lt_sender_num=#{mem_num}
+		    
+		    UNION ALL 
+		    
+		   	SELECT
+		   		lt_sender_id,
+		   		lt_receiver_id,
+		   		lt_title,
+		   		lt_content
+		    FROM
+		    	letter_receive
+		    WHERE
+		    	lt_receiver_num=#{mem_num})
+	    	<where>
+			<if test="keyword != null and keyword != ''">
+				<if test="keyfield == 1">
+					lt_sender_id LIKE '%' || #{keyword} || '%'
+				</if>
+
+				<if test="keyfield == 2">
+					lt_receiver_id LIKE '%' || #{keyword} || '%'
+				</if>
+
+				<if test="keyfield == 3">
+					lt_title LIKE '%' || #{keyword} || '%'
+				</if>
+
+				<if test="keyfield == 4">
+					lt_content LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectAllList" parameterType="map" resultType="letterVO">
+		SELECT 
+			*
+		FROM
+			(SELECT
+				rownum rnum,
+				a.*
+			FROM
+				(SELECT
+				   *
+				 FROM
+			   		(SELECT
+			   			lt_num AS lt_num,
+			   			lt_sender_num,
+			   			lt_receiver_num,
+			   			<![CDATA[
+			   			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			   			]]>
+			            lt_date,
+			            lt_sender_id,
+		      			SUBSTR(lt_receiver_id,0,DECODE(INSTR(lt_receiver_id,','),0,LENGTH(lt_receiver_id),INSTR(lt_receiver_id,',')-1)) AS lt_receiver_id,
+				        lt_content
+			    	FROM
+			    		letter_send 
+			     	WHERE
+			     		lt_sender_num=#{mem_num}
+			     		
+			      	UNION ALL 
+			      	
+			  		SELECT
+			  			snum AS lt_num,
+			  			lt_sender_num,
+			  			TO_CHAR(lt_receiver_num) AS lt_receiver_num,
+			  			<![CDATA[
+			  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			  			]]>
+			        	lt_date,
+				        lt_sender_id,
+				        lt_receiver_id,
+				        lt_content
+			  		FROM
+			  			letter_receive
+			  		WHERE
+			  			lt_receiver_num=#{mem_num}) 
+			  	<where>
+					<if test="keyword != null and keyword != ''">
+						<if test="keyfield == 1">
+							lt_sender_id LIKE '%' || #{keyword} || '%'
+						</if>
+		
+						<if test="keyfield == 2">
+							lt_receiver_id LIKE '%' || #{keyword} || '%'
+						</if>
+		
+						<if test="keyfield == 3">
+							lt_title LIKE '%' || #{keyword} || '%'
+						</if>
+		
+						<if test="keyfield == 4">
+							lt_content LIKE '%' || #{keyword} || '%'
+						</if>
+					</if>
+				</where>
+			   ORDER BY lt_date DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]> 
+	</select>
+	
+	<select id="selectAllNP" parameterType="map" resultType="nextPrevVO">
+		WITH tta AS
+		(
+          SELECT
+            *
+           FROM
+             (SELECT
+              	lt_num AS lt_num,
+                <![CDATA[
+	  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+	  			]]>
+                lt_date,
+                lt_sender_id,
+                lt_receiver_id
+              FROM
+                letter_send 
+              WHERE
+                lt_sender_num=#{mem_num}
+                
+              UNION ALL 
+              
+              SELECT
+                snum AS lt_num,
+                <![CDATA[
+	  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+	  			]]>
+                lt_date,
+                lt_sender_id,
+                lt_receiver_id
+              FROM
+                letter_receive
+              WHERE
+                lt_receiver_num=#{mem_num}) 
+          )
+               
+           SELECT * FROM(
+               SELECT
+	               lt_num,
+	               LAG(lt_num,1) OVER(ORDER BY lt_num) prev_num,
+	               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
+	               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
+	               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+	               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
+	               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
+	               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
+	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+               FROM tta 
+               )
+           WHERE lt_num=#{lt_num}
+	</select>
+	
+	<select id="selectRecRowCount" parameterType="map" resultType="integer">
+		SELECT
+		  COUNT(*)
+		FROM
+		  letter_receive l JOIN member_detail m ON mem_num = lt_sender_num
+		WHERE
+		  lt_receiver_num=#{mem_num}
+		  
+		  <if test="keyword != null and keyword != ''">
+			<if test="keyfield == 1">
+				AND lt_sender_id LIKE '%' || #{keyword} || '%'
+			</if>
+
+			<if test="keyfield == 2">
+				AND lt_receiver_id LIKE '%' || #{keyword} || '%'
+			</if>
+
+			<if test="keyfield == 3">
+				AND lt_title LIKE '%' || #{keyword} || '%'
+			</if>
+
+			<if test="keyfield == 4">
+				AND lt_content LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectRecList" parameterType="map" resultType="letterVO">
+		SELECT 
+			*
+		FROM
+			(SELECT
+				rownum rnum,
+				a.*
+			FROM
+		  		(SELECT
+		  			snum AS lt_num,
+		  			lt_sender_num,
+		  			lt_receiver_num,
+                    <![CDATA[
+			  		REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			  		]]>
+		        	lt_date,
+			        lt_sender_id,
+			        lt_receiver_id,
+			        lt_content,
+                    mem_name
+		  		FROM
+		  			letter_receive l JOIN member_detail m on mem_num=lt_sender_num
+		  		WHERE
+		  			lt_receiver_num=#{mem_num}
+		  			 <if test="keyword != null and keyword != ''">
+						<if test="keyfield == 1">
+							AND lt_sender_id LIKE '%' || #{keyword} || '%'
+						</if>
+			
+						<if test="keyfield == 2">
+							AND lt_receiver_id LIKE '%' || #{keyword} || '%'
+						</if>
+			
+						<if test="keyfield == 3">
+							AND lt_title LIKE '%' || #{keyword} || '%'
+						</if>
+			
+						<if test="keyfield == 4">
+							AND lt_content LIKE '%' || #{keyword} || '%'
+						</if>
+					</if>
+		  		ORDER BY lt_date DESC)a)
+		
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]> 
+	</select>
+	
+	<select id="selectRecNP" parameterType="map" resultType="nextPrevVO">
+		WITH tta AS
+		(
+         	SELECT
+			  snum AS lt_num,   
+	          <![CDATA[
+	  		  REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+	  		  ]]>
+	          lt_date,
+	          lt_sender_id,
+	          lt_receiver_id,
+	          mem_name
+			FROM
+			  letter_receive l JOIN member_detail m ON mem_num = lt_sender_num
+			WHERE
+			  lt_receiver_num=#{mem_num}
+	          )
+	               
+	           SELECT * FROM(
+	               SELECT
+		               lt_num,
+		               LAG(lt_num,1) OVER(ORDER BY lt_num) prev_num,
+		               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
+		               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
+		               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+	                   LAG(mem_name,1) OVER(ORDER BY lt_num) prev_mem_name,
+		               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
+		               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
+		               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
+		               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
+	                   LEAD(mem_name,1) OVER(ORDER BY lt_num) next_mem_name
+	               FROM tta 
+	               )
+           WHERE lt_num=#{lt_num}
+	</select>
 </mapper>
 
 

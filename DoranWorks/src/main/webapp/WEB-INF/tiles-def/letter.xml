@@ -16,6 +16,12 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/letter/letterWrite.jsp"/>                   
     </definition>
+
+    <definition name="letterView" extends="main">
+    	<put-attribute name="title" value="쪽지상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterView.jsp"/>                   
+    </definition>
 </tiles-definitions>
 
 

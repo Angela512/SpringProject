@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import kr.spring.letter.vo.SendVO;
+import kr.spring.letter.vo.LetterVO;
 import kr.spring.reservation.vo.ReservationVO;
 
 public interface ReservationService {

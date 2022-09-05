@@ -1,11 +1,16 @@
 package kr.spring.letter.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.letter.dao.LetterMapper;
-import kr.spring.letter.vo.SendVO;
+import kr.spring.letter.vo.LetterVO;
+import kr.spring.letter.vo.NextPrevVO;
+import kr.spring.member.vo.MemberVO;
 
 @Service
 @Transactional
@@ -14,36 +19,93 @@ public class LetterServiceImpl implements LetterService{
 	@Autowired
 	private LetterMapper letterMapper;
 	
-	@Override
-	public int selectMem_num(String mem_id) {
-		return letterMapper.selectMem_num(mem_id);
-	}
 
 	@Override
-	public void insertSend(SendVO send) {
-		String[] rname = send.getRnames();
+	public MemberVO selectMem_vo(String mem_id) {
+		return letterMapper.selectMem_vo(mem_id);
+	}
+	
+	@Override
+	public void insertSend(LetterVO letter) {
+		String[] rids = letter.getRids();
+		String[] rids2 = letter.getRids2();
 		String rrecnum="";
-		SendVO sendVV = send;
+		LetterVO sendVV = letter;
 		
-		for(int i=0;i<rname.length;i++) {
-			String recnum=String.valueOf(letterMapper.selectMem_num(rname[i]));
-			if(i==rname.length-1)rrecnum+=recnum;
-			else rrecnum+=(recnum+", ");
+		for(int i=0;i<rids.length;i++) {
+			MemberVO mm = letterMapper.selectMem_vo(rids[i]);
+			
+			if(i==rids.length-1) {
+				rrecnum+=mm.getMem_num();
+			}
+			else {
+				rrecnum+=(mm.getMem_num()+", ");
+			}
 		}
-		sendVV.setSend_receiver_num(rrecnum);
-		
+		int sendNum=letterMapper.sendNum();
+		sendVV.setLt_num(sendNum);
+		sendVV.setLt_receiver_num(rrecnum);
+		System.out.println("sendVV : "+sendVV);
 		letterMapper.insertSend(sendVV);
 		
 		
-		for(int i=0;i<rname.length;i++) {
-			String recname = rname[i];
-			send.setSend_receiver_id(recname);
+		for(int i=0;i<rids.length;i++) {
+			MemberVO nn = letterMapper.selectMem_vo(rids[i]);
 			
-			send.setSend_receiver_num(String.valueOf(letterMapper.selectMem_num(recname)));
+			letter.setLt_receiver_num(String.valueOf(nn.getMem_num()));
+			letter.setLt_receiver_id(nn.getMem_id());
+			letter.setSnum(sendNum);
 			
-			letterMapper.insertReceive(send);
+			letterMapper.insertReceive(letter);
+		}
+		
+		for(int i=0;i<rids2.length;i++) {
+			MemberVO nn = letterMapper.selectMem_vo(rids2[i]);
+			
+			letter.setLt_receiver_num(String.valueOf(nn.getMem_num()));
+			letter.setLt_receiver_id(nn.getMem_id());
+			letter.setSnum(sendNum);
+			
+			letterMapper.insertReceive(letter);
 		}
 		
 	}
+
+	@Override
+	public int selectAllRowCount(Map<String, Object> map) {
+		return letterMapper.selectAllRowCount(map);
+	}
+
+	@Override
+	public List<LetterVO> selectAllList(Map<String, Object> map) {
+		return letterMapper.selectAllList(map);
+	}
+
+	@Override
+	public LetterVO selectLetter(int lt_num) {
+		return letterMapper.selectLetter(lt_num);
+	}
+
+	@Override
+	public NextPrevVO selectAllNP(Map<String, Object> map) {
+		return letterMapper.selectAllNP(map);
+	}
+
+	@Override
+	public int selectRecRowCount(Map<String, Object> map) {
+		return letterMapper.selectRecRowCount(map);
+	}
+
+	@Override
+	public List<LetterVO> selectRecList(Map<String, Object> map) {
+		return letterMapper.selectRecList(map);
+	}
+
+	@Override
+	public NextPrevVO selectRecNP(Map<String, Object> map) {
+		return letterMapper.selectRecNP(map);
+	}
+
+	
 
 }

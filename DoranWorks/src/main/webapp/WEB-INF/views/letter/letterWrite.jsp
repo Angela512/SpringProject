@@ -10,19 +10,19 @@
 		
 		<ul>
 			<li>
-				<label for="send_receiver_id">받는사람</label>
-				<input type="text" id="send_receiver_id" name="send_receiver_id">
+				<label for="lt_receiver_id">받는사람</label>
+				<input type="text" id="lt_receiver_id" name="lt_receiver_id">
 			</li>
 
 			<li>
-				<label for="send_reference_id">참조</label>
-				<input type="text" id="send_reference_id" name="send_reference_id">
+				<label for="lt_reference_id">참조</label>
+				<input type="text" id="lt_reference_id" name="lt_reference_id">
 			</li>
 
 			<li>
-				<input type="checkbox" value="1" name="send_important" id="send_important"> 중요!
-				<label for="send_title">제목</label>
-				<input type="text" id="send_title" name="send_title">
+				<input type="checkbox" value="1" name="lt_important" id="lt_important"> 중요!
+				<label for="lt_title">제목</label>
+				<input type="text" id="lt_title" name="lt_title">
 			</li>
 			
 			<li>
@@ -36,7 +36,7 @@
 			</li>
 			
 			<li>
-				<textarea rows="5" cols="30" name="send_content"></textarea>
+				<textarea rows="5" cols="30" name="lt_content"></textarea>
 			</li>
 		</ul>
 	</form>
