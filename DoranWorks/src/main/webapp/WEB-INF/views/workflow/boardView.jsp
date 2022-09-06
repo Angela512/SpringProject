@@ -96,6 +96,7 @@
 			<img src="${pageContext.request.contextPath}/images/face.png" width="40" height="40" class="my-photo">
 			</c:if>
 		</li> --%>
+		
 		<li>
 			[${workflow_main.mem_dpt}] ${workflow_main.mem_name} ${workflow_main.mem_rank}
 			<br>
@@ -129,6 +130,19 @@
             <td width="1" align="center" class="form16b" id="tms_auto_sign"></td>
           </tr>
     </table>
+    <!-- 
+    <table border="solid">
+    	<tr>
+    		<td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b" rowspan="2">1</td>
+    		<td>2</td>
+    		<td>3</td>
+    	</tr>
+    		<td height="30" width="50">4</td>
+    		<td>5</td>
+    	<tr>
+    	</tr>
+    </table>
+     -->
     <table width="644" border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;" class="form2" align="center" >
       <tr>
         <td>&nbsp;</td>

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.member.vo.MemberVO;
 import kr.spring.workflow.dao.WorkflowMainMapper;
 import kr.spring.workflow.vo.WorkflowMainVO;
+import kr.spring.workflow.vo.WorkflowSignVO;
 
 @Service
 @Transactional
@@ -31,6 +33,7 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 	public void insertBoard(WorkflowMainVO flow) {
 		flowMapper.insertBoard(flow); 
 	 }
+	
 	 
 	 
 
@@ -38,6 +41,15 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 	public WorkflowMainVO selectBoard(Integer flow_num) {
 		return flowMapper.selectBoard(flow_num);
 	}
+
+	@Override
+	public boolean insertSign(WorkflowSignVO sign) {
+		return flowMapper.insertSign(sign); 
+		
+	}
+
+	
+
 
 
 

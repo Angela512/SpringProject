@@ -8,6 +8,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.js"></script>
 <div class="page-main">
 	<h2>결재 상황</h2>
+	
+<!-- 	<input type="button" value="목록" onclick="location.href='sign.do'"> -->
+	 <a href="#" onclick="window.open('signList.do', '_blank', 'width=600 height=600')">.</a>		            
 	<form action="list.do" id="search_form" 
 	                                   method="get">
 		<ul class="search">
@@ -56,13 +59,16 @@
 		
 			<td>${flow.mem_name} ${flow.mem_rank}</td>
 			<td>${flow.flow_sort}</td>
-			<td>${flow.flow_date}</td> 
-			
-			
+			<td>${flow.flow_date}</td> 		
 		</tr>
 		
 		</c:forEach>
 	</table>
+	<%-- 
+	<c:forEach var="lm" items="${list2}">
+		${lm.mem_name} ${lm.mem_dpt} <br>
+	</c:forEach>
+	 --%>
 	<div class="align-center">${page}</div>
 	</c:if>
 </div>

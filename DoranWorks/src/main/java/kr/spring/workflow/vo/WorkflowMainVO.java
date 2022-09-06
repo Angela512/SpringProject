@@ -129,6 +129,15 @@ public class WorkflowMainVO {
 	public void setMem_photo_name(String mem_photo_name) {
 		this.mem_photo_name = mem_photo_name;
 	}
+	@Override
+	public String toString() {
+		return "WorkflowMainVO [flow_num=" + flow_num + ", form_num=" + form_num + ", mem_num=" + mem_num
+				+ ", flow_title=" + flow_title + ", flow_sort=" + flow_sort + ", flow_state=" + flow_state
+				+ ", flow_no=" + flow_no + ", flow_content=" + flow_content + ", flow_start=" + flow_start
+				+ ", flow_end=" + flow_end + ", flow_subsort=" + flow_subsort + ", flow_date=" + flow_date
+				+ ", flow_modify=" + flow_modify + ", mem_name=" + mem_name + ", mem_dpt=" + mem_dpt + ", mem_rank="
+				+ mem_rank + ", mem_photo_name=" + mem_photo_name + "]";
+	}
 	
 	
 	

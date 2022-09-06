@@ -23,4 +23,7 @@ public interface MemberService {
 	
 	public List<MemberVO> selectMsgMemberList(Map<String,Object> map);
 	public int selectMsgMemberRowCount(Map<String,Object> map);
+	
+	//전자결재 회원 목록 호출
+	public List<MemberVO> selectSignList();
 }

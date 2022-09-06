@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import kr.spring.member.vo.MemberVO;
 import kr.spring.workflow.vo.WorkflowMainVO;
+import kr.spring.workflow.vo.WorkflowSignVO;
 
 
 @Service
@@ -14,6 +16,7 @@ public interface WorkflowMainService {
 		public List<WorkflowMainVO> selectList(Map<String,Object> map);
 	    public int selectRowCount(Map<String,Object> map); 
 	    public void insertBoard(WorkflowMainVO flow);
+	    public boolean insertSign(WorkflowSignVO sign);
 		public WorkflowMainVO selectBoard(Integer flow_num);
 //		public void updateHit(Integer flow_num);
 		/* public void updateBoard(WorkflowMainVO flow); */

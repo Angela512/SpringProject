@@ -80,4 +80,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.selectMsgMemberRowCount(map);
 	}
 
+	//전자결재 회원 목록 호출
+	@Override
+	public List<MemberVO> selectSignList() {
+		return memberMapper.selectSignList();
+	}
 }

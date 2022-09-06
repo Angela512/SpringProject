@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Select;
 //import org.apache.ibatis.annotations.Update;
 
 import kr.spring.workflow.vo.WorkflowMainVO;
+import kr.spring.workflow.vo.WorkflowSignVO;
+
 
 
 @Mapper
@@ -18,16 +20,21 @@ public interface WorkflowMainMapper {
 		//부모글
 		public List<WorkflowMainVO> selectList(Map<String,Object> map);
 		public int selectRowCount(Map<String,Object> map);
-		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,flow_start,flow_end,flow_subsort,mem_num"
+		
+		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,flow_start,flow_end,flow_subsort,flow_state,mem_num"
 				+ ") "
-				+ "VALUES (workflow_main_seq.nextval,#{flow_title},#{flow_content},#{flow_sort},#{flow_start},#{flow_end},#{flow_subsort},#{mem_num})")
+				+ "VALUES (workflow_main_seq.nextval,#{flow_title},#{flow_content},#{flow_sort},#{flow_start},#{flow_end},#{flow_subsort},#{flow_state},#{mem_num})")
 		public void insertBoard(WorkflowMainVO flow);
+				
 		@Select("SELECT * FROM workflow_main b JOIN member m "
 				+ "USING(mem_num) JOIN member_detail d "
 				+ "USING(mem_num) JOIN mem_rank c "
 				+ "USING(mem_rank_num) JOIN mem_dpt s "
 				+ "USING(mem_dpt_num) WHERE b.flow_num=#{flow_num}")
 		public WorkflowMainVO selectBoard(Integer flow_num);
+		public boolean insertSign(WorkflowSignVO sign);
+		
+		
 //		@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 //		public void updateHit(Integer board_num);
 //		public void updateBoard(WorkflowMainVO board);   ////

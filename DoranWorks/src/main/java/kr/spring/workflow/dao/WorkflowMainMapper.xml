@@ -49,13 +49,14 @@
   		              b.flow_subsort, 		           
   		              b.mem_num,
   		              m.mem_name,
-  		              c.mem_rank
+  		              c.mem_rank,
+  		              d.mem_dpt
   		            FROM workflow_main b JOIN member_detail m
   		            ON b.mem_num = m.mem_num
   		            JOIN mem_rank c 
                     ON m.mem_rank_num = c.mem_rank_num
-                    <!-- join mem_dpt d
-					ON m.mem_dpt_num = d.mem_dpt_num -->
+                    join mem_dpt d
+					ON m.mem_dpt_num = d.mem_dpt_num 
   		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
@@ -94,6 +95,13 @@
   		WHERE board_num=#{board_num} -->
   	</update>
   	
+  	
+  	
+  	<!-- 게시판 결재라인 등록 -->
+	 <insert id="insertSign">
+		insert into workflow_sign (sign_num, sign_no, sign_name)  
+		values(workflow_sign_seq.nextval, #{sign_no}, #{sign_name})
+	</insert> 
 </mapper>
 
 

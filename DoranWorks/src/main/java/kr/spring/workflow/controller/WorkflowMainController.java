@@ -19,24 +19,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
 import kr.spring.workflow.service.WorkflowMainService;
 import kr.spring.workflow.vo.WorkflowMainVO;
+import kr.spring.workflow.vo.WorkflowSignVO;
 
 @Controller
 public class WorkflowMainController {
 	private static final Logger logger =
 		         LoggerFactory.getLogger(
 				          WorkflowMainController.class);
+	
 	private int rowCount = 20;
 	private int pageCount = 10;
 	
 	@Autowired
 	private WorkflowMainService flowService;
+	@Autowired
+	private MemberService memberService;
+	
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -67,6 +74,7 @@ public class WorkflowMainController {
 	
 	MemberVO user = 
 			(MemberVO)session.getAttribute("user");
+	
 	//회원번호 셋팅
 	flowVO.setMem_num(user.getMem_num());
 	//ip셋팅
@@ -111,12 +119,14 @@ public class WorkflowMainController {
 					rowCount,pageCount,"list.do");
 	
 	List<WorkflowMainVO> list = null;
+	List<MemberVO> list2 = null;
 	if(count > 0) {
 		
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
 		
 		list = flowService.selectList(map);
+		list2 = memberService.selectList(map);;
 	}
 	
 	
@@ -124,6 +134,7 @@ public class WorkflowMainController {
 	mav.setViewName("boardList"); //////////////////////////////////
 	mav.addObject("count", count);
 	mav.addObject("list", list);
+	mav.addObject("list2", list2);
 	mav.addObject("page", page.getPage());
 	
 	return mav;
@@ -137,9 +148,6 @@ public class WorkflowMainController {
 		          @RequestParam int flow_num) {
 	
 	logger.debug("<<board_num>> : " + flow_num);
-	
-	//해당 글의 조회수 증가
-//	boardService.updateHit(flow_num);
 	
 	WorkflowMainVO workflow_main = 
 			flowService.selectBoard(flow_num);
@@ -262,5 +270,203 @@ public class WorkflowMainController {
 //	
 //	return "common/resultView";
 //	}
+	
+	
+	
+	
+	
+	
+	//========결재 라인===========//
+//		@RequestMapping("/workflow/sign.do")
+//		public String line() {
+//			return "signList";		
+//		}
+	
+	
+	
+	 
+	
+	
+	/////-------------------테스트 코드 확인 완료-----------------------////////////////
+	
+	/*
+		@RequestMapping("/workflow/signList.do")
+		public ModelAndView line(
+			@RequestParam(value="pageNum",defaultValue="1") 
+			int currentPage,
+			@RequestParam(value="keyfield",defaultValue="")
+			String keyfield,
+			@RequestParam(value="keyword",defaultValue="")
+			String keyword) {
+		
+		Map<String,Object> map = 
+				    new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		//글의 총개수(검색된 글의 개수)
+		int count = memberService.selectRowCount(map);
+		logger.debug("<<count>> : " + count);
+		
+		//페이지 처리
+		PagingUtil page = 
+				new PagingUtil(keyfield,keyword,
+						currentPage,count,
+						rowCount,pageCount,"list.do");
+		
+		List<MemberVO> list = null;
+		if(count > 0) {
+			
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = memberService.selectSignList(map);
+		}
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("signList"); 
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page", page.getPage());
+		
+		return mav;
+		}
+		
+		*/
+	////////-------------여기 까지-----------------//////////
+	
+	@RequestMapping("/workflow/signList.do")
+	public ModelAndView line() {
+	
+	List<MemberVO> list = memberService.selectSignList();
+	
+	ModelAndView mav = new ModelAndView();
+	mav.setViewName("signList"); 
+	mav.addObject("list", list);
+	
+	return mav;
+	}
+	
+	
+	@PostMapping("/workflow/signList.do")
+	public String insertreview(WorkflowSignVO sign) throws Exception{
+		boolean result = flowService.insertSign(sign);
+		if (result) {
+			return "/workflow/signList";
+		} else {
+			return "error";
+		}
+	}
+		
+	/////-------------------테스트 코드2-----------------------////////////////
+		
+		
+		//등록 폼에서 전송된 데이터 처리
+		@PostMapping("/workflow/signWrite.do")
+		public String submit(@Valid WorkflowSignVO signVO,
+			      BindingResult result,
+			      HttpServletRequest request,
+			      HttpSession session,
+			      Model model) {
+		
+		logger.debug("<<게시판 글 저장>> : " + signVO);
+		
+		//유효성 검사 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return form();
+		}
+		
+		MemberVO user = 
+				(MemberVO)session.getAttribute("user");
+		
+		//회원번호 셋팅
+		signVO.setMem_num(user.getMem_num());
+		
+		//View에 표시할 메시지
+		model.addAttribute(
+				"message", "글 등록이 완료되었습니다.");
+		model.addAttribute(
+		"url", request.getContextPath()+"/workflow/list.do");
+		
+		return "common/resultView";
+		}
+		
+		
+		
+		
+		
+     /////-------------여기 까지2-----------------//////////	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+//	//========게시판 글상세===========//
+//		@RequestMapping("/workflow/sign.do")
+//		public ModelAndView sign(
+//			          @RequestParam int mem_num) {
+//		
+//		logger.debug("<<board_num>> : " + mem_num);
+//		
+//		//WorkflowMainVO workflow_main = flowService.selectBoard(mem_num);
+//		MemberVO sign = memberService.selectMember(mem_num);
+//		
+//		//제목에 태그를 허용하지 않음
+//		//workflow_main.setFlow_title( StringUtil.useNoHtml(workflow_main.getFlow_title()));
+//		
+//		//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
+//		//ckeditor 사용시 아래 코드 주석 처리
+//		/*
+//		board.setContent(
+//		StringUtil.useBrNoHtml(board.getContent()));
+//		*/
+//		                         //뷰 이름    속성명   속성값
+//		//return new ModelAndView("boardView","workflow_main",workflow_main);
+//		return new ModelAndView("signList","sign",sign);
+//		}	
+	
+		
+	
+		
+		
+		
+//		//========결재 등록=========//
+//		@RequestMapping("/board/signWrite.do")
+//		@ResponseBody
+//		public Map<String,String> writeReply(
+//				  WorkflowSignVO workflowSignVO,
+//				  HttpSession session,
+//				  HttpServletRequest request){
+//			
+//			logger.debug("<<댓글 등록>> : " + workflowSignVO);
+//			
+//			Map<String,String> mapAjax = 
+//					new HashMap<String,String>();
+//			
+//			MemberVO user = 
+//				(MemberVO)session.getAttribute("user");
+//			if(user==null) {//로그인 안 됨
+//				mapAjax.put("result", "logout");
+//			}else {//로그인 됨
+//				//회원번호 등록
+//				workflowSignVO.setMem_num(
+//						             user.getMem_num());
+//				
+//				//댓글 등록
+//				flowService.insertSign(workflowSignVO);
+//				mapAjax.put("result","success");
+//			}
+//			return mapAjax;
+//		}
+		
 
 }

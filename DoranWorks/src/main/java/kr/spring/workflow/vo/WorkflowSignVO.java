@@ -6,9 +6,10 @@ public class WorkflowSignVO {
 	private int form_num;
 	private int mem_num;
 	private String sign_no;
+	private String sign_name;
 	private String mem_name;
-	
-	
+	private String mem_dpt;
+	private String mem_rank;
 	public int getSign_num() {
 		return sign_num;
 	}
@@ -33,12 +34,32 @@ public class WorkflowSignVO {
 	public void setSign_no(String sign_no) {
 		this.sign_no = sign_no;
 	}
+	public String getSign_name() {
+		return sign_name;
+	}
+	public void setSign_name(String sign_name) {
+		this.sign_name = sign_name;
+	}
 	public String getMem_name() {
 		return mem_name;
 	}
 	public void setMem_name(String mem_name) {
 		this.mem_name = mem_name;
 	}
+	public String getMem_dpt() {
+		return mem_dpt;
+	}
+	public void setMem_dpt(String mem_dpt) {
+		this.mem_dpt = mem_dpt;
+	}
+	public String getMem_rank() {
+		return mem_rank;
+	}
+	public void setMem_rank(String mem_rank) {
+		this.mem_rank = mem_rank;
+	}
+	
+	
 	
 	
 	
