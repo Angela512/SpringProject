@@ -59,14 +59,31 @@
   	
   	</select>
 
-	<select id="selectMessageRowCount" parameterType="map" resultType="integer">
+	<select id="selectMsgMemberRowCount" parameterType="map" resultType="integer">
 	  	SELECT COUNT(*)
 	  	FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
 	  	ON dpt.mem_dpt_num = d.mem_dpt_num
-	  	
+	  <where>
+  		<if test="keyword != null and keyword != ''">
+  			<if test="keyfield == 1">
+  				d.mem_name LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 2">
+  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 3">
+  				d.mem_email LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 4">
+  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
+  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+  				d.mem_email LIKE '%' || #{keyword} || '%' 
+  			</if>
+  		</if>
+  	</where>
  	</select>			
   				
-  	<select id="selectMessageList" parameterType="map" resultType="memberVO">
+  	<select id="selectMsgMemberList" parameterType="map" resultType="memberVO">
   		SELECT 
   			*
   		FROM (SELECT
@@ -82,7 +99,24 @@
   			  			d.mem_email
   			  		FROM mem_dpt dpt JOIN member_detail d
   			  		ON dpt.mem_dpt_num = d.mem_dpt_num
-					
+					<where>
+				  		<if test="keyword != null and keyword != ''">
+				  			<if test="keyfield == 1">
+				  				d.mem_name LIKE '%' || #{keyword} || '%'
+				  			</if>
+				  			<if test="keyfield == 2">
+				  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
+				  			</if>
+				  			<if test="keyfield == 3">
+				  				d.mem_email LIKE '%' || #{keyword} || '%'
+				  			</if>
+				  			<if test="keyfield == 4">
+				  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
+				  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+				  				d.mem_email LIKE '%' || #{keyword} || '%' 
+				  			</if>
+				  		</if>
+			  		</where>
   			  		ORDER BY d.mem_name ASC)a)
   			
   	</select>

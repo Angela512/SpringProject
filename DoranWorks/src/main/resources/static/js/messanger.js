@@ -26,35 +26,21 @@ $(function(){
 			timeout:30000,
 			success:function(param){
 				count = param.count;
+				
 				$(param.list).each(function(index, item){
-					let output = '<h2>멤버 선택</h2>';
-					/*output += '<h4>';
-					output += '<img src="../member/viewProfile.do?mem_num='+ item.mem_num +'" width="30" height="30" class="my-photo">';
-					if(item.nick_name){
-						output += item.nick_name + '</h4>';
-					}else{
-						output += item.id + '</h4>';
-					}
-					output += '<div class="sub-item">';
-					output += '<p>' + item.re_content.replace(/\r\n/g,'<br>') + '</p>';
+					let output = '';
+						output += '<tr>';
+						output += '<td>';
+						output += '<input type="checkbox" name="mem_num" data-num="' + item.mem_num + '" id="' + item.mem_name + '" class="checkedMember">';
+						output += '</td>';
+						output += '<td><a href="detail.do?mem_num='+ item.mem_num + '">' + item.mem_name + '</a></td>';
+						output += '<td>' + item.mem_dpt + '</td>';
+						output += '</tr>';
 					
-					if(item.re_mdate){
-						output += '<span class="modify-date">최근 수정일 : ' + item.re_mdate + '</span>';
-					}else{
-						output += '<span class="modify-date">등록일 : ' + item.re_date + '</span>';					
-					}
 					
-					if(param.user_num == item.mem_num){ //user_num을 BoardAjaxCntr에서 받아옴
-						//로그인 회원 == 댓글 작성자
-						output += ' <input type="button" data-num="' + item.re_num + '" value="수정" class="modify-btn">';
-						output += ' <input type="button" data-num="' + item.re_num + '" value="삭제" class="delete-btn">';
-					}
-					output += '<hr size="1" noshade>';
-					output += '</div>'; //sub-item을 닫음
-					output += '</div>';*/
 					 
 					//문서 객체에 추가
-					$('#memberList').append(output);
+					$('#member_list').append(output);
 					 
 					
 				});

@@ -10,30 +10,22 @@
 	 <form action="list.do" id="search_form" method="get">
 		<ul class="search">
 			<li>												<!-- 검색하는 내용 보여져야되니까 -->
-				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
-			</li>
-			<li>
-				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='list.do'">
+				<input type="search" name="keyword" id="keyword" value="${param.keyword}" placeholder="채팅방 이름, 메시지 검색">
 			</li>	
 		</ul>
 	</form> 
 	<div class="align-right">
 		<input type="button" value="채팅방 생성" id="createroom_btn">
 	</div>
-	<!-- <input type="button" value="채팅방 생성" onclick="location.href='createChatroom.do'"> -->
 	<div id="searchChatroom" style="display:none;">
 		<h2>멤버 선택</h2>
 		<form action="createChatroom.do" id="search_form" method="get">
 			<ul class="search">
 				<li>												<!-- 검색하는 내용 보여져야되니까 -->
-					<input type="search" name="keyword" id="keyword" value="${param.keyword}">
-				</li>
-				<li>
-					<input type="submit" value="찾기">
-					<input type="button" value="목록" onclick="location.href='list.do'">
-				</li>	
+					<input type="search" name="keyword" id="keyword" value="${param.keyword}" placeholder="이름, 부서, 이메일 검색">
+				</li> 
 			</ul>
+			<div><table id="member_list"></table></div>
 		</form>
 		
 		<!-- 멤버 리스트 시작 -->
@@ -65,8 +57,7 @@
 		<hr size="1" width="100%">
 		<form action="confirm.do" method="post" id="checked_form" style="display:none;">
 		    <input type="hidden" name="members" value="${user.mem_num}">
-			<div class="checked_div"></div>
-			
+			<div class="checkedd_div"></div>
 		<!-- 선택된 멤버 리스트 끝 -->
 			
 			<c:if test="${!empty user}">

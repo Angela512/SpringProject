@@ -21,6 +21,6 @@ public interface MemberService {
 	public int selectRowCount(Map<String,Object> map);
 	public void updateByAdmin(MemberVO member);
 	
-	public List<MemberVO> selectMessageList(Map<String,Object> map);
-	public int selectMessageRowCount(Map<String,Object> map);
+	public List<MemberVO> selectMsgMemberList(Map<String,Object> map);
+	public int selectMsgMemberRowCount(Map<String,Object> map);
 }

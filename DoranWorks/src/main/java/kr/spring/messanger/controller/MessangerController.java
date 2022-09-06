@@ -98,7 +98,7 @@ public class MessangerController {
 		map.put("keyword", keyword);
 
 		//총 멤버 수
-		int count = memberService.selectMessageRowCount(map);
+		int count = memberService.selectMsgMemberRowCount(map);
 		
 		logger.debug("<<count>> : " + count);
 
@@ -108,12 +108,16 @@ public class MessangerController {
 		List<ChatroomVO> clist = null;
 		
 		if(count > 0) {
-			//page == 0이면 필요없는 작업이니까 이 안으로 넣음
-
-			list = memberService.selectMessageList(map);
+			list = memberService.selectMsgMemberList(map);
 		}
+		
+		
 
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			mapAjax.put("user_num", user.getMem_num());
+		}
 		mapAjax.put("count", count);
 		mapAjax.put("list", list);
 		mapAjax.put("clist", clist);

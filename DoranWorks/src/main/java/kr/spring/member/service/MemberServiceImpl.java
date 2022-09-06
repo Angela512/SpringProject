@@ -71,13 +71,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<MemberVO> selectMessageList(Map<String, Object> map) {
-		return memberMapper.selectMessageList(map);
+	public List<MemberVO> selectMsgMemberList(Map<String, Object> map) {
+		return memberMapper.selectMsgMemberList(map);
 	}
 
 	@Override
-	public int selectMessageRowCount(Map<String, Object> map) {
-		return memberMapper.selectMessageRowCount(map);
+	public int selectMsgMemberRowCount(Map<String, Object> map) {
+		return memberMapper.selectMsgMemberRowCount(map);
 	}
 
 }
