@@ -14,6 +14,7 @@ create table letter_send(
 	lt_filename2 varchar2(100),
 	lt_sender_id varchar2(50) not null,
 	lt_receiver_id varchar2(50) not null,
+	lt_reference_id varchar2(50)
 	constraint send_pk primary key (lt_num),
 	constraint send_fk1 foreign key (lt_sender_num) references member (mem_num)
 );

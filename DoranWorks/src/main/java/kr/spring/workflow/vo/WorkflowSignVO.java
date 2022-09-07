@@ -10,6 +10,7 @@ public class WorkflowSignVO {
 	private String mem_name;
 	private String mem_dpt;
 	private String mem_rank;
+	
 	public int getSign_num() {
 		return sign_num;
 	}

@@ -1,6 +1,5 @@
 package kr.spring.letter.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.letter.service.LetterService;
 import kr.spring.letter.vo.LetterVO;
-import kr.spring.letter.vo.NamesVO;
 import kr.spring.letter.vo.NextPrevVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
@@ -38,20 +36,6 @@ public class LetterController {
 	@Autowired
 	private LetterService letterService;
 	
-	public List<NamesVO> getListnames(List<LetterVO> letter){
-		
-		List<NamesVO> names = new ArrayList<NamesVO>();
-		
-		for(int i=0;i<letter.size();i++) {
-			NamesVO name = new NamesVO();
-			
-			name.setRec_name(letterService.selectMem_vo(letter.get(i).getLt_receiver_id()).getMem_name());
-			name.setSen_name(letterService.selectMem_vo(letter.get(i).getLt_sender_id()).getMem_name());
-			
-			names.add(name);
-		}
-		return names;
-	}
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -110,7 +94,6 @@ public class LetterController {
 		
 		int count=0;
 		List<LetterVO> list = null;
-		List<NamesVO> list2 = null;
 		PagingUtil page = null;
 		
 		if(letter_type==0) {
@@ -130,7 +113,6 @@ public class LetterController {
 				
 				list=letterService.selectAllList(map);
 				
-				list2 = getListnames(list);
 			}
 			
 		}else if(letter_type==1) {
@@ -140,7 +122,7 @@ public class LetterController {
 			logger.debug("<<count>> : "+count);
 			
 			//페이지 처리
-			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do");
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
 			
 			if(count>0) {
 				map.put("start", page.getStartRow());
@@ -149,6 +131,21 @@ public class LetterController {
 				list=letterService.selectRecList(map);
 			}
 		}else if(letter_type==2) {
+			//글의 총 개수
+			count = letterService.selectSendRowCount(map);
+			
+			logger.debug("<<count>> : "+count);
+			
+			//페이지 처리
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
+			
+			if(count>0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				
+				list=letterService.selectSendList(map);
+				
+			}
 			
 		}else if(letter_type==3) {
 			
@@ -162,7 +159,6 @@ public class LetterController {
 		mav.setViewName("letterList");
 		mav.addObject("count",count);
 		mav.addObject("list",list);
-		mav.addObject("list2",list2);
 		mav.addObject("page",page.getPage());
 		
 		
@@ -189,6 +185,8 @@ public class LetterController {
 			np = letterService.selectAllNP(map);
 		else if(letter_type==1)
 			np = letterService.selectRecNP(map);
+		else if(letter_type==2)
+			np = letterService.selectSendNP(map);
 		
 		System.out.println("이전다음 : "+np);
 		

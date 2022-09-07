@@ -31,6 +31,7 @@
 	
 	<button onclick="location.href='main.do?letter_type=0'">전체쪽지함</button>
 	<button onclick="location.href='main.do?letter_type=1'">받은쪽지함</button>
+	<button onclick="location.href='main.do?letter_type=2'">보낸쪽지함</button>
 	
 	<c:if test="${!empty user }">
 	<div class="align-right">
@@ -53,12 +54,16 @@
 			</td>
 			<td>
 				<c:if test="${param.letter_type ==0 || param.letter_type == null}">
-					<c:if test="${letter.lt_sender_num == user.mem_num}">${list2[status.index].rec_name}(${letter.lt_receiver_id })</c:if>
-					<c:if test="${letter.lt_sender_num != user.mem_num }">${list2[status.index].sen_name}(${letter.lt_sender_id })</c:if>
+					<c:if test="${letter.lt_sender_num == user.mem_num}">${letter.lt_receiver_id }</c:if>
+					<c:if test="${letter.lt_sender_num != user.mem_num }">${letter.lt_sender_id }</c:if>
 				</c:if>
 				
 				<c:if test="${param.letter_type==1 }">
 				${letter.mem_name}(${letter.lt_sender_id })
+				</c:if>
+
+				<c:if test="${param.letter_type==2 }">
+				${letter.lt_receiver_id }
 				</c:if>
 			 </td>
 			<td><a href="detail.do?lt_num=${letter.lt_num }&letter_type=${param.letter_type}">${letter.lt_title }</a></td>

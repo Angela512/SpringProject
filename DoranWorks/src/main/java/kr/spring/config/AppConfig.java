@@ -39,6 +39,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/WEB-INF/tiles-def/third.xml",
 				"/WEB-INF/tiles-def/reservation.xml",
 				"/WEB-INF/tiles-def/workflow.xml",
+				"/WEB-INF/tiles-def/sign.xml",
 				"/WEB-INF/tiles-def/letter.xml",
 				"/WEB-INF/tiles-def/messanger.xml"
 		});

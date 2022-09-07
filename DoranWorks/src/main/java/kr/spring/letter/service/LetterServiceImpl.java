@@ -106,6 +106,21 @@ public class LetterServiceImpl implements LetterService{
 		return letterMapper.selectRecNP(map);
 	}
 
+	@Override
+	public int selectSendRowCount(Map<String, Object> map) {
+		return letterMapper.selectSendRowCount(map);
+	}
+
+	@Override
+	public List<LetterVO> selectSendList(Map<String, Object> map) {
+		return letterMapper.selectSendList(map);
+	}
+
+	@Override
+	public NextPrevVO selectSendNP(Map<String, Object> map) {
+		return letterMapper.selectSendNP(map);
+	}
+
 	
 
 }

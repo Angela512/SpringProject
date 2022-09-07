@@ -18,14 +18,13 @@
 		
 		<br>
 		
-	</c:forEach>
+		</c:forEach>
 	
 	<br>
 	
 
 	<input type="text" name="sign_no"/>
 	<input type="submit" value="전송" />
-	<input type="button" id="request" value="테스트 버튼" >
 	<input type="button" value="취소" onClick="window.close()">
 	
 	</form>
