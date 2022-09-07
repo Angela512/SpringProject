@@ -88,7 +88,7 @@ public class MessangerController {
 	}
 	
 	//==============채팅방 생성===============
-	//멤버 리스트 및 검색
+	//멤버 리스트 및 검색(완료)
 	@RequestMapping("/messanger/createChatroom.do")
 	@ResponseBody
 	public Map<String,Object> chatroomProcess(@RequestParam(value="keyword", defaultValue="") String keyword,
@@ -105,13 +105,10 @@ public class MessangerController {
 		//페이지 처리
 
 		List<MemberVO> list = null;
-		List<ChatroomVO> clist = null;
 		
 		if(count > 0) {
 			list = memberService.selectMsgMemberList(map);
 		}
-		
-		
 
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -120,27 +117,34 @@ public class MessangerController {
 		}
 		mapAjax.put("count", count);
 		mapAjax.put("list", list);
-		mapAjax.put("clist", clist);
 
 		return mapAjax;
 	}
 	
 	//채팅방 멤버 선택 후 메시지방 생성하기
-	@RequestMapping("/messanger/confirm.do")//members[]
+	@RequestMapping("/messanger/confirm.do")
 	@ResponseBody
-	public ModelAndView createChatroom(ChatroomVO chatroomVO) {
+	public Map<String,Object> createChatroom(ChatroomVO chatroomVO, HttpSession session) {
 		
 		logger.debug("<<선택된 멤버>> : " + chatroomVO);
 		
-		//채팅방번호, 채팅방이름 생성
-		messangerService.insertChatroom(chatroomVO);
+		//채팅방번호, 채팅방이름, 채팅방멤버들 생성
+		messangerService.insertChatroom(chatroomVO); 
+		int chatroom_num = chatroomVO.getChatroom_num();
+		List<ChatmemVO> list = null;
 		
+		//채팅방 번호
+		list = messangerService.selectChatmem(chatroom_num);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("msgWrite"); //tiles 식별자 명
+		Map<String,Object> mapAjax = new HashMap<String,Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		if(user != null) {
+			mapAjax.put("user_num", user.getMem_num());
+		}
+		mapAjax.put("list", list);
 		
-		return mav;
+		return mapAjax;
 	}
 	
 	

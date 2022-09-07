@@ -27,7 +27,14 @@ public interface MessangerMapper {
 	@Insert("INSERT INTO chatmem (chatroom_num, mem_num) VALUES (#{chatroom_num}, #{mem_num})")
 	public void insertChatmem(ChatmemVO chatmemVO);
 	
-	
+	//해당 채팅방의 멤버들 정보 가져오기
+	@Select("SELECT m.chatroom_num chatroom_num, m.mem_num, r.chatroom_name, d.mem_name, d.mem_photo_name, dpt.mem_dpt, rank.mem_rank "
+			+ "FROM chatmem m JOIN chatroom r ON m.chatroom_num = r.chatroom_num "
+			+ "JOIN member_detail d ON m.mem_num = d.mem_num "
+			+ "JOIN mem_dpt dpt ON dpt.mem_dpt_num = d.mem_dpt_num "
+			+ "JOIN mem_rank rank ON rank.mem_rank_num = d.mem_rank_num "
+			+ "WHERE m.chatroom_num=#{chatroom_num}")
+	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
 	
 	public List<ChatroomVO> selectChatroomList(Map<String,Object> map);
 	public int selectChatroomRowCount(Map<String, Object> map);

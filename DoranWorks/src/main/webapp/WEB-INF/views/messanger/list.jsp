@@ -25,47 +25,28 @@
 					<input type="search" name="keyword" id="keyword" value="${param.keyword}" placeholder="이름, 부서, 이메일 검색">
 				</li> 
 			</ul>
+			<!-- 멤버리스트 시작 -->
 			<div><table id="member_list"></table></div>
+			<!-- 멤버리스트 끝 -->
 		</form>
-		
-		<!-- 멤버 리스트 시작 -->
-		<c:if test="${count == 0}">
-		<div class="result-display">회원이 없습니다.</div>
-		</c:if>
-		<c:if test="${empty user}">
-		<div class="result-display">로그인 후 사용하세요.</div>
-		</c:if>
-		<c:if test="${count > 0 && !empty user}">
-		<table>
-			<c:forEach var="member" items="${list}">
-			<c:if test="${member.mem_num != user.mem_num}">
-				<tr>
-					<td>
-					<input type="checkbox" name="mem_num" data-num="${member.mem_num}" id="${member.mem_name}" class="checkedMember">
-					</td>
-					<td><a href="detail.do?mem_num=${member.mem_num}">${member.mem_name}</a></td>
-					<td>${member.mem_dpt}</td>
-				</tr>
-			</c:if>
-			</c:forEach>
-		</table>
-		<div class="align-center">${page}</div>
-		</c:if>
-		<!-- 멤버 리스트 끝 -->
 		
 		<!-- 선택된 멤버 리스트 시작 -->
 		<hr size="1" width="100%">
 		<form action="confirm.do" method="post" id="checked_form" style="display:none;">
 		    <input type="hidden" name="members" value="${user.mem_num}">
-			<div class="checkedd_div"></div>
+			<div class="checked_div"></div>
 		<!-- 선택된 멤버 리스트 끝 -->
 			
 			<c:if test="${!empty user}">
 			<div class="align-right">
+				<input type="button" value="취소" class="mem_reset">
 				<input type="submit" value="확인">
 			</div>
 			</c:if>
+			
 		</form>
+		
 	</div>
+	<div class="chat_start"></div>
 </div>
 <!-- 내용 끝 -->

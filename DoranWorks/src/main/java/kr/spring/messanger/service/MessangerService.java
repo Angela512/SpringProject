@@ -10,6 +10,7 @@ import kr.spring.messanger.vo.MessangerVO;
 
 public interface MessangerService {
 	public void insertChatroom(ChatroomVO chatroomVO);
+	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
 	public List<ChatroomVO> selectChatroomList(Map<String,Object> map);
 	public int selectChatroomRowCount(Map<String, Object> map);
 	public void insertMessage(MessangerVO messanger);

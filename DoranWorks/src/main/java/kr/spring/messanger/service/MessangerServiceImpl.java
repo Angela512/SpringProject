@@ -38,6 +38,11 @@ public class MessangerServiceImpl implements MessangerService{
 			msgMapper.insertChatmem(chatmemVO);
 		}
 	}
+	
+	@Override
+	public List<ChatmemVO> selectChatmem(Integer chatroom_num) {
+		return msgMapper.selectChatmem(chatroom_num);
+	}
 
 	@Override
 	public List<ChatroomVO> selectChatroomList(Map<String, Object> map) {
