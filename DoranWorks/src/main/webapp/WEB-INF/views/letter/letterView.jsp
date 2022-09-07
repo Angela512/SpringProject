@@ -27,8 +27,38 @@
 		${letter.lt_content }
 	</p>
 	
-	<div>${np.prev_num } ${np.prev_mem_name } ${np.prev_title }</div>
-	<div>${np.next_num } ${np.next_mem_name } ${np.next_title }</div>
+	
+	<c:if test="${param.letter_type==0 || param.letter_type == null}">
+		<c:if test="${np.prev_send_id != user.mem_id }">
+		<div>${np.prev_num } ${np.prev_send_id} ${np.prev_title }</div>
+		</c:if>
+		<c:if test="${np.prev_send_id == user.mem_id }">
+		<div>${np.prev_num } ${np.prev_receiver_id} ${np.prev_title }</div>
+		</c:if>
+
+		<c:if test="${np.next_send_id != user.mem_id }">
+		<div>${np.next_num } ${np.next_send_id} ${np.next_title }</div>
+		</c:if>
+		<c:if test="${np.next_send_id == user.mem_id }">
+		<div>${np.next_num } ${np.next_receiver_id} ${np.next_title }</div>
+		</c:if>
+	</c:if>
+	
+	
+	<c:if test="${param.letter_type==1 }">
+		<c:if test="${np.prev_num != null }">
+		<div>${np.prev_num } ${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title }</div>
+		</c:if>
+		<c:if test="${np.next_num != null }">
+		<div>${np.next_num } ${np.next_mem_name }(${np.next_send_id}) ${np.next_title }</div>
+		</c:if>
+	</c:if>
+
+	<c:if test="${param.letter_type==2 }">
+		<div>${np.prev_num } ${np.prev_receiver_id} ${np.prev_title }</div>
+		<div>${np.next_num } ${np.next_receiver_id} ${np.next_title }</div>
+	</c:if>
+
 </div>
 
 <!-- 내용 끝 -->

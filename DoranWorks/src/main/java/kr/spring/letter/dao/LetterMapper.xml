@@ -79,23 +79,23 @@
 		FROM
 		   (SELECT 
 		   		lt_sender_id,
-		   		lt_receiver_id,
+		   		(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 		   		lt_title,
 		   		lt_content
 		    FROM
-		    	letter_send
+		    	letter_send s
 		    WHERE
 		    	lt_sender_num=#{mem_num}
 		    
 		    UNION ALL 
 		    
 		   	SELECT
-		   		lt_sender_id,
+		   		(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
 		   		lt_receiver_id,
 		   		lt_title,
 		   		lt_content
 		    FROM
-		    	letter_receive
+		    	letter_receive r
 		    WHERE
 		    	lt_receiver_num=#{mem_num})
 	    	<where>
@@ -139,10 +139,10 @@
 			   			]]>
 			            lt_date,
 			            lt_sender_id,
-		      			SUBSTR(lt_receiver_id,0,DECODE(INSTR(lt_receiver_id,','),0,LENGTH(lt_receiver_id),INSTR(lt_receiver_id,',')-1)) AS lt_receiver_id,
+		      			(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 				        lt_content
 			    	FROM
-			    		letter_send 
+			    		letter_send s
 			     	WHERE
 			     		lt_sender_num=#{mem_num}
 			     		
@@ -156,11 +156,11 @@
 			  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
 			  			]]>
 			        	lt_date,
-				        lt_sender_id,
+				        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
 				        lt_receiver_id,
 				        lt_content
 			  		FROM
-			  			letter_receive
+			  			letter_receive r
 			  		WHERE
 			  			lt_receiver_num=#{mem_num}) 
 			  	<where>
@@ -201,9 +201,9 @@
 	  			]]>
                 lt_date,
                 lt_sender_id,
-                lt_receiver_id
+                (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id
               FROM
-                letter_send 
+                letter_send s
               WHERE
                 lt_sender_num=#{mem_num}
                 
@@ -215,10 +215,10 @@
 	  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
 	  			]]>
                 lt_date,
-                lt_sender_id,
+                (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
                 lt_receiver_id
               FROM
-                letter_receive
+                letter_receive r
               WHERE
                 lt_receiver_num=#{mem_num}) 
           )
@@ -246,24 +246,6 @@
 		  letter_receive l JOIN member_detail m ON mem_num = lt_sender_num
 		WHERE
 		  lt_receiver_num=#{mem_num}
-		  
-		  <if test="keyword != null and keyword != ''">
-			<if test="keyfield == 1">
-				AND lt_sender_id LIKE '%' || #{keyword} || '%'
-			</if>
-
-			<if test="keyfield == 2">
-				AND lt_receiver_id LIKE '%' || #{keyword} || '%'
-			</if>
-
-			<if test="keyfield == 3">
-				AND lt_title LIKE '%' || #{keyword} || '%'
-			</if>
-
-			<if test="keyfield == 4">
-				AND lt_content LIKE '%' || #{keyword} || '%'
-			</if>
-		</if>
 	</select>
 	
 	<select id="selectRecList" parameterType="map" resultType="letterVO">
@@ -290,23 +272,6 @@
 		  			letter_receive l JOIN member_detail m on mem_num=lt_sender_num
 		  		WHERE
 		  			lt_receiver_num=#{mem_num}
-		  			 <if test="keyword != null and keyword != ''">
-						<if test="keyfield == 1">
-							AND lt_sender_id LIKE '%' || #{keyword} || '%'
-						</if>
-			
-						<if test="keyfield == 2">
-							AND lt_receiver_id LIKE '%' || #{keyword} || '%'
-						</if>
-			
-						<if test="keyfield == 3">
-							AND lt_title LIKE '%' || #{keyword} || '%'
-						</if>
-			
-						<if test="keyfield == 4">
-							AND lt_content LIKE '%' || #{keyword} || '%'
-						</if>
-					</if>
 		  		ORDER BY lt_date DESC)a)
 		
 		<![CDATA[
@@ -349,6 +314,84 @@
 	               )
            WHERE lt_num=#{lt_num}
 	</select>
+	
+	<select id="selectSendRowCount" parameterType="map" resultType="integer">
+		SELECT
+		  COUNT(*)
+		FROM
+		  letter_send
+		WHERE
+		  lt_sender_num=#{mem_num}
+	</select>
+	
+	<select id="selectSendList" parameterType="map" resultType="letterVO">
+		SELECT 
+			*
+		FROM
+			(SELECT
+				rownum rnum,
+				a.*
+			FROM
+		  		(SELECT
+		  			lt_num,
+		  			lt_sender_num,
+		  			lt_receiver_num,
+                    <![CDATA[
+			  		REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			  		]]>
+		        	lt_date,
+			        lt_sender_id,
+			        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
+			        lt_content
+		  		FROM
+		  			letter_send s
+		  		WHERE
+		  			lt_sender_num=#{mem_num}
+		  		ORDER BY lt_date DESC)a)
+		
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]> 
+	</select>
+	
+	<select id="selectSendNP" parameterType="map" resultType="nextPrevVO">
+		WITH tta AS
+			(
+			SELECT
+	  			lt_num,
+	  			lt_sender_num,
+	  			lt_receiver_num,
+		  		<![CDATA[
+		  		REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+		  		]]>
+	        	lt_date,
+		        lt_sender_id,
+		        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
+		        lt_content
+	  		FROM
+	  			letter_send s
+	  		WHERE
+	  			lt_sender_num=#{mem_num}
+	  		)
+	  		
+         SELECT * FROM
+         	(
+             SELECT
+              lt_num,
+              LAG(lt_num,1) OVER(ORDER BY lt_num) prev_num,
+              LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
+              LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
+              LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+              LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
+              LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
+              LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
+              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+                
+             FROM tta 
+         	)
+         WHERE lt_num=#{lt_num}
+	</select>
+	
 </mapper>
 
 

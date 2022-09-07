@@ -32,6 +32,13 @@ public interface LetterMapper {
 	public List<LetterVO> selectRecList(Map<String, Object> map);
 	//받은 쪽지함 이전글 다음글
 	public NextPrevVO selectRecNP(Map<String, Object> map);
+
+	//보낸쪽지함
+	public int selectSendRowCount(Map<String, Object>map);
+	public List<LetterVO> selectSendList(Map<String, Object> map);
+	//보낸 쪽지함 이전글 다음글
+	public NextPrevVO selectSendNP(Map<String, Object> map);
+	
 	
 	//쪽지 상세
 	@Select("SELECT * FROM letter_send WHERE lt_num=#{lt_num}")
