@@ -96,12 +96,13 @@
   	</update>
   	
   	
-  	
-  	<!-- 게시판 결재라인 등록 -->
+  	<!-- 
+  	게시판 결재라인 등록
 	 <insert id="insertSign">
-		insert into workflow_sign (sign_num, sign_no, sign_name)  
-		values(workflow_sign_seq.nextval, #{sign_no}, #{sign_name})
-	</insert> 
+		insert into workflow_sign (sign_num, sign_no, sign_name,mem_num)  
+		values(workflow_sign_seq.nextval, #{sign_no}, #{sign_name}, #{mem_num} )
+	</insert>
+	  -->
 </mapper>
 
 

@@ -11,6 +11,7 @@ import kr.spring.member.vo.MemberVO;
 import kr.spring.workflow.dao.WorkflowMainMapper;
 import kr.spring.workflow.vo.WorkflowMainVO;
 import kr.spring.workflow.vo.WorkflowSignVO;
+import kr.spring.workflow.vo.WorkflowVO;
 
 @Service
 @Transactional
@@ -29,26 +30,37 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		return flowMapper.selectRowCount(map); 
 	}
 	 
-	@Override 
-	public void insertBoard(WorkflowMainVO flow) {
-		flowMapper.insertBoard(flow); 
-	 }
+	
 	
 	 
-	 
-
+	
 	@Override
 	public WorkflowMainVO selectBoard(Integer flow_num) {
 		return flowMapper.selectBoard(flow_num);
 	}
 
+
+	
+	//테스트
 	@Override
-	public boolean insertSign(WorkflowSignVO sign) {
-		return flowMapper.insertSign(sign); 
+	public void insertTest(WorkflowVO work) {
+		work.setFlow_num(flowMapper.selectFlow_num());
+		flowMapper.insertTest(work);
+		
+	
 		
 	}
 
-	
+	@Override
+	public void insertBoard(WorkflowVO flowVO) {
+		flowVO.setFlow_num(flowMapper.selectCurrent_num());
+		flowMapper.insertBoard(flowVO);
+		
+	}
+
+
+
+
 
 
 

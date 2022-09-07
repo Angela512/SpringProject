@@ -29,6 +29,7 @@ import kr.spring.util.StringUtil;
 import kr.spring.workflow.service.WorkflowMainService;
 import kr.spring.workflow.vo.WorkflowMainVO;
 import kr.spring.workflow.vo.WorkflowSignVO;
+import kr.spring.workflow.vo.WorkflowVO;
 
 @Controller
 public class WorkflowMainController {
@@ -51,7 +52,10 @@ public class WorkflowMainController {
 	return new WorkflowMainVO();
 	}
 	
+	
+	
 	//===========게시판 글 등록============//
+	/*
 	//등록 폼
 	@GetMapping("/workflow/write.do")
 	public String form() {
@@ -91,6 +95,8 @@ public class WorkflowMainController {
 	
 	return "common/resultView";
 	}
+	
+	*/
 	
 	
 	//===========게시판 글 목록============//
@@ -350,27 +356,40 @@ public class WorkflowMainController {
 	
 	
 	@PostMapping("/workflow/signList.do")
-	public String insertreview(WorkflowSignVO sign) throws Exception{
+	public String insertreview(HttpSession session,WorkflowVO work) throws Exception{
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		work.setMem_num(user.getMem_num());
+		
+		/*
 		boolean result = flowService.insertSign(sign);
 		if (result) {
-			return "/workflow/signList";
+			return "workflow/autoClose";
 		} else {
 			return "error";
 		}
+		*/
+		flowService.insertTest(work);
+		return "workflow/autoClose";
 	}
 		
 	/////-------------------테스트 코드2-----------------------////////////////
 		
+	//===========게시판 글 등록============//
 		
+		//등록 폼
+		@GetMapping("/workflow/write.do")
+		public String form() {
+		return "boardWrite";
+		}
 		//등록 폼에서 전송된 데이터 처리
-		@PostMapping("/workflow/signWrite.do")
-		public String submit(@Valid WorkflowSignVO signVO,
+		@PostMapping("/workflow/write.do")
+		public String submit(@Valid WorkflowVO flowVO,
 			      BindingResult result,
 			      HttpServletRequest request,
 			      HttpSession session,
 			      Model model) {
 		
-		logger.debug("<<게시판 글 저장>> : " + signVO);
+		logger.debug("<<게시판 글 저장>> : " + flowVO);
 		
 		//유효성 검사 결과 오류가 있으면 폼 호출
 		if(result.hasErrors()) {
@@ -381,7 +400,10 @@ public class WorkflowMainController {
 				(MemberVO)session.getAttribute("user");
 		
 		//회원번호 셋팅
-		signVO.setMem_num(user.getMem_num());
+		flowVO.setMem_num(user.getMem_num());
+		System.out.println("하이 : "+flowVO);		
+		
+		flowService.insertBoard(flowVO);
 		
 		//View에 표시할 메시지
 		model.addAttribute(
@@ -406,67 +428,10 @@ public class WorkflowMainController {
 		
 		
 		
-		
-		
-		
-	
-//	//========게시판 글상세===========//
-//		@RequestMapping("/workflow/sign.do")
-//		public ModelAndView sign(
-//			          @RequestParam int mem_num) {
-//		
-//		logger.debug("<<board_num>> : " + mem_num);
-//		
-//		//WorkflowMainVO workflow_main = flowService.selectBoard(mem_num);
-//		MemberVO sign = memberService.selectMember(mem_num);
-//		
-//		//제목에 태그를 허용하지 않음
-//		//workflow_main.setFlow_title( StringUtil.useNoHtml(workflow_main.getFlow_title()));
-//		
-//		//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
-//		//ckeditor 사용시 아래 코드 주석 처리
-//		/*
-//		board.setContent(
-//		StringUtil.useBrNoHtml(board.getContent()));
-//		*/
-//		                         //뷰 이름    속성명   속성값
-//		//return new ModelAndView("boardView","workflow_main",workflow_main);
-//		return new ModelAndView("signList","sign",sign);
-//		}	
 	
 		
 	
 		
-		
-		
-//		//========결재 등록=========//
-//		@RequestMapping("/board/signWrite.do")
-//		@ResponseBody
-//		public Map<String,String> writeReply(
-//				  WorkflowSignVO workflowSignVO,
-//				  HttpSession session,
-//				  HttpServletRequest request){
-//			
-//			logger.debug("<<댓글 등록>> : " + workflowSignVO);
-//			
-//			Map<String,String> mapAjax = 
-//					new HashMap<String,String>();
-//			
-//			MemberVO user = 
-//				(MemberVO)session.getAttribute("user");
-//			if(user==null) {//로그인 안 됨
-//				mapAjax.put("result", "logout");
-//			}else {//로그인 됨
-//				//회원번호 등록
-//				workflowSignVO.setMem_num(
-//						             user.getMem_num());
-//				
-//				//댓글 등록
-//				flowService.insertSign(workflowSignVO);
-//				mapAjax.put("result","success");
-//			}
-//			return mapAjax;
-//		}
 		
 
 }
