@@ -11,8 +11,8 @@ import kr.spring.messanger.vo.MessangerVO;
 public interface MessangerService {
 	public void insertChatroom(ChatroomVO chatroomVO);
 	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
-	public List<ChatroomVO> selectChatroomList(Map<String,Object> map);
-	public int selectChatroomRowCount(Map<String, Object> map);
+	public List<ChatmemVO> selectChatroomList(Integer mem_num);
+	public int selectChatmemCount(Integer chatroom_num);
 	public void insertMessage(MessangerVO messanger);
 	public int selectCheckedMemberCount(Map<String,Object> map);
 	public List<ChatroomVO> selectCheckedMemberList(Map<String,Object> map);

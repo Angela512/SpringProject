@@ -5,7 +5,7 @@
 <mapper namespace="kr.spring.messanger.dao.MessangerMapper">  
   	<!-- MessangerMapper.java랑 파일명 / 메소드명 같아야함 -->
   				<!--	타입,			 반환타입 -->
-  	<select id="selectChatroomList" parameterType="map" resultType="chatroomVO">
+  	<select id="selectChatroomList2" parameterType="map" resultType="chatroomVO">
   		SELECT 
 		*
 	FROM (SELECT
@@ -18,21 +18,11 @@
 		  			msg.msg_sendtime
 		  		FROM chatroom c JOIN message msg
 		  		ON c.chatroom_num = msg.chatroom_num JOIN member_detail d ON msg.mem_num = d.mem_num 
-		<!-- <where>
-				<if test="keyword != null and keyword != ''">
-					<if test="keyfield == 1">
-						b.title LIKE '%' || #{keyword} || '%'
-					</if>
-					<if test="keyfield == 2">
-						m.id LIKE '%' || #{keyword} || '%' 
-						OR 
-							m.nick_name LIKE '%' || #{keyword} || '%'
-					</if>
-					<if test="keyfield == 3">
-						b.content LIKE '%' || #{keyword} || '%'
-					</if>
-				</if>
-			</where> -->	
+			<!-- <where>
+	  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
+	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+	  				d.mem_email LIKE '%' || #{keyword} || '%' 
+		  		</where> -->	
 		  		ORDER BY c.chatroom_num DESC)a)
   	</select>
   	

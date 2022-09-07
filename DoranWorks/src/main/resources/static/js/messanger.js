@@ -8,6 +8,11 @@ $(function(){
 		}
 	});
 	
+	$('#chat_list').click(function(){
+		$('#chat_list').hide();
+		createChat();
+	});
+	
 	//검색 유효성 체크
 	$('#search_form').submit(function(){
 		if($('#keyword').val().trim() == ''){
@@ -16,6 +21,64 @@ $(function(){
 			return false;
 		}
 	});
+	
+	function list(){
+		$.ajax({
+			url:'list.do',
+			type:'post',
+			data:{keyword:$('#keyword').val()},
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				alert('list.do success');
+				let user_num = param.user_num;
+				let chatUI;
+				$(param.list).each(function(index, item){
+					
+					
+				});
+				chatUI = '';
+				chatUI += '<textarea rows="8" cols="90" name="msg_content" id="msg_content" class="msgContent">';
+				
+				$('.chat_start').append(chatUI);
+			},
+			error:function(){
+				//로딩 이미지 감추기
+				alert('list.do 네트워크 오류 발생');
+			}
+		});
+	}
+	
+	function createChat(){
+		let form_data = $(this).serialize();
+		//로딩 이미지 노출 (url:listReply.do는 BoardAjaxCntrl에 있음)
+		$.ajax({
+			url:'gotochat.do',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				alert('success');
+				let user_num = param.user_num;
+				let chatUI;
+				$(param.list).each(function(index, item){
+					
+					
+				});
+				chatUI = '';
+				chatUI += '<textarea rows="8" cols="90" name="msg_content" id="msg_content" class="msgContent">';
+				
+				$('.chat_start').append(chatUI);
+			},
+			error:function(){
+				//로딩 이미지 감추기
+				alert('gotochat.do 네트워크 오류 발생');
+			}
+		});
+	}
 	
 	
 	//멤버 리스트 및 검색
@@ -92,25 +155,18 @@ $(function(){
 		$.ajax({
 			url:'confirm.do',
 			type:'post',
-			data:form_data,
+			/*data:form_data,*/
+			data:{chatroom_num:chatroom_num},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
 			success:function(param){
-				let user_num = param.user_num;
-				let chatUI;
-				$(param.list).each(function(index, item){
-					chatUI = '';
-					chatUI += '<h2>' + item.mem_name + '</h2>';
-					$('.chat_start').append(chatUI);
-				});
-				chatUI = '';
-				chatUI += '<textarea rows="8" cols="90" name="msg_content" id="msg_content" class="msgContent">'
-				
-				$('.chat_start').append(chatUI);
+				alert('success');
+				let user_num = param.chatroom_num;
+				createChat();
 			},
 			error:function(){
-				alert('네트워크 오류 발생');
+				alert('confirm.do 네트워크 오류 발생');
 			}
 		});
 		event.preventDefault();

@@ -45,13 +45,8 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 
 	@Override
-	public List<ChatroomVO> selectChatroomList(Map<String, Object> map) {
-		return msgMapper.selectChatroomList(map);
-	}
-
-	@Override
-	public int selectChatroomRowCount(Map<String, Object> map) {
-		return msgMapper.selectChatroomRowCount(map);
+	public List<ChatmemVO> selectChatroomList(Integer mem_num) {
+		return msgMapper.selectChatroomList(mem_num);
 	}
 
 	@Override
@@ -63,6 +58,11 @@ public class MessangerServiceImpl implements MessangerService{
 	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int selectChatmemCount(Integer chatroom_num) {
+		return msgMapper.selectChatmemCount(chatroom_num);
 	}
 
 }

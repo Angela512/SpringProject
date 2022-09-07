@@ -36,8 +36,17 @@ public interface MessangerMapper {
 			+ "WHERE m.chatroom_num=#{chatroom_num}")
 	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
 	
-	public List<ChatroomVO> selectChatroomList(Map<String,Object> map);
-	public int selectChatroomRowCount(Map<String, Object> map);
+	//채팅방 목록
+	@Select("SELECT * FROM chatroom c JOIN chatmem USING(chatroom_num) WHERE mem_num=#{mem_num}")
+	public List<ChatmemVO> selectChatroomList(Integer mem_num);
+	
+	//채팅방 내 멤버 수
+	@Select("SELECT COUNT(*) FROM(SELECT m.mem_num FROM chatroom r JOIN chatmem m "
+			+ "ON r.chatroom_num = m.chatroom_num "
+			+ "WHERE r.chatroom_num=#{chatroom_num})")
+	public int selectChatmemCount(Integer chatroom_num);
+	
+	//채팅방 띄우기
 	
 	//채팅방 생성 시 멤버 선택
 	public int selectCheckedMemberCount(Map<String, Object> map);

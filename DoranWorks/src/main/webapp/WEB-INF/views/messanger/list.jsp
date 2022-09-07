@@ -14,9 +14,14 @@
 			</li>	
 		</ul>
 	</form> 
-	<div class="align-right">
+	<div class="align-center">
 		<input type="button" value="채팅방 생성" id="createroom_btn">
 	</div>
+	
+	<!-- 채팅방 리스트 -->
+	<div class="chat_list"></div>
+	
+	
 	<div id="searchChatroom" style="display:none;">
 		<h2>멤버 선택</h2>
 		<form action="createChatroom.do" id="search_form" method="get">
