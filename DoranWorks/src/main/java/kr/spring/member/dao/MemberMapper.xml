@@ -65,20 +65,9 @@
 	  	ON dpt.mem_dpt_num = d.mem_dpt_num
 	  <where>
   		<if test="keyword != null and keyword != ''">
-  			<if test="keyfield == 1">
-  				d.mem_name LIKE '%' || #{keyword} || '%'
-  			</if>
-  			<if test="keyfield == 2">
-  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
-  			</if>
-  			<if test="keyfield == 3">
-  				d.mem_email LIKE '%' || #{keyword} || '%'
-  			</if>
-  			<if test="keyfield == 4">
-  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
-  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
-  				d.mem_email LIKE '%' || #{keyword} || '%' 
-  			</if>
+			d.mem_name LIKE '%' || #{keyword} || '%' OR 
+			dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+			d.mem_email LIKE '%' || #{keyword} || '%' 
   		</if>
   	</where>
  	</select>			
@@ -91,9 +80,6 @@
   				rownum rnum
   			  FROM (SELECT
   			  			dpt.mem_dpt,
-  			  		<!-- 	<![CDATA[
-  			  			REPLACE(REPLACE(b.title,'<','&lt;'),'>','&gt;') title,
-  			  			]]> -->
   			  			d.mem_num,
   			  			d.mem_name,
   			  			d.mem_email
@@ -101,20 +87,9 @@
   			  		ON dpt.mem_dpt_num = d.mem_dpt_num
 					<where>
 				  		<if test="keyword != null and keyword != ''">
-				  			<if test="keyfield == 1">
-				  				d.mem_name LIKE '%' || #{keyword} || '%'
-				  			</if>
-				  			<if test="keyfield == 2">
-				  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
-				  			</if>
-				  			<if test="keyfield == 3">
-				  				d.mem_email LIKE '%' || #{keyword} || '%'
-				  			</if>
-				  			<if test="keyfield == 4">
-				  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
-				  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
-				  				d.mem_email LIKE '%' || #{keyword} || '%' 
-				  			</if>
+			  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
+			  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
+			  				d.mem_email LIKE '%' || #{keyword} || '%' 
 				  		</if>
 			  		</where>
   			  		ORDER BY d.mem_name ASC)a)

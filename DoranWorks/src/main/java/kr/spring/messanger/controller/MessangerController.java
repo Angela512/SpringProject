@@ -64,9 +64,12 @@ public class MessangerController {
 		return "list";
 	}
 	
+	//채팅방 목록
 	@RequestMapping("/messanger/chatroomList.do")
 	@ResponseBody
-	public Map<String,Object> msgList(HttpSession session) {
+	public Map<String,Object> chatroomList(@RequestParam(value="keyword", defaultValue="") String keyword, HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyword", keyword);
 		
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		
@@ -80,7 +83,6 @@ public class MessangerController {
 			mapAjax.put("list",list);
 		}
 		
-		 
 		return mapAjax;
 	}
 	
@@ -88,7 +90,7 @@ public class MessangerController {
 	//멤버 리스트 및 검색(완료)
 	@RequestMapping("/messanger/createChatroom.do")
 	@ResponseBody
-	public Map<String,Object> chatroomProcess(@RequestParam(value="keyword", defaultValue="") String keyword,
+	public Map<String,Object> chatroomChatroom(@RequestParam(value="keyword", defaultValue="") String keyword,
 											HttpSession session) {
 		//파라미터들 맵으로 묶어서 보냄
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -141,6 +143,9 @@ public class MessangerController {
 		
 		return mapAjax;
 	}
+	
+	//새로 생성된 채팅방을 목록에 추가
+	
 	
 	//채팅방 띄우기
 	@RequestMapping("/messanger/gotochat.do")

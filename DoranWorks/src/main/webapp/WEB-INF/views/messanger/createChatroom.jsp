@@ -6,67 +6,29 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
-	<h2>멤버 선택</h2>
-	<form action="createChatroom.do" id="search_form" method="get">
-		<ul class="search">
-			<li>												<!-- 검색하는 내용 보여져야되니까 -->
-				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
-			</li>
-			<li>
-				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='list.do'">
-			</li>	
-		</ul>
-	</form>
-	
-	<!-- 멤버 리스트 시작 -->
-	<c:if test="${count == 0}">
-	<div class="result-display">회원이 없습니다.</div>
-	</c:if>
-	<c:if test="${empty user}">
-	<div class="result-display">로그인 후 사용하세요.</div>
-	</c:if>
-	<c:if test="${count > 0 && !empty user}">
-	<table>
-		<c:forEach var="member" items="${list}">
-		<c:if test="${member.mem_num != user.mem_num}">
-			<tr>
-				<td>
-				<input type="checkbox" name="mem_num" data-num="${member.mem_num}" id="${member.mem_name}" class="checkedMember">
-				</td>
-				<td><a href="detail.do?mem_num=${member.mem_num}">${member.mem_name}</a></td>
-				<td>${member.mem_dpt}</td>
-			</tr>
-		</c:if>
-		</c:forEach>
-	</table>
-	<div class="align-center">${page}</div>
-	</c:if>
-	<!-- 멤버 리스트 끝 -->
-	
-	<!-- 선택된 멤버 리스트 시작 -->
-	<hr size="1" width="100%">
-	<form action="confirm.do" method="post" id="checked_form" style="display:none;">
-	    <input type="hidden" name="members" value="${user.mem_num}">
-		<div class="checked_div"></div>
-		
-	<!-- 선택된 멤버 리스트 끝 -->
-		
-		<c:if test="${!empty user}">
-		<div class="align-right">
-			<input type="submit" value="확인">
-		</div>
-		</c:if>
-	</form>
-	
-	<!-- 
-	<form:form action="createChatroom.do" modelAttribute="chatroomVO" id="register_form">
-	<form:errors element="div" cssClass="error-color"/>
-		<label for="chatroom_name">채팅방이름</label>
-		<form:input path="chatroom_name"/>
-		<form:errors path="chatroom_name" cssClass="error-color"/>
-		<form:button>만들기</form:button>
-	</form:form>
-	 -->
+	<!-- 채팅 시작 -->
+	<div class="chat_start">
+		<form id="chat_form"> <!-- hidden값으로 넘겨서 js에서 작업 / 이게 아니면 그냥 여기서 script해서 js작업하면 됨 -->
+			<%-- <input type="hidden" name="msg_num" value="${board.board_num}" id="board_num"> --%>
+			<textarea rows="3" cols="50" name="re_content" id="re_content" class="rep-content"
+			<c:if test="${empty user}">disabled="disabled"</c:if>
+			><c:if test="${empty user}">로그인 후 작성</c:if></textarea>
+			<c:if test="${!empty user}">
+			<div id="re_first">
+				<span class="letter-count">300/300</span>
+			</div>
+			<div id="re_second" class="align-right">
+				<input type="submit" value="전송">
+			</div>
+			</c:if>
+		</form>
+	</div>
+	<!-- 채팅 끝 -->
 	 
 </div>
+
+
+
+
+
+
