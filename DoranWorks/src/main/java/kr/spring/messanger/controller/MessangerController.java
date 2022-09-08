@@ -60,7 +60,6 @@ public class MessangerController {
 	
 	//==============메인===============
 	@RequestMapping("/messanger/list.do")
-	@ResponseBody
 	public String msgList() {
 		return "list";
 	}

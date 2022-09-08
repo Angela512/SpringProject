@@ -7,7 +7,7 @@
 <tiles-definitions>
 
 	<definition name="list" extends="main">
-    	<put-attribute name="title" value="채팅방 생성"/>
+    	<put-attribute name="title" value="메신저"/>
     	<put-attribute name="body" value="/WEB-INF/views/messanger/list.jsp"/>                 
     </definition>
 
