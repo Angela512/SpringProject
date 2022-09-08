@@ -21,7 +21,7 @@ public interface WorkflowMainService {
 //	    public void insertBoard(WorkflowMainVO flow);
 	    //결재 리스트
 //	    public boolean insertSign(WorkflowSignVO sign);
-		public WorkflowMainVO selectBoard(Integer flow_num);
+		public WorkflowVO selectBoard(Integer flow_num);
 		
 		//테스트
 		public void insertTest(WorkflowVO work);

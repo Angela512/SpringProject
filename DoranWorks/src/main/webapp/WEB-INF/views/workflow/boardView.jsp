@@ -82,27 +82,27 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.fav.js"></script>
 <div class="page-main">
-<fmt:parseDate value="${workflow_main.flow_start}" var="strPlanDate" pattern="yyyy-MM-dd"/>
+<fmt:parseDate value="${workflow.flow_start}" var="strPlanDate" pattern="yyyy-MM-dd"/>
 	 <fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
-	 <fmt:parseDate value="${workflow_main.flow_end}" var="endPlanDate" pattern="yyyy-MM-dd"/> 
+	 <fmt:parseDate value="${workflow.flow_end}" var="endPlanDate" pattern="yyyy-MM-dd"/> 
 	 <fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
-	<h2>${workflow_main.flow_title}</h2>
+	<h2>${workflow.flow_title}</h2>
 	<ul class="detail-info">
 		<%-- <li>
-			<c:if test="${!empty workflow_main.flow_photo_name}">
-			<img src="imageView.do?flow_num=${workflow_main.flow_num}&board_type=1" width="40" height="40" class="my-photo">
+			<c:if test="${!empty workflow.flow_photo_name}">
+			<img src="imageView.do?flow_num=${workflow.flow_num}&board_type=1" width="40" height="40" class="my-photo">
 			</c:if>
-			<c:if test="${empty workflow_main.flow_photo_name}">
+			<c:if test="${empty workflow.flow_photo_name}">
 			<img src="${pageContext.request.contextPath}/images/face.png" width="40" height="40" class="my-photo">
 			</c:if>
 		</li> --%>
 		
 		<li>
-			[${workflow_main.mem_dpt}] ${workflow_main.mem_name} ${workflow_main.mem_rank}
+			[${workflow.mem_dpt}] ${workflow.mem_name} ${workflow.mem_rank}
 			<br>
-			결재 종류 :${workflow_main.flow_sort}
+			결재 종류 :${workflow.flow_sort}
 			<br>
-			작성일 : ${workflow_main.flow_date}
+			작성일 : ${workflow.flow_date}
 		</li>
 	</ul>
 	<hr size="1" width="100%">
@@ -152,26 +152,26 @@
     
     <tr>
         <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">문서번호</td>
-        <td align="center" class="form10"><div id="docno"></div><fmt:formatDate value="${workflow_main.flow_date}" pattern="yyyyMMdd"/>-${workflow_main.flow_num}</td>
+        <td align="center" class="form10"><div id="docno"></div><fmt:formatDate value="${workflow.flow_date}" pattern="yyyyMMdd"/>-${workflow.flow_num}</td>
         <td align="center" bgcolor="#D9E2F3" class="form10b">작성일자</td> 
-        <td align="center" class="form10"><DIV   id="to_date" style="padding:3px;"></DIV>${workflow_main.flow_date}</td>
+        <td align="center" class="form10"><DIV   id="to_date" style="padding:3px;"></DIV>${workflow.flow_date}</td>
       </tr>
     
       <tr>
         <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">이 름</td>
-        <td align="center" class="form10"><div id="username"></div>${workflow_main.mem_name}</td>
+        <td align="center" class="form10"><div id="username"></div>${workflow.mem_name}</td>
         <td align="center" bgcolor="#D9E2F3" class="form10b">직 책</td>
-        <td align="center" class="form10"><div id="pp"></div>${workflow_main.mem_rank}</td>
+        <td align="center" class="form10"><div id="pp"></div>${workflow.mem_rank}</td>
       </tr>
       <tr>
         <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">소속(본부)</td>
         <td width="188" align="center" class="form10"><div tms_edit id="jic2"></div>도란도란</td>
         <td width="79" align="center" bgcolor="#D9E2F3" class="form10b">부서(팀)</td>
-        <td width="182" align="center" class="form10"><div id="partname"></div>${workflow_main.mem_dpt}</td>
+        <td width="182" align="center" class="form10"><div id="partname"></div>${workflow.mem_dpt}</td>
       </tr>
       <tr>
         <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">제 목</td>
-        <td colspan="3" align="left" class="form10" onClick="javascript:title1.focus();"><DIV   id="title1" style="padding:3px;">${workflow_main.flow_title}</DIV></td>
+        <td colspan="3" align="left" class="form10" onClick="javascript:title1.focus();"><DIV   id="title1" style="padding:3px;">${workflow.flow_title}</DIV></td>
       </tr>
       <tr>
         <td width="38" rowspan="6" align="center" bgcolor="#D9E2F3"  class="form10b">신<br>
@@ -188,24 +188,24 @@
         <td colspan="3" align="left"  class="form10">
         <table width="100%" border="0"  class="form10">
           <tr>
-            <c:if test="${workflow_main.flow_subsort == '연차' }">
+            <c:if test="${workflow.flow_subsort == '연차' }">
             <td height="40" rowspan="2" align="center"><div  id="aa1" onClick="gb(this)">연차(V)</div></td>
             </c:if>
-            <c:if test="${workflow_main.flow_subsort != '연차' }">
+            <c:if test="${workflow.flow_subsort != '연차' }">
             <td height="40" rowspan="2" align="center"><div  id="aa1" onClick="gb(this)">연차(&nbsp;&nbsp;&nbsp;)</div></td>
             </c:if>
             
-            <c:if test="${workflow_main.flow_subsort == '오전반차' }">
+            <c:if test="${workflow.flow_subsort == '오전반차' }">
             <td align="center"><div  id="aa2" onClick="gb(this)">오전반차(V)</div></td>
             </c:if>
-            <c:if test="${workflow_main.flow_subsort != '오전반차' }">
+            <c:if test="${workflow.flow_subsort != '오전반차' }">
             <td align="center"><div  id="aa2" onClick="gb(this)">오전반차(&nbsp;&nbsp;&nbsp;)</div></td>
             </c:if>
                       
-            <c:if test="${workflow_main.flow_subsort == '훈련' }">
+            <c:if test="${workflow.flow_subsort == '훈련' }">
             <td rowspan="2" align="center"><div  id="aa3" onClick="gb(this)">훈련(V)</div></td>
             </c:if>
-            <c:if test="${workflow_main.flow_subsort != '훈련' }">
+            <c:if test="${workflow.flow_subsort != '훈련' }">
             <td rowspan="2" align="center"><div  id="aa3" onClick="gb(this)">훈련(&nbsp;&nbsp;&nbsp;)</div></td>
             </c:if>
             
@@ -214,10 +214,10 @@
             <td rowspan="2" align="center"><div  id="aa6" onClick="gb(this)">대휴(&nbsp;&nbsp;&nbsp;)</div></td>
           </tr>
           <tr>
-          	<c:if test="${workflow_main.flow_subsort == '오후반차' }">
+          	<c:if test="${workflow.flow_subsort == '오후반차' }">
             <td align="center"><div  id="aa7" onClick="gb(this)">오후반차(V)</div></td>
             </c:if>
-            <c:if test="${workflow_main.flow_subsort != '오후반차' }">
+            <c:if test="${workflow.flow_subsort != '오후반차' }">
             <td align="center"><div  id="aa7" onClick="gb(this)">오후반차(&nbsp;&nbsp;&nbsp;)</div></td>
             </c:if>
           </tr>
@@ -227,17 +227,23 @@
         <td height="40" align="center" bgcolor="#D9E2F3"  class="form10b">일정</td>
         <td colspan="3" align="left"  class="form10" onClick="javascript:as2.focus();"><table width="100%" border="0" align="center" cellpadding="0"  cellspacing="0" bordercolor="#ffffff" class="form2" style="border-collapse:collapse;">
           <tr>
-            <td width="33%" align="left" class="form2"><div  id="h_sdate" onClick="calendar(this, 'todate1')"  style="padding:3px;cursor:hand;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${workflow_main.flow_start}</div></td>
+            <td width="33%" align="left" class="form2"><div  id="h_sdate" onClick="calendar(this, 'todate1')"  style="padding:3px;cursor:hand;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${workflow.flow_start}</div></td>
             <td width="6%" align="center" class="form2">~</td>
-            <td width="33%" align="left" class="form2"><div  id="h_edate" onClick="calendar(this, 'todate1')"  style="padding:3px;cursor:hand;">${workflow_main.flow_end}</div></td>
+            <td width="33%" align="left" class="form2"><div  id="h_edate" onClick="calendar(this, 'todate1')"  style="padding:3px;cursor:hand;">${workflow.flow_end}</div></td>
             <td width="3%" align="left" class="form2">&nbsp;</td>
             <td width="25%" align="left" class="form2"><div   tms_edit    id="h_caldate" style="padding:3px" >(   ${endDate-strDate}일)</div></td>
           </tr>
         </table></td>
       </tr>
       <tr>
-        <td height="40" align="center" bgcolor="#D9E2F3"  class="form10b">주요행선지</td>
-        <td colspan="3" align="left"  class="form10" ><div tms_edit id="jic3" style="padding:3px"></div></td>
+        <td height="40" align="center" bgcolor="#D9E2F3"  class="form10b">수신</td>
+        <td colspan="3" align="left"  class="form10" ><div tms_edit id="jic3" style="padding:3px">
+		&nbsp;
+		<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+        <c:out value="${name}" /> &nbsp;
+        </c:forTokens>
+
+	</div></td>
       </tr>
       <tr>
         <td height="40" align="center" bgcolor="#D9E2F3"  class="form10b">대체근무자</td>
@@ -246,7 +252,7 @@
       <tr>
         <td height="200" colspan="2" align="center" bgcolor="#D9E2F3"  class="form10b">신청사유<br>
           (자세히)</td>
-        <td colspan="3" align="left" valign="top" class="form10" onClick="javascript:as2.focus();"><DIV  tms_edit id="as2" style="padding:3px;"><DIV>${workflow_main.flow_content} 
+        <td colspan="3" align="left" valign="top" class="form10" onClick="javascript:as2.focus();"><DIV  tms_edit id="as2" style="padding:3px;"><DIV>${workflow.flow_content}</DIV>       	    
         </td>
       </tr>
       <tr>

@@ -37,13 +37,24 @@ public interface WorkflowMainMapper {
 		public boolean insertSign(WorkflowSignVO sign);
 		
 		
-		
+		/*
 		@Select("SELECT * FROM workflow_main b JOIN member m "
 				+ "USING(mem_num) JOIN member_detail d "
 				+ "USING(mem_num) JOIN mem_rank c "
 				+ "USING(mem_rank_num) JOIN mem_dpt s "
-				+ "USING(mem_dpt_num) WHERE b.flow_num=#{flow_num}")
-		public WorkflowMainVO selectBoard(Integer flow_num);
+				+ "USING(mem_dpt_num) JOIN workflow_test t "
+				+ "USING(flow_num) WHERE b.flow_num=#{flow_num}")
+		*/
+		
+		@Select("SELECT * FROM workflow_main b JOIN member_detail m "
+                +" ON b.mem_num = m.mem_num "
+                +" JOIN mem_rank c "
+                +" ON m.mem_rank_num = c.mem_rank_num "
+                +" join mem_dpt d "
+	          	+" ON m.mem_dpt_num = d.mem_dpt_num "
+		        +" left join workflow_test t "
+		        +" ON t.flow_num = b.flow_num WHERE b.flow_num=#{flow_num}")
+		public WorkflowVO selectBoard(Integer flow_num);
 		
 		
 		

@@ -35,7 +35,7 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 	 
 	
 	@Override
-	public WorkflowMainVO selectBoard(Integer flow_num) {
+	public WorkflowVO selectBoard(Integer flow_num) {
 		return flowMapper.selectBoard(flow_num);
 	}
 

@@ -48,6 +48,10 @@
   		              b.flow_end,
   		              b.flow_subsort, 		           
   		              b.mem_num,
+  		              
+  		              t.sign_no,
+  		              t.sign_name,
+  		              
   		              m.mem_name,
   		              c.mem_rank,
   		              d.mem_dpt
@@ -57,6 +61,9 @@
                     ON m.mem_rank_num = c.mem_rank_num
                     join mem_dpt d
 					ON m.mem_dpt_num = d.mem_dpt_num 
+					
+					left join workflow_test t
+					ON t.flow_num = b.flow_num
   		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">

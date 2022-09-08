@@ -32,10 +32,10 @@ import kr.spring.workflow.vo.WorkflowSignVO;
 import kr.spring.workflow.vo.WorkflowVO;
 
 @Controller
-public class WorkflowMainController {
+public class WorkflowController {
 	private static final Logger logger =
 		         LoggerFactory.getLogger(
-				          WorkflowMainController.class);
+				          WorkflowController.class);
 	
 	private int rowCount = 20;
 	private int pageCount = 10;
@@ -149,27 +149,30 @@ public class WorkflowMainController {
 	
 	
 	//========게시판 글상세===========//
-	@RequestMapping("/workflow/detail.do")
-	public ModelAndView detail(
-		          @RequestParam int flow_num) {
+//	@RequestMapping("/workflow/detail.do")
+//	public ModelAndView detail(
+//		          @RequestParam int flow_num) {
+//	
+//	logger.debug("<<board_num>> : " + flow_num);
+//	
+//	WorkflowVO workflow = 
+//			flowService.selectBoard(flow_num);
+//	
+//	//제목에 태그를 허용하지 않음
+//	workflow.setFlow_title(
+//		 StringUtil.useNoHtml(workflow.getFlow_title()));
+//	//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
+//	//ckeditor 사용시 아래 코드 주석 처리
+//	/*
+//	board.setContent(
+//	StringUtil.useBrNoHtml(board.getContent()));
+//	*/
+//	                         //뷰 이름    속성명   속성값
+//	return new ModelAndView("boardView","workflow_main",workflow);
+//	}
 	
-	logger.debug("<<board_num>> : " + flow_num);
 	
-	WorkflowMainVO workflow_main = 
-			flowService.selectBoard(flow_num);
 	
-	//제목에 태그를 허용하지 않음
-	workflow_main.setFlow_title(
-		 StringUtil.useNoHtml(workflow_main.getFlow_title()));
-	//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
-	//ckeditor 사용시 아래 코드 주석 처리
-	/*
-	board.setContent(
-	StringUtil.useBrNoHtml(board.getContent()));
-	*/
-	                         //뷰 이름    속성명   속성값
-	return new ModelAndView("boardView","workflow_main",workflow_main);
-	}
 	
 //	//===========파일다운로드===========//
 //	@RequestMapping("/board/file.do")
@@ -421,7 +424,36 @@ public class WorkflowMainController {
      /////-------------여기 까지2-----------------//////////	
 		
 		
+		//========게시판 글상세===========//
+		@RequestMapping("/workflow/detail.do")
+		public ModelAndView detail(
+			          @RequestParam int flow_num) {
 		
+		logger.debug("<<board_num>> : " + flow_num);
+		
+		WorkflowVO workflow = 
+				flowService.selectBoard(flow_num);
+		
+		List<MemberVO> list = memberService.selectSignList();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("boardView"); 
+		mav.addObject("workflow",workflow);
+		mav.addObject("list", list);
+		
+		
+		//제목에 태그를 허용하지 않음
+//		workflow.setFlow_title(
+//			 StringUtil.useNoHtml(workflow.getFlow_title()));
+		//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
+		//ckeditor 사용시 아래 코드 주석 처리
+		/*
+		board.setContent(
+		StringUtil.useBrNoHtml(board.getContent()));
+		*/
+	
+		return mav;
+		}	
 		
 		
 		
