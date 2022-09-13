@@ -63,9 +63,7 @@ $(function(){
 					
 					//이 div가 클릭되면 대화창 띄움
 					$(document).on('click', '.chatroom', function(){
-						if($('.chat_start *').length == 0){ 
 							createChat($(this).attr('id'));
-						}
 					}); 
 				}
 			},
@@ -76,10 +74,8 @@ $(function(){
 		});
 	}
 	
-	//대화창 띄우기
+	//채팅창 띄우기
 	function createChat(chatroom_num){
-		let form_data = $(this).serialize();
-		//로딩 이미지 노출 (url:listReply.do는 BoardAjaxCntrl에 있음)
 		$.ajax({
 			url:'gotochat.do',
 			type:'post',
@@ -89,24 +85,91 @@ $(function(){
 			timeout:30000,
 			success:function(param){
 				let user_num = param.user_num;
-				let chatUI;
-				$(param.list).each(function(index, item){
-					if(user_num != item.mem_num){ //대화창에서 상대방 프로필만 띄움
-						
-					}
-					
-				});
-				chatUI = '';
-				chatUI += '<textarea rows="8" cols="90" name="msg_content" id="msg_content" class="msgContent">';
+				$('.chat_form').empty();
 				
-				$('.chat_start').append(chatUI);
+				//채팅방 대화목록
+				$(param.msgList).each(function(index, item){
+					let msgUI = '';
+					msgUI += '<div class=';
+					if(item.mem_num != user_num){
+						msgUI += '"align-left"';
+					}else{
+						msgUI += '"align-right"';
+					}
+					msgUI += '><b>[' + item.mem_name + '] : ' + item.msg_content + '</b><span>' + item.msg_sendtime +'</span></div>';
+					msgUI += '';
+					$('.chat_form').append(msgUI);
+				});
+				let chatUI = '';
+				chatUI += '<form id="chat_form">';
+				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
+				chatUI += '<textarea rows="8" cols="60" name="msg_content" id="msg_content" class="msgContent"></textarea>';
+				chatUI += '<div id="msg_first"><span class="letter-count">100/100</span></div>';
+				chatUI += '<input type="file" name="upload">';
+				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송"></div>';
+				chatUI += '</form>';
+				
+				$('.chat_form').append(chatUI);
+				
+				
+				
 			},
 			error:function(){
-				//로딩 이미지 감추기
 				alert('gotochat.do 네트워크 오류 발생');
 			}
 		});
 	}
+	
+	//메시지 전송
+	$(document).on('submit', '#chat_form', function(event){
+		if($('#msg_content').val().trim() == ''){
+			alert('내용을 입력하세요');
+			$('#msg_content').val('').focus();
+			return false;
+		}
+		//메시지 전송
+		let form_data = new FormData($(this)[0]);
+		$.ajax({
+			url:'writeMsg.do',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			contentType:false,
+			enctype:'multipart/form-data',
+			processData:false,
+			success:function(param){
+				if(param.result == 'logout'){
+					alert('로그인 후 사용 가능');
+				}else if(param.result == 'success'){
+					let chatroom_num = param.chatroom_num;
+					createChat(chatroom_num);
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+		//기본 이벤트 제거
+		event.preventDefault();
+	});
+	
+	//글자수 
+	$(document).on('keyup', 'textarea', function(){
+		//입력한 글자 수
+		let inputLength = $(this).val().length;
+		
+		if(inputLength > 100){ //100자 이상인 경우
+			$(this).val($(this).val().substring(0,100)); //100자 넘으면 잘라냄
+		}else{ //300자 이하인 경우
+			//남은 글자 수 구하기
+			let remain = 100 - inputLength;
+			remain += '/100';
+			if($(this).attr('id') == 'msg_content'){
+				//댓글 등록 폼 글자 수 
+				$('#msg_first .letter-count').text(remain);
+			}
+		}
+	});
 	
 	
 	//멤버 리스트 및 검색(완료)

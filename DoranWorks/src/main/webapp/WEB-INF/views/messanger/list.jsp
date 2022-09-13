@@ -12,11 +12,8 @@
 	<div id="chatroomList"></div>
 </div>
 	
-	
-	
-	
 	<div id="searchChatroom" style="display:none;">
-	<div id="mem_list"></div>
+		<div id="mem_list"></div>
 		<%-- <h2>멤버 선택</h2>
 		<form action="createChatroom.do" id="search_form" method="get">
 			<ul class="search">
@@ -42,11 +39,12 @@
 				<input type="submit" value="확인">
 			</div>
 			</c:if>
-			
 		</form>
-		
 	</div>
 	
+	<!-- 채팅 시작 -->
+	<div class="chat_form"></div>
+	<!-- 채팅 끝 -->
 	
 	
 </div>

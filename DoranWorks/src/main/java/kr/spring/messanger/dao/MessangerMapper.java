@@ -52,13 +52,22 @@ public interface MessangerMapper {
 	public int selectCheckedMemberCount(Map<String, Object> map);
 	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map);
 	
-	//메시지 
-	public List<MemberVO> selectList(Map<String, Object> map);
+	//메시지  
+	//대화방에서 메시지 목록들 가져오기
+	@Select("SELECT msg_num, m.mem_num, d.mem_name, msg_content, m.chatroom_num, m.msg_sendtime "
+			+ "FROM message m JOIN member_detail d "
+			+ "ON m.mem_num=d.mem_num "
+			+ "WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
+	public List<MessangerVO> selectMsgList(Integer chatroom_num);
+	
 	public int selectRowCount(Map<String, Object> map);
 	
-	@Insert("INSERT INTO message (msg_num, chatroom_num, msg_content, msg_uploadfile, msg_filename, mem_num) "
-			+ "VALUES (message_seq.nextval, 100, #{msg_content}, #{msg_uploadfile}, #{msg_filename}, #{mem_num})")
-	public void insertMessage(MessangerVO messanger); //
+	@Insert("INSERT INTO message (msg_num, chatroom_num, msg_content, msg_uploadfile, msg_filename, mem_num, msg_sendtime) "
+			+ "VALUES (message_seq.nextval, #{chatroom_num}, #{msg_content}, #{msg_uploadfile}, #{msg_filename}, #{mem_num}, #{msg_sendtime})")
+	public void insertMessage(MessangerVO messanger); 
+	
+	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi') FROM dual")
+	public String selectMsgSendtime();
 	
 	@Select("SELECT * FROM message msg JOIN member m USING(mem_num) JOIN member_detail d USING (mem_num) "
 			+ "WHERE msg.msg_num=#{msg_num}")

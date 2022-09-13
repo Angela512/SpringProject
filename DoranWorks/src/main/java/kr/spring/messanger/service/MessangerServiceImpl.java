@@ -21,8 +21,8 @@ public class MessangerServiceImpl implements MessangerService{
 	
 	@Override
 	public void insertMessage(MessangerVO messanger) {
+		messanger.setMsg_sendtime(msgMapper.selectMsgSendtime());
 		msgMapper.insertMessage(messanger);
-		
 	}
 	
 	@Override
@@ -63,6 +63,11 @@ public class MessangerServiceImpl implements MessangerService{
 	@Override
 	public int selectChatmemCount(Integer chatroom_num) {
 		return msgMapper.selectChatmemCount(chatroom_num);
+	}
+
+	@Override
+	public List<MessangerVO> selectMsgList(Integer chatroom_num) {
+		return msgMapper.selectMsgList(chatroom_num);
 	}
 
 }

@@ -147,80 +147,57 @@ public class MessangerController {
 	//새로 생성된 채팅방을 목록에 추가
 	
 	
-	//채팅방 띄우기
+	//채팅방 띄우고 메시지 보여주기
 	@RequestMapping("/messanger/gotochat.do")
 	@ResponseBody
 	public Map<String, Object> goChat(@RequestParam int chatroom_num, HttpSession session){
 		logger.debug("<<선택된 채팅방>> : " + chatroom_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		MessangerVO messangerVO = new MessangerVO();
+		messangerVO.setMem_num(user.getMem_num());
 		
 		List<ChatmemVO> list = null;
-		
+		List<MessangerVO> msgList = null;
 		//해당 채팅방의 멤버들 정보
-		list = messangerService.selectChatmem(chatroom_num);
-		
+		list = messangerService.selectChatmem(chatroom_num); //채팅방 안에 있는 멤버들 정보 읽어옴
+		msgList = messangerService.selectMsgList(chatroom_num); //채팅방 대화내용 읽어옴
+
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
+		if(user != null) {
+			mapAjax.put("user_num", user.getMem_num());
+		}
 		mapAjax.put("list", list);
+		mapAjax.put("msgList", msgList);
 		
 		return mapAjax;
 	}
 	
 	
-	//==============메시지==============
-	//등록 폼
-	@GetMapping("/messanger/write.do")
-	public String form() {
-		return "msgWrite"; //tiles
-	}
-	//등록 폼에서 전송된 데이터 처리
-	@PostMapping("/messanger/write.do")
-	public String submit(@Valid MessangerVO messangerVO, BindingResult result, HttpServletRequest request, HttpSession session, Model model) {
-		logger.debug("<<게시판 글 저장>> : " + messangerVO);
+	//==============메시지==============	
+	@RequestMapping("/messanger/writeMsg.do")
+	@ResponseBody
+	public Map<String, Object> submitMsg(MessangerVO messangerVO, HttpSession session){
+		logger.debug("<<메시지 전송>> : " + messangerVO);
+		logger.debug("<<chatroom_num>> : " + messangerVO.getChatroom_num());
+		MemberVO user = (MemberVO)session.getAttribute("user");
 
-		//유효성 검사 결과 오류 있으면 폼 호출
-		if(result.hasErrors()) {
-			return form();
+		Map<String, Object> mapAjax = new HashMap<String, Object>();
+
+		if(user == null) { //로그인 안 된 경우
+			mapAjax.put("result", "logout");
+		}else{ 
+			messangerVO.setMem_num(user.getMem_num());
+			messangerService.insertMessage(messangerVO); //메시지 저장
+			mapAjax.put("chatroom_num", messangerVO.getChatroom_num());
+			mapAjax.put("result", "success");
 		}
 
-		//세션에서 유저 정보 뽑아냄
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		logger.debug("<<user 정보>> : " + user);
-		//회원번호 셋팅
-		messangerVO.setMem_num(user.getMem_num());
-		
-
-		//글쓰기
-		messangerService.insertMessage(messangerVO);
-
-		//View에 표시할 메시지 지정(식별자, 내용)
-		model.addAttribute("message", "글 등록이 완료되었습니다.");
-		model.addAttribute("url", request.getContextPath()+"/main/main.do"); //작성이 완료되면 목록으로 이동
-
-		//얘는 jsp
-		return "common/resultView"; //등록이 되면 자바스크립트를 활용하여 등록됐다고 띄울거임
+		return mapAjax;
 	}
 	
-	//==========채팅방 목록==========
-	/*
-	 * @RequestMapping("/messanger/list.do") public ModelAndView
-	 * process(@RequestParam(value="keyfield", defaultValue="") String keyfield,
-	 * 
-	 * @RequestParam(value="keyword", defaultValue="") String keyword) {
-	 * 
-	 * //파라미터들 맵으로 묶어서 보냄 Map<String,Object> map = new HashMap<String,Object>();
-	 * map.put("keyfield", keyfield); map.put("keyword", keyword);
-	 * 
-	 * 
-	 * List<ChatroomVO> list = null;
-	 * 
-	 * 
-	 * list = messangerService.selectChatroomList(map);
-	 * 
-	 * 
-	 * ModelAndView mav = new ModelAndView(); mav.setViewName("msgList"); //tiles
-	 * 식별자 명 mav.addObject("list", list);
-	 * 
-	 * return mav; }
-	 */
+	
+	
 	
 	
 	

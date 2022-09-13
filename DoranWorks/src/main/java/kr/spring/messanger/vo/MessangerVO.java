@@ -10,10 +10,12 @@ public class MessangerVO {
 	private int mem_num;
 	private int chatroom_num;
 	private String msg_content;
-	private Date msg_sendTime;
-	private Date msg_openTime;
+	private String msg_sendtime; //2022-09-09 17:12
+	private String msg_opentime;
 	private String msg_filename;
 	private byte[] msg_uploadfile;
+	
+	private String mem_name;
 	
 	//이미지 BLOB 처리
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -23,6 +25,15 @@ public class MessangerVO {
 		//파일이름
 		setMsg_filename(upload.getOriginalFilename());
 	}
+	
+	public String getMem_name() {
+		return mem_name;
+	}
+
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+
 	public int getMsg_num() {
 		return msg_num;
 	}
@@ -47,18 +58,23 @@ public class MessangerVO {
 	public void setMsg_content(String msg_content) {
 		this.msg_content = msg_content;
 	}
-	public Date getMsg_sendTime() {
-		return msg_sendTime;
+	
+	public String getMsg_sendtime() {
+		return msg_sendtime;
 	}
-	public void setMsg_sendTime(Date msg_sendTime) {
-		this.msg_sendTime = msg_sendTime;
+
+	public void setMsg_sendtime(String msg_sendtime) {
+		this.msg_sendtime = msg_sendtime;
 	}
-	public Date getMsg_openTime() {
-		return msg_openTime;
+
+	public String getMsg_opentime() {
+		return msg_opentime;
 	}
-	public void setMsg_openTime(Date msg_openTime) {
-		this.msg_openTime = msg_openTime;
+
+	public void setMsg_opentime(String msg_opentime) {
+		this.msg_opentime = msg_opentime;
 	}
+
 	public String getMsg_filename() {
 		return msg_filename;
 	}
@@ -74,7 +90,7 @@ public class MessangerVO {
 	@Override
 	public String toString() {
 		return "MessangerVO [msg_num=" + msg_num + ", mem_num=" + mem_num + ", chatroom_num=" + chatroom_num
-				+ ", msg_content=" + msg_content + ", msg_sendTime=" + msg_sendTime + ", msg_openTime=" + msg_openTime
+				+ ", msg_content=" + msg_content + ", msg_sendtime=" + msg_sendtime + ", msg_opentime=" + msg_opentime
 				+ ", msg_filename=" + msg_filename + "]";
 	}
 	
