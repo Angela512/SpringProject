@@ -2,11 +2,14 @@ package kr.spring.workflow.vo;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 public class WorkflowVO {
 	
 	private int flow_num;
 	private int form_num;
 	private int mem_num;
+	@NotEmpty
 	private String flow_title;
 	
 	

@@ -12,7 +12,7 @@
 
 		<c:forEach var="flow" items="${list}">
 
-		<input type="checkbox" name="sign_name" value="${flow.mem_name}"/>${flow.mem_name}
+		<input type="checkbox" name="sign_name" value="${flow.mem_name} ${flow.mem_rank}"/>${flow.mem_name}
 		${flow.mem_rank}
 		${flow.mem_dpt}
 		

@@ -130,26 +130,58 @@
             <td width="1" align="center" class="form16b" id="tms_auto_sign"></td>
           </tr>
     </table>
-    <!-- 
-    <table border="solid">
-    	<tr>
-    		<td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b" rowspan="2">1</td>
-    		<td>2</td>
-    		<td>3</td>
-    	</tr>
-    		<td height="30" width="50">4</td>
-    		<td>5</td>
-    	<tr>
-    	</tr>
-    </table>
-     -->
+    
+     
+    
+     
     <table width="644" border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;" class="form2" align="center" >
       <tr>
         <td>&nbsp;</td>
       </tr>
     </table>
-    <table width="644" border="1"  cellspacing="0" cellpadding="0" bordercolor="#000000" style="border-collapse:collapse;" align="center" class="form10">
-    
+    <!-- 테이블 테스트 -->
+    <%-- 
+    <table border="solid" align="right" class="form10">
+   				<tr>
+    				<td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b" rowspan="2">11</td>
+    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+    				<td><c:out value="${name}" /></td>
+    				</c:forTokens>
+
+    			</tr>
+    			<tr>
+    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+    				<td height="30" width="50"><c:out value="${name}" /></td>   				
+					</c:forTokens>
+
+    			</tr>
+ 		   </table>
+ 	 --%>	   
+    <!--  -->
+    <table width="644" border="1"  cellspacing="0" cellpadding="0" bordercolor="#000000" style="border-collapse:collapse; border:none;" align="center" class="form10">
+    <tr >
+    	<td colspan="7" style="border:none;">
+    	<!-- 테이블 테스트 -->
+    		<table border="solid" align="right" class="form10" style="border-collapse:collapse;">
+   				<tr>
+    				<td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b" rowspan="2" width="10"></td>
+    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+    				<td><c:out value="${name}" /></td>
+    				</c:forTokens>
+
+    			</tr>
+    			<tr>
+    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+    				<td height="60" width="80"></td>   				
+					</c:forTokens>
+
+    			</tr>
+ 		   </table>
+ 		   
+	   
+    	<!-- 테이블 테스트 끝 -->
+    	</td>
+    </tr>
     <tr>
         <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">문서번호</td>
         <td align="center" class="form10"><div id="docno"></div><fmt:formatDate value="${workflow.flow_date}" pattern="yyyyMMdd"/>-${workflow.flow_num}</td>

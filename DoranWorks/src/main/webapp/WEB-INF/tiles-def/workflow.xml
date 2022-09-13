@@ -26,7 +26,15 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/signList.jsp"/>                   
     </definition>
-     --> 
+     -->
+      
+    <definition name="signList" template="/WEB-INF/views/workflow/signList.jsp">
+    <!-- 
+    <put-attribute name="title" value="결재라인보기"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/workflow/signList.jsp"/>
+      -->
+    </definition>
 </tiles-definitions>
 
 
