@@ -16,6 +16,7 @@ public class MessangerVO {
 	private byte[] msg_uploadfile;
 	
 	private String mem_name;
+	private int total_cnt;
 	
 	//이미지 BLOB 처리
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -87,6 +88,15 @@ public class MessangerVO {
 	public void setMsg_uploadfile(byte[] msg_uploadfile) {
 		this.msg_uploadfile = msg_uploadfile;
 	}
+	
+	public int getTotal_cnt() {
+		return total_cnt;
+	}
+
+	public void setTotal_cnt(int total_cnt) {
+		this.total_cnt = total_cnt;
+	}
+
 	@Override
 	public String toString() {
 		return "MessangerVO [msg_num=" + msg_num + ", mem_num=" + mem_num + ", chatroom_num=" + chatroom_num

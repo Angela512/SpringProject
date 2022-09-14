@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.vo.ChatmemVO;
+import kr.spring.messanger.vo.ChatreadVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
 
@@ -57,28 +59,41 @@ public interface MessangerMapper {
 	public int selectCheckedMemberCount(Map<String, Object> map);
 	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map);
 	
-	//메시지  
+//========메시지========================  
 	//대화방에서 메시지 목록들 가져오기
-	@Select("SELECT msg_num, m.mem_num, d.mem_name, msg_content, m.chatroom_num, m.msg_sendtime "
-			+ "FROM message m JOIN member_detail d "
-			+ "ON m.mem_num=d.mem_num "
-			+ "WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
+	@Select("SELECT msg_num, m.mem_num, d.mem_name, msg_content, chatroom_num, m.msg_sendtime, total_cnt "
+			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r USING(msg_num) JOIN member_detail d ON m.mem_num=d.mem_num WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
 	public List<MessangerVO> selectMsgList(Integer chatroom_num);
 	
 	public int selectRowCount(Map<String, Object> map);
 	
+	//msg_num 생성
+	@Select("SELECT message_seq.nextval FROM dual")
+	public int selectMsg_num();
+	
 	//메시지 정보 저장
 	@Insert("INSERT INTO message (msg_num, chatroom_num, msg_content, msg_uploadfile, msg_filename, mem_num, msg_sendtime) "
-			+ "VALUES (message_seq.nextval, #{chatroom_num}, #{msg_content}, #{msg_uploadfile}, #{msg_filename}, #{mem_num}, #{msg_sendtime})")
+			+ "VALUES (#{msg_num}, #{chatroom_num}, #{msg_content}, #{msg_uploadfile}, #{msg_filename}, #{mem_num}, #{msg_sendtime})")
 	public void insertMessage(MessangerVO messanger); 
 	
 	//메시지 보내면 Chatread에 일단 다 저장하고 읽으면 삭제하는 방식으로 진행
-	@Insert("INSERT INTO chatread (chatread_num, msg_num, mem_num) VALUES (chatread_seq.nextval, #{msg_num}, #{mem_num})")
-	public void insertChatread(MessangerVO messanger);
+	@Insert("INSERT INTO chatread (chatread_num, msg_num, mem_num, chatroom_num) VALUES (#{chatread_num}, #{msg_num}, #{mem_num}, #{chatroom_num})")
+	public void insertChatread(ChatreadVO chatreadVO);
+	
+	//chatread_num 생성
+	@Select("SELECT chatread_seq.nextval FROM dual")
+	public int selectChatread_num();
+	
+	//해당 채팅방에 있는 멤버들의 회원번호(mem_num) 가져옴
+	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num}")
+	public List<Integer> selectMsgMem_num(Integer chatroom_num);
+	
+	//채팅방 멤버 수
+	public List<ChatreadVO> selectChatmemCount();
 	
 	//타인이 보낸 메시지를 읽으면 읽은 사람의 회원번호로 삭제
-	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num}")
-	public void deleteChatread(Integer mem_num);
+	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num} AND chatroom_num=#{chatroom_num}")
+	public void deleteChatread(@Param(value="mem_num") Integer mem_num, @Param(value="chatroom_num") Integer chatroom_num);
 	
 	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi') FROM dual")
 	public String selectMsgSendtime();

@@ -125,10 +125,6 @@ public class MessangerController {
 		//채팅방번호, 채팅방이름, 채팅방멤버들 생성
 		messangerService.insertChatroom(chatroomVO); 
 		int chatroom_num = chatroomVO.getChatroom_num();
-		//List<ChatmemVO> list = null;
-		
-		//채팅방 번호
-		//list = messangerService.selectChatmem(chatroom_num);
 		
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -149,13 +145,12 @@ public class MessangerController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		MessangerVO messangerVO = new MessangerVO();
-		messangerVO.setMem_num(user.getMem_num());
 		
 		List<ChatmemVO> list = null;
 		List<MessangerVO> msgList = null;
 		//해당 채팅방의 멤버들 정보
 		list = messangerService.selectChatmem(chatroom_num); //채팅방 안에 있는 멤버들 정보 읽어옴
-		msgList = messangerService.selectMsgList(chatroom_num); //채팅방 대화내용 읽어옴
+		msgList = messangerService.selectMsgList(user.getMem_num(), chatroom_num); //채팅방 대화내용 읽어옴
 
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		if(user != null) {

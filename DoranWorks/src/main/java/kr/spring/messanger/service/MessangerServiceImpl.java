@@ -10,20 +10,42 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.dao.MessangerMapper;
 import kr.spring.messanger.vo.ChatmemVO;
+import kr.spring.messanger.vo.ChatreadVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
 
 @Service 
 @Transactional 
 public class MessangerServiceImpl implements MessangerService{
-	@Autowired //주입받아야하니까
+	@Autowired 
 	public MessangerMapper msgMapper;
 	
 	@Override
 	public void insertMessage(MessangerVO messanger) {
 		messanger.setMsg_sendtime(msgMapper.selectMsgSendtime());
-		msgMapper.insertMessage(messanger);
-		msgMapper.insertChatread(messanger);
+		messanger.setMsg_num(msgMapper.selectMsg_num()); //msg_num 시퀀스 생성
+		msgMapper.insertMessage(messanger); 
+		
+		int msg_num = messanger.getMsg_num(); 
+		int chatroom_num = messanger.getChatroom_num();
+		int user_num = messanger.getMem_num();
+		
+		//해당 채팅방에 있는 멤버들의 회원번호들 읽어옴
+		List<Integer> members = msgMapper.selectMsgMem_num(chatroom_num);
+		
+		ChatreadVO chatreadVO = new ChatreadVO();
+		
+		for(Integer mem_num : members) {
+			
+			chatreadVO.setChatread_num(msgMapper.selectChatread_num()); //chatread_num 시퀀스 생성
+			chatreadVO.setMsg_num(msg_num);
+			chatreadVO.setMem_num(mem_num);
+			chatreadVO.setChatroom_num(chatroom_num);
+
+			msgMapper.insertChatread(chatreadVO); 
+			
+		}
+		 
 	}
 	
 	@Override
@@ -68,14 +90,10 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 
 	@Override
-	public List<MessangerVO> selectMsgList(Integer chatroom_num) {
+	public List<MessangerVO> selectMsgList(Integer mem_num, Integer chatroom_num) {
+		//메시지 읽으면 삭제
+		msgMapper.deleteChatread(mem_num, chatroom_num);
 		return msgMapper.selectMsgList(chatroom_num);
-	}
-
-	@Override
-	public void deleteChatread(Integer mem_num) {
-		msgMapper.deleteChatread(mem_num);
-		
 	}
 
 }

@@ -15,7 +15,6 @@ public class ChatmemVO {
 	private String mem_dpt;
 	private String mem_rank;
 	
-	
 	//=======================이미지 BLOB 처리=========================//
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
 	public void setUpload(MultipartFile upload)throws IOException{
@@ -24,7 +23,7 @@ public class ChatmemVO {
 		//파일이름
 		setMem_photo_name(upload.getOriginalFilename());
 	}
-	
+
 	public String getChatroom_name() {
 		return chatroom_name;
 	}

@@ -87,16 +87,18 @@ $(function(){
 				let user_num = param.user_num;
 				$('.chat_form').empty();
 				$('.chat_form').show();
+				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>';
+				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
 				$(param.msgList).each(function(index, item){
-					let msgUI = '';
+					msgUI = '';
 					msgUI += '<div class=';
 					if(item.mem_num != user_num){
 						msgUI += '"align-left"';
 					}else{
 						msgUI += '"align-right"';
 					}
-					msgUI += '><b>[' + item.mem_name + '] : ' + item.msg_content + '</b><span>' + item.msg_sendtime +'</span></div>';
+					msgUI += '><b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content + '</b> <span>' + item.msg_sendtime +'</span></div>';
 					msgUI += '';
 					$('.chat_form').append(msgUI);
 				});
@@ -220,7 +222,7 @@ $(function(){
 					if(isChecked){ //이미 체크되어있으면 체크 해제
 						isChecked = $(this).attr("checked", false);
 						//폼에서도 삭제함
-						$('#'+mem_num).remove();
+						$('#' + mem_num).remove();
 						if($('.checked_div *').length == 0){//체크된 멤버가 없으면 폼 숨김
 							$('#checked_form').hide();
 						}
@@ -228,7 +230,7 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
-						modifyUI += '<input type="text" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
+						modifyUI += '<span name="members" value="'+ mem_num +'" id="'+ mem_num + '">' + mem_name + '</span>';
 						
 						//체크된 멤버 노출
 						$('.checked_div').append(modifyUI);
@@ -257,7 +259,6 @@ $(function(){
 			url:'confirm.do',
 			type:'post',
 			data:form_data,
-			/*data:{chatroom_num:chatroom_num},*/
 			dataType:'json',
 			cache:false,
 			timeout:30000,

@@ -4,7 +4,14 @@ public class ChatreadVO {
 	private int chatread_num;
 	private int msg_num;
 	private int mem_num;
+	private int chatroom_num;
 	
+	public int getChatroom_num() {
+		return chatroom_num;
+	}
+	public void setChatroom_num(int chatroom_num) {
+		this.chatroom_num = chatroom_num;
+	}
 	public int getChatread_num() {
 		return chatread_num;
 	}
