@@ -3,9 +3,11 @@ package kr.spring.messanger.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.vo.ChatmemVO;
@@ -16,10 +18,11 @@ import kr.spring.messanger.vo.MessangerVO;
 public interface MessangerMapper {
 	
 //==========채팅방==========//
-	//채팅방 생성(채팅방번호 생성됨)
+	//채팅방 번호 생성
 	@Select("SELECT chatroom_seq.nextval FROM dual")
 	public int selectChatroom_num();
 	
+	//채팅방 생성
 	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_num})")
 	public void insertChatroom(ChatroomVO chatroomVO);
 	
@@ -27,13 +30,16 @@ public interface MessangerMapper {
 	@Insert("INSERT INTO chatmem (chatroom_num, mem_num) VALUES (#{chatroom_num}, #{mem_num})")
 	public void insertChatmem(ChatmemVO chatmemVO);
 	
+	//채팅방 이름 변경
+	/*
+	 * @Update("UPDATE chatroom SET chatroom_name= WHERE chatroom_num=#{chatroom_num}"
+	 * ) public void updateChatroom_name(Integer chatroom_num);
+	 */
+	
 	//해당 채팅방의 멤버들 정보 가져오기
-	@Select("SELECT m.chatroom_num chatroom_num, m.mem_num, r.chatroom_name, d.mem_name, d.mem_photo_name, dpt.mem_dpt, rank.mem_rank "
-			+ "FROM chatmem m JOIN chatroom r ON m.chatroom_num = r.chatroom_num "
-			+ "JOIN member_detail d ON m.mem_num = d.mem_num "
-			+ "JOIN mem_dpt dpt ON dpt.mem_dpt_num = d.mem_dpt_num "
-			+ "JOIN mem_rank rank ON rank.mem_rank_num = d.mem_rank_num "
-			+ "WHERE m.chatroom_num=#{chatroom_num}")
+	@Select("SELECT chatroom_num, mem_num, chatroom_name, mem_name, mem_photo_name, mem_dpt, mem_rank "
+			+ "FROM chatmem JOIN chatroom USING(chatroom_num) JOIN member_detail USING(mem_num) "
+			+ "JOIN mem_dpt USING(mem_dpt_num) JOIN mem_rank USING(mem_rank_num) WHERE chatroom_num=#{chatroom_num}")
 	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
 	
 	//채팅방 목록
@@ -41,9 +47,8 @@ public interface MessangerMapper {
 	public List<ChatmemVO> selectChatroomList(Integer mem_num);
 	
 	//채팅방 내 멤버 수
-	@Select("SELECT COUNT(*) FROM(SELECT m.mem_num FROM chatroom r JOIN chatmem m "
-			+ "ON r.chatroom_num = m.chatroom_num "
-			+ "WHERE r.chatroom_num=#{chatroom_num})")
+	@Select("SELECT COUNT(*) FROM(SELECT mem_num FROM chatroom JOIN chatmem "
+			+ "USING(chatroom_num) WHERE chatroom_num=#{chatroom_num})")
 	public int selectChatmemCount(Integer chatroom_num);
 	
 	//채팅방 띄우기
@@ -62,16 +67,23 @@ public interface MessangerMapper {
 	
 	public int selectRowCount(Map<String, Object> map);
 	
+	//메시지 정보 저장
 	@Insert("INSERT INTO message (msg_num, chatroom_num, msg_content, msg_uploadfile, msg_filename, mem_num, msg_sendtime) "
 			+ "VALUES (message_seq.nextval, #{chatroom_num}, #{msg_content}, #{msg_uploadfile}, #{msg_filename}, #{mem_num}, #{msg_sendtime})")
 	public void insertMessage(MessangerVO messanger); 
 	
+	//메시지 보내면 Chatread에 일단 다 저장하고 읽으면 삭제하는 방식으로 진행
+	@Insert("INSERT INTO chatread (chatread_num, msg_num, mem_num) VALUES (chatread_seq.nextval, #{msg_num}, #{mem_num})")
+	public void insertChatread(MessangerVO messanger);
+	
+	//타인이 보낸 메시지를 읽으면 읽은 사람의 회원번호로 삭제
+	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num}")
+	public void deleteChatread(Integer mem_num);
+	
 	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi') FROM dual")
 	public String selectMsgSendtime();
 	
-	@Select("SELECT * FROM message msg JOIN member m USING(mem_num) JOIN member_detail d USING (mem_num) "
-			+ "WHERE msg.msg_num=#{msg_num}")
-	public MessangerVO selectMessage(Integer msg_num); //채팅방 리스트에서 채팅방 눌러서 들어가기(==게시글 상세)
+	
 	
 	
 }

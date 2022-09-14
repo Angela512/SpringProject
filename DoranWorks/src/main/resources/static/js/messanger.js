@@ -23,7 +23,7 @@ $(function(){
 		}
 	});
 	
-	//채팅방 목록
+	//================채팅방 목록==============================
 	function list(){
 		$.ajax({
 			url:'chatroomList.do',
@@ -52,7 +52,7 @@ $(function(){
 					$(param.list).each(function(index, item){
 						let chatroomListUI = '';
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
-						chatroomListUI += '[' + item.chatroom_num + '] -> mem_num : [' + item.mem_num + ']<br>';
+						chatroomListUI += '[' + item.chatroom_num + '번 채팅방]<br>';
 						chatroomListUI += '</div>';
 						chatroomListUI += '';
 						chatroomListUI += '';
@@ -74,7 +74,7 @@ $(function(){
 		});
 	}
 	
-	//채팅창 띄우기
+	//======================채팅창 띄우기==========================
 	function createChat(chatroom_num){
 		$.ajax({
 			url:'gotochat.do',
@@ -86,7 +86,7 @@ $(function(){
 			success:function(param){
 				let user_num = param.user_num;
 				$('.chat_form').empty();
-				
+				$('.chat_form').show();
 				//채팅방 대화목록
 				$(param.msgList).each(function(index, item){
 					let msgUI = '';
@@ -228,7 +228,6 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
-						//댓글 수정폼 UI
 						modifyUI += '<input type="text" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
 						
 						//체크된 멤버 노출
@@ -257,15 +256,20 @@ $(function(){
 		$.ajax({
 			url:'confirm.do',
 			type:'post',
-			/*data:form_data,*/
-			data:{chatroom_num:chatroom_num},
+			data:form_data,
+			/*data:{chatroom_num:chatroom_num},*/
 			dataType:'json',
 			cache:false,
 			timeout:30000,
 			success:function(param){
 				alert('success');
-				let user_num = param.chatroom_num;
-				createChat();
+				let chatroom_num = param.chatroom_num;
+				//채팅방 리스트에도 추가
+				$('.chatroomMain').empty();
+				$('#chatroomList').empty();
+				list();
+				//대화창 열기
+				createChat(chatroom_num);
 			},
 			error:function(){
 				alert('confirm.do 네트워크 오류 발생');

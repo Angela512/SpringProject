@@ -7,10 +7,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
 
-<div class="chatroomMain">
+<div class="chatroomMain"></div>
 	<!-- 채팅방 리스트 -->
-	<div id="chatroomList"></div>
-</div>
+<div id="chatroomList"></div>
+
 	
 	<div id="searchChatroom" style="display:none;">
 		<div id="mem_list"></div>
@@ -43,7 +43,7 @@
 	</div>
 	
 	<!-- 채팅 시작 -->
-	<div class="chat_form"></div>
+	<div class="chat_form" style="display:none;"></div>
 	<!-- 채팅 끝 -->
 	
 	

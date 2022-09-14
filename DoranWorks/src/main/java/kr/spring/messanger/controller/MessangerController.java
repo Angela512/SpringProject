@@ -64,13 +64,10 @@ public class MessangerController {
 		return "list";
 	}
 	
-	//채팅방 목록
+	//==============채팅방 목록==============
 	@RequestMapping("/messanger/chatroomList.do")
 	@ResponseBody
 	public Map<String,Object> chatroomList(@RequestParam(value="keyword", defaultValue="") String keyword, HttpSession session) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("keyword", keyword);
-		
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -120,7 +117,7 @@ public class MessangerController {
 		return mapAjax;
 	}
 	
-	//채팅방 멤버 선택 후 메시지방 생성하기
+	//==============채팅방 멤버 선택 후 메시지방 생성하기==============
 	@RequestMapping("/messanger/confirm.do")
 	@ResponseBody
 	public Map<String,Object> createChatroom(ChatroomVO chatroomVO, HttpSession session) {
@@ -144,10 +141,7 @@ public class MessangerController {
 		return mapAjax;
 	}
 	
-	//새로 생성된 채팅방을 목록에 추가
-	
-	
-	//채팅방 띄우고 메시지 보여주기
+	//==============채팅방 띄우고 메시지 보여주기==============
 	@RequestMapping("/messanger/gotochat.do")
 	@ResponseBody
 	public Map<String, Object> goChat(@RequestParam int chatroom_num, HttpSession session){
@@ -189,6 +183,7 @@ public class MessangerController {
 		}else{ 
 			messangerVO.setMem_num(user.getMem_num());
 			messangerService.insertMessage(messangerVO); //메시지 저장
+			
 			mapAjax.put("chatroom_num", messangerVO.getChatroom_num());
 			mapAjax.put("result", "success");
 		}

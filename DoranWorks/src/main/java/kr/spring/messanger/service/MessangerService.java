@@ -17,4 +17,5 @@ public interface MessangerService {
 	public int selectCheckedMemberCount(Map<String,Object> map);
 	public List<ChatroomVO> selectCheckedMemberList(Map<String,Object> map);
 	public List<MessangerVO> selectMsgList(Integer chatroom_num);
+	public void deleteChatread(Integer mem_num);
 }

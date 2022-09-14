@@ -23,6 +23,7 @@ public class MessangerServiceImpl implements MessangerService{
 	public void insertMessage(MessangerVO messanger) {
 		messanger.setMsg_sendtime(msgMapper.selectMsgSendtime());
 		msgMapper.insertMessage(messanger);
+		msgMapper.insertChatread(messanger);
 	}
 	
 	@Override
@@ -37,6 +38,7 @@ public class MessangerServiceImpl implements MessangerService{
 			
 			msgMapper.insertChatmem(chatmemVO);
 		}
+		
 	}
 	
 	@Override
@@ -68,6 +70,12 @@ public class MessangerServiceImpl implements MessangerService{
 	@Override
 	public List<MessangerVO> selectMsgList(Integer chatroom_num) {
 		return msgMapper.selectMsgList(chatroom_num);
+	}
+
+	@Override
+	public void deleteChatread(Integer mem_num) {
+		msgMapper.deleteChatread(mem_num);
+		
 	}
 
 }
