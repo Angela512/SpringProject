@@ -104,6 +104,9 @@
 			<br>
 			작성일 : ${workflow.flow_date}
 		</li>
+		<li>
+			<input type="button" value="인쇄" onclick="window.print()" >
+		</li>
 	</ul>
 	<hr size="1" width="100%">
 	<p>

@@ -12,31 +12,46 @@ public class WorkflowVO {
 	@NotEmpty
 	private String flow_title;
 	
-	
 	private String flow_sort;
+	
 	private String flow_state;
 	private String flow_no;
+	@NotEmpty
 	private String flow_content;
 	
+	@NotEmpty
 	private String flow_start;
+	@NotEmpty
 	private String flow_end;
+	@NotEmpty
 	private String flow_subsort;
 	
 	private Date flow_date;
 	private String flow_modify;
 	
-
+	private String flow_line;
+	
 	private String mem_photo_name;
 	
 	private int sign_num;
 
+	
 	private String sign_no;
+	@NotEmpty
 	private String sign_name;
 	private String mem_name;
 	private String mem_dpt;
 	private String mem_rank;
 	
 	
+	
+	
+	public String getFlow_line() {
+		return flow_line;
+	}
+	public void setFlow_line(String flow_line) {
+		this.flow_line = flow_line;
+	}
 	public int getFlow_num() {
 		return flow_num;
 	}

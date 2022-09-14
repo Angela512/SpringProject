@@ -19,21 +19,19 @@ import kr.spring.workflow.vo.WorkflowVO;
 public interface WorkflowMainMapper {
 	
 		//부모글
-		public List<WorkflowMainVO> selectList(Map<String,Object> map);
+		public List<WorkflowVO> selectList(Map<String,Object> map);
 		public int selectRowCount(Map<String,Object> map);
 		
-		@Select("SELECT workflow_test_seq.nextval FROM dual")
-		public int selectFlow_num();
-		@Select("SELECT workflow_test_seq.currval FROM dual")
-		public int selectCurrent_num(); 
+		@Select("SELECT workflow_main_seq.nextval FROM dual")
+		public int selectFlow_num();		
 		/*
 		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,flow_start,flow_end,flow_subsort,flow_state,mem_num"
 				+ ") "
 				+ "VALUES (#{flow_num},#{flow_title},#{flow_content},#{flow_sort},#{flow_start},#{flow_end},#{flow_subsort},#{flow_state},#{mem_num})")
 		public void insertBoard(WorkflowMainVO flow);
 		*/		
-		@Insert("insert into workflow_sign (sign_num, sign_no, sign_name,mem_num) " 
-				+"values(workflow_sign_seq.nextval, #{sign_no}, #{sign_name}, #{mem_num})")
+		@Insert("insert into workflow_sign (sign_num, sign_name,mem_num) " 
+				+"values(workflow_sign_seq.nextval, #{sign_name}, #{mem_num})")
 		public boolean insertSign(WorkflowSignVO sign);
 		
 		
@@ -64,12 +62,12 @@ public interface WorkflowMainMapper {
 		@Insert("INSERT INTO workflow_main (flow_num,flow_title,flow_content,flow_sort,flow_start,flow_end,flow_subsort,flow_state,mem_num"
 				+ ") "
 				+ "VALUES (#{flow_num},#{flow_title},#{flow_content},#{flow_sort},#{flow_start},#{flow_end},#{flow_subsort},#{flow_state},#{mem_num})")
-		public void insertBoard(WorkflowVO work);
+		public void insertTable_Main(WorkflowVO work);
 		
 		
-		@Insert("insert into workflow_test (flow_num, sign_no, sign_name, mem_num) " 
-				+"values(#{flow_num}, #{sign_no}, #{sign_name}, #{mem_num})")
-		public void insertTest(WorkflowVO work);
+		@Insert("insert into workflow_test (flow_num, sign_name, mem_num) " 
+				+"values(#{flow_num}, #{sign_name}, #{mem_num})")
+		public void insertTable_Test(WorkflowVO work);
 		
 		
 		

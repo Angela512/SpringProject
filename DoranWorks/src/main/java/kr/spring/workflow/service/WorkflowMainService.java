@@ -16,7 +16,7 @@ import kr.spring.workflow.vo.WorkflowVO;
 @Service
 public interface WorkflowMainService {
 	//부모글
-		public List<WorkflowMainVO> selectList(Map<String,Object> map);
+		public List<WorkflowVO> selectList(Map<String,Object> map);
 	    public int selectRowCount(Map<String,Object> map); 
 //	    public void insertBoard(WorkflowMainVO flow);
 	    //결재 리스트
@@ -24,8 +24,7 @@ public interface WorkflowMainService {
 		public WorkflowVO selectBoard(Integer flow_num);
 		
 		//테스트
-		public void insertTest(WorkflowVO work);
-		public void insertBoard(WorkflowVO work);
+		public void insertFlow_num(WorkflowVO work);
 		
 		
 		

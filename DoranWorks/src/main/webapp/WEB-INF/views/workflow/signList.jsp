@@ -12,19 +12,21 @@
 
 		<c:forEach var="flow" items="${list}">
 
-		<input type="checkbox" name="sign_name" value="${flow.mem_name} ${flow.mem_rank}"/>${flow.mem_name}
+		<input type="checkbox"  value="${flow.mem_name} ${flow.mem_rank}"/>
+		${flow.mem_name}
 		${flow.mem_rank}
 		${flow.mem_dpt}
 		
 		<br>
 		
 		</c:forEach>
+		
 	
+	
+		
+
 	<br>
 	
-
-	<input type="text" name="sign_no"/>
-	<input type="submit" value="전송" />
+	<input type="button" value="확인" id="list_read"/>
 	<input type="button" value="취소" onClick="window.close()">
-	
 	</form>

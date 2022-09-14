@@ -47,9 +47,14 @@ public class WorkflowController {
 	
 	
 	//자바빈(VO) 초기화
+//	@ModelAttribute
+//	public WorkflowMainVO initCommand() {
+//	return new WorkflowMainVO();
+//	}
+	
 	@ModelAttribute
-	public WorkflowMainVO initCommand() {
-	return new WorkflowMainVO();
+	public WorkflowVO initCommand() {
+	return new WorkflowVO();
 	}
 	
 	
@@ -124,7 +129,7 @@ public class WorkflowController {
 					currentPage,count,
 					rowCount,pageCount,"list.do");
 	
-	List<WorkflowMainVO> list = null;
+	List<WorkflowVO> list = null;
 	List<MemberVO> list2 = null;
 	if(count > 0) {
 		
@@ -360,9 +365,13 @@ public class WorkflowController {
 	
 	@PostMapping("/workflow/signList.do")
 	public String insertreview(HttpSession session,WorkflowVO work) throws Exception{
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		work.setMem_num(user.getMem_num());
 		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//회원번호 세팅
+		work.setMem_num(user.getMem_num());
+		//테스트 값 세팅
+		work.setFlow_line("테스트");
 		/*
 		boolean result = flowService.insertSign(sign);
 		if (result) {
@@ -371,7 +380,7 @@ public class WorkflowController {
 			return "error";
 		}
 		*/
-		flowService.insertTest(work);
+		//flowService.insertTest(work);
 		return "workflow/autoClose";
 	}
 		
@@ -403,10 +412,10 @@ public class WorkflowController {
 				(MemberVO)session.getAttribute("user");
 		
 		//회원번호 셋팅
-		flowVO.setMem_num(user.getMem_num());
-		System.out.println("하이 : "+flowVO);		
+		flowVO.setMem_num(user.getMem_num());	
 		
-		flowService.insertBoard(flowVO);
+		flowService.insertFlow_num(flowVO);
+		
 		
 		//View에 표시할 메시지
 		model.addAttribute(

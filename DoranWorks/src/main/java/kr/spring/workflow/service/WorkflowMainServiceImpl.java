@@ -21,7 +21,7 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 	private WorkflowMainMapper flowMapper;
 	
 	@Override
-	public List<WorkflowMainVO> selectList(Map<String, Object> map) {
+	public List<WorkflowVO> selectList(Map<String, Object> map) {
 		return flowMapper.selectList(map);
 	}
 
@@ -39,24 +39,19 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		return flowMapper.selectBoard(flow_num);
 	}
 
-
-	
-	//테스트
 	@Override
-	public void insertTest(WorkflowVO work) {
+	public void insertFlow_num(WorkflowVO work) {
 		work.setFlow_num(flowMapper.selectFlow_num());
-		flowMapper.insertTest(work);
-		
-	
+		flowMapper.insertTable_Main(work);
+		flowMapper.insertTable_Test(work);
 		
 	}
 
-	@Override
-	public void insertBoard(WorkflowVO flowVO) {
-		flowVO.setFlow_num(flowMapper.selectCurrent_num());
-		flowMapper.insertBoard(flowVO);
-		
-	}
+
+	
+
+
+	
 
 
 
