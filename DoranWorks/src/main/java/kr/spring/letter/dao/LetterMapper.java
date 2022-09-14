@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.NextPrevVO;
@@ -38,12 +39,34 @@ public interface LetterMapper {
 	public List<LetterVO> selectSendList(Map<String, Object> map);
 	//보낸 쪽지함 이전글 다음글
 	public NextPrevVO selectSendNP(Map<String, Object> map);
+
+	//내게쓴쪽지함
+	public int selectMyRowCount(Map<String, Object>map);
+	public List<LetterVO> selectMyList(Map<String, Object> map);
+	//내게쓴 쪽지함 이전글 다음글
+	public NextPrevVO selectMyNP(Map<String, Object> map);
+
+	//중요쪽지함
+	public int selectImportantRowCount(Map<String, Object>map);
+	public List<LetterVO> selectImportantList(Map<String, Object> map);
+	//중요 쪽지함 이전글 다음글
+	public NextPrevVO selectImportantNP(Map<String, Object> map);
 	
+	
+	//보낸쪽지함 중요 업데이트
+	@Update("UPDATE letter_send SET lt_important=#{important} WHERE lt_num=#{lt_num}")
+	public void updateSendImportant(Map<String, Object> map);
+	
+	//받은쪽지함 정보 가져오기
+	@Select("SELECT * FROM letter_receive WHERE snum=#{lt_num} AND lt_receiver_num=#{lt_receiver_num}")
+	public LetterVO selectRecLetter(Map<String, Object> map);
+	//받은쪽지함 중요 업데이트
+	@Update("UPDATE letter_receive SET lt_important=#{important} WHERE snum=#{lt_num} AND lt_receiver_num=#{lt_receiver_num}")
+	public void updateReceiveImportant(Map<String, Object> map);
 	
 	//쪽지 상세
-	@Select("SELECT * FROM letter_send WHERE lt_num=#{lt_num}")
 	public LetterVO selectLetter(int lt_num);
-	
+	public List<LetterVO> selectName(String[] rids);
 	
 	
 }

@@ -3,6 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.letter.dao.LetterMapper">  
+	<!-- 보낸쪽지함 인서트 -->
 	<insert id="insertSend" parameterType="letterVO">
 		INSERT INTO letter_send 
 			(lt_num,
@@ -10,9 +11,6 @@
 			 lt_sender_num,
 			 lt_receiver_num,
 			 lt_content,
-			 <if test="lt_important!=null">
-			 lt_important,
-			 </if>
 			 lt_uploadfile1,
 			 lt_uploadfile2,
 			 lt_filename1,
@@ -26,9 +24,6 @@
 		 	 #{lt_sender_num},
 		 	 #{lt_receiver_num},
 		 	 #{lt_content},
-		 	 <if test="lt_important!=null">
-		 	 #{lt_important},
-		 	 </if>
 		 	 #{lt_uploadfile1},
 		 	 #{lt_uploadfile2},
 		 	 #{lt_filename1},
@@ -38,6 +33,7 @@
 		 	 #{lt_reference_id})
 	</insert>
 	
+	<!-- 받은쪽지함 인서트 -->
 	<insert id="insertReceive" parameterType="letterVO">
 		INSERT INTO letter_receive
 			(lt_num,
@@ -45,9 +41,6 @@
 			 lt_sender_num,
 			 lt_receiver_num,
 			 lt_content,
-			 <if test="lt_important!=null">
-			 lt_important,
-			 </if>
 			 lt_uploadfile1,
 			 lt_uploadfile2,
 			 lt_filename1,
@@ -61,9 +54,6 @@
 		 	 #{lt_sender_num},
 		 	 #{lt_receiver_num},
 		 	 #{lt_content},
-		 	 <if test="lt_important!=null">
-		 	 #{lt_important},
-		 	 </if>
 		 	 #{lt_uploadfile1},
 		 	 #{lt_uploadfile2},
 		 	 #{lt_filename1},
@@ -73,6 +63,7 @@
 		 	 #{snum})
 	</insert>
 	
+	<!-- 전체쪽지함 카운트 -->
 	<select id="selectAllRowCount" parameterType="map" resultType="integer">
 		SELECT
 			COUNT(*)
@@ -97,7 +88,7 @@
 		    FROM
 		    	letter_receive r
 		    WHERE
-		    	lt_receiver_num=#{mem_num})
+		    	lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num})
 	    	<where>
 			<if test="keyword != null and keyword != ''">
 				<if test="keyfield == 1">
@@ -119,6 +110,7 @@
 		</where>
 	</select>
 	
+	<!-- 전체쪽지함 리스트 -->
 	<select id="selectAllList" parameterType="map" resultType="letterVO">
 		SELECT 
 			*
@@ -140,7 +132,8 @@
 			            lt_date,
 			            lt_sender_id,
 		      			(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
-				        lt_content
+				        lt_content,
+				        lt_important
 			    	FROM
 			    		letter_send s
 			     	WHERE
@@ -158,11 +151,12 @@
 			        	lt_date,
 				        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
 				        lt_receiver_id,
-				        lt_content
+				        lt_content,
+				        lt_important
 			  		FROM
 			  			letter_receive r
 			  		WHERE
-			  			lt_receiver_num=#{mem_num}) 
+			  			lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num}) 
 			  	<where>
 					<if test="keyword != null and keyword != ''">
 						<if test="keyfield == 1">
@@ -188,6 +182,7 @@
 		]]> 
 	</select>
 	
+	<!-- 전체쪽지함 이전/다음글 -->
 	<select id="selectAllNP" parameterType="map" resultType="nextPrevVO">
 		WITH tta AS
 		(
@@ -220,7 +215,7 @@
               FROM
                 letter_receive r
               WHERE
-                lt_receiver_num=#{mem_num}) 
+                lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num}) 
           )
                
            SELECT * FROM(
@@ -239,6 +234,7 @@
            WHERE lt_num=#{lt_num}
 	</select>
 	
+	<!-- 받은쪽지함 카운트 -->
 	<select id="selectRecRowCount" parameterType="map" resultType="integer">
 		SELECT
 		  COUNT(*)
@@ -248,6 +244,7 @@
 		  lt_receiver_num=#{mem_num}
 	</select>
 	
+	<!-- 받은쪽지함 리스트 -->
 	<select id="selectRecList" parameterType="map" resultType="letterVO">
 		SELECT 
 			*
@@ -267,7 +264,8 @@
 			        lt_sender_id,
 			        lt_receiver_id,
 			        lt_content,
-                    mem_name
+                    mem_name,
+                    lt_important
 		  		FROM
 		  			letter_receive l JOIN member_detail m on mem_num=lt_sender_num
 		  		WHERE
@@ -279,6 +277,7 @@
 		]]> 
 	</select>
 	
+	<!-- 받은쪽지함 이전/다음글 -->
 	<select id="selectRecNP" parameterType="map" resultType="nextPrevVO">
 		WITH tta AS
 		(
@@ -315,6 +314,7 @@
            WHERE lt_num=#{lt_num}
 	</select>
 	
+	<!-- 보낸쪽지함 카운트 -->
 	<select id="selectSendRowCount" parameterType="map" resultType="integer">
 		SELECT
 		  COUNT(*)
@@ -324,6 +324,7 @@
 		  lt_sender_num=#{mem_num}
 	</select>
 	
+	<!-- 보낸쪽지함 리스트 -->
 	<select id="selectSendList" parameterType="map" resultType="letterVO">
 		SELECT 
 			*
@@ -342,7 +343,8 @@
 		        	lt_date,
 			        lt_sender_id,
 			        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
-			        lt_content
+			        lt_content,
+			        lt_important
 		  		FROM
 		  			letter_send s
 		  		WHERE
@@ -354,6 +356,7 @@
 		]]> 
 	</select>
 	
+	<!-- 보낸쪽지함 이전/다음글 -->
 	<select id="selectSendNP" parameterType="map" resultType="nextPrevVO">
 		WITH tta AS
 			(
@@ -391,6 +394,262 @@
          	)
          WHERE lt_num=#{lt_num}
 	</select>
+	
+	<!-- 내게쓴쪽지함 카운트 -->
+	<select id="selectMyRowCount" parameterType="map" resultType="integer">
+		SELECT
+		  COUNT(*)
+		FROM
+		  letter_send
+		WHERE
+		  lt_sender_num=#{mem_num} AND lt_receiver_num=#{lt_receiver_num}
+	</select>
+	
+	<!-- 내게쓴쪽지함 리스트 -->
+	<select id="selectMyList" parameterType="map" resultType="letterVO">
+		SELECT 
+			*
+		FROM
+			(SELECT
+				rownum rnum,
+				a.*
+			FROM
+		  		(SELECT
+		  			lt_num,
+		  			lt_sender_num,
+		  			lt_receiver_num,
+                    <![CDATA[
+			  		REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			  		]]>
+		        	lt_date,
+			        lt_sender_id,
+			        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = s.lt_receiver_id) || '('|| lt_receiver_id || ')' AS lt_receiver_id,
+			        lt_content,
+			        lt_important
+		  		FROM
+		  			letter_send s
+		  		WHERE
+		  			lt_sender_num=#{mem_num} AND lt_receiver_num=#{lt_receiver_num}
+		  		ORDER BY lt_date DESC)a)
+		
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]> 
+	</select>
+	
+	<!-- 내게쓴쪽지함 이전다음글 -->
+	<select id="selectMyNP" parameterType="map" resultType="nextPrevVO">
+		WITH tta AS
+			(
+			SELECT
+	  			lt_num,
+	  			lt_sender_num,
+	  			lt_receiver_num,
+		  		<![CDATA[
+		  		REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+		  		]]>
+	        	lt_date,
+		        lt_sender_id,
+		        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = s.lt_receiver_id) || '('|| lt_receiver_id || ')' AS lt_receiver_id,
+		        lt_content
+	  		FROM
+	  			letter_send s
+	  		WHERE
+	  			lt_sender_num=#{mem_num} AND lt_receiver_num=#{lt_receiver_num}
+	  		)
+	  		
+         SELECT * FROM
+         	(
+             SELECT
+              lt_num,
+              LAG(lt_num,1) OVER(ORDER BY lt_num) prev_num,
+              LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
+              LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
+              LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+              LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
+              LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
+              LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
+              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+                
+             FROM tta 
+         	)
+         WHERE lt_num=#{lt_num}
+	</select>
+	
+	<!-- 중요쪽지함 카운트 -->
+	<select id="selectImportantRowCount" parameterType="map" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM
+		   (SELECT 
+		   		lt_sender_id,
+		   		(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
+		   		lt_title,
+		   		lt_content,
+		   		lt_important
+		    FROM
+		    	letter_send s
+		    WHERE
+		    	lt_sender_num=#{mem_num} AND lt_important=1
+		    
+		    UNION ALL 
+		    
+		   	SELECT
+		   		(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
+		   		lt_receiver_id,
+		   		lt_title,
+		   		lt_content,
+		   		lt_important
+		    FROM
+		    	letter_receive r
+		    WHERE
+		    	lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1)
+	</select>
+	
+	<!-- 중요쪽지함 리스트 -->
+	<select id="selectImportantList" parameterType="map" resultType="letterVO">
+		SELECT 
+			*
+		FROM
+			(SELECT
+				rownum rnum,
+				a.*
+			FROM
+				(SELECT
+				   *
+				 FROM
+			   		(SELECT
+			   			lt_num AS lt_num,
+			   			lt_sender_num,
+			   			lt_receiver_num,
+			   			<![CDATA[
+			   			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			   			]]>
+			            lt_date,
+			            lt_sender_id,
+		      			(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
+				        lt_content,
+				        lt_important
+			    	FROM
+			    		letter_send s
+			     	WHERE
+			     		lt_sender_num=#{mem_num} AND lt_important=1
+			     		
+			      	UNION ALL 
+			      	
+			  		SELECT
+			  			snum AS lt_num,
+			  			lt_sender_num,
+			  			TO_CHAR(lt_receiver_num) AS lt_receiver_num,
+			  			<![CDATA[
+			  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+			  			]]>
+			        	lt_date,
+				        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
+				        lt_receiver_id,
+				        lt_content,
+				        lt_important
+			  		FROM
+			  			letter_receive r
+			  		WHERE
+			  			lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1) 
+			   ORDER BY lt_date DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]> 
+	</select>
+	
+	<!-- 중요쪽지함 이전다음글 -->
+	<select id="selectImportantNP" parameterType="map" resultType="nextPrevVO">
+		WITH tta AS
+		(
+          SELECT
+            *
+           FROM
+             (SELECT
+              	lt_num AS lt_num,
+                <![CDATA[
+	  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+	  			]]>
+                lt_date,
+                lt_sender_id,
+                (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
+                lt_important
+              FROM
+                letter_send s
+              WHERE
+                lt_sender_num=#{mem_num} AND lt_important=1
+                
+              UNION ALL 
+              
+              SELECT
+                snum AS lt_num,
+                <![CDATA[
+	  			REPLACE(REPLACE(lt_title,'<','&lt;'),'>','&gt;') AS lt_title,
+	  			]]>
+                lt_date,
+                (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
+                lt_receiver_id,
+                lt_important
+              FROM
+                letter_receive r
+              WHERE
+                lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1) 
+          )
+               
+           SELECT * FROM(
+               SELECT
+	               lt_num,
+	               LAG(lt_num,1) OVER(ORDER BY lt_num) prev_num,
+	               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
+	               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
+	               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+	               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
+	               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
+	               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
+	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+               FROM tta 
+               )
+           WHERE lt_num=#{lt_num}
+	</select>
+	
+	<!-- 상세페이지 기본정보 -->
+	<select id="selectLetter" parameterType="integer" resultType="letterVO">
+		SELECT 
+		    lt_num,
+		    lt_title,
+		    lt_sender_num,
+		    lt_receiver_num,
+		    lt_date,
+		    lt_content,
+		    lt_read,
+		    lt_important,
+		    lt_uploadfile1,
+		    lt_uploadfile2,
+		    lt_filename1,
+		    lt_filename2,
+		    (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = s.lt_sender_id) || '(' || lt_sender_id || ')' as lt_sender_id,
+		    lt_receiver_id,
+		    lt_reference_id
+		FROM letter_send s WHERE lt_num=#{lt_num}
+	</select>
+	
+	<!-- 상세페이지 이름가져오기 -->
+	<select id="selectName" resultType="letterVO">
+		SELECT 
+		    M.MEM_ID,
+		    MD.MEM_NAME
+		FROM
+		    MEMBER M,
+		    MEMBER_DETAIL MD
+		WHERE M.MEM_NUM = MD.MEM_NUM
+		    AND M.MEM_ID IN (
+			   	<foreach item="item" collection="rids" separator=",">
+	  				#{item}
+			   	</foreach>
+		    )
+	</select>
+	
 	
 </mapper>
 

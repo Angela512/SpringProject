@@ -32,6 +32,7 @@ public class LetterVO {
 	private int snum;
 	
 	private String mem_name;
+	private String mem_id;
 	
 	//=======================이미지 BLOB 처리=========================//
 		//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -224,6 +225,16 @@ public class LetterVO {
 	public void setMem_name(String mem_name) {
 		this.mem_name = mem_name;
 	}
+	
+	
+
+	public String getMem_id() {
+		return mem_id;
+	}
+
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
 
 	@Override
 	public String toString() {
@@ -233,9 +244,10 @@ public class LetterVO {
 				+ ", lt_filename2=" + lt_filename2 + ", lt_sender_id=" + lt_sender_id + ", lt_receiver_id="
 				+ lt_receiver_id + ", lt_reference_id=" + lt_reference_id + ", lt_sender_name=" + lt_sender_name
 				+ ", lt_receiver_name=" + lt_receiver_name + ", rids=" + Arrays.toString(rids) + ", rids2="
-				+ Arrays.toString(rids2) + ", snum=" + snum + ", mem_name=" + mem_name + "]";
+				+ Arrays.toString(rids2) + ", snum=" + snum + ", mem_name=" + mem_name + ", mem_id=" + mem_id + "]";
 	}
 
+	
 	
 	
 	

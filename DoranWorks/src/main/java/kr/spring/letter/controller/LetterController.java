@@ -96,7 +96,7 @@ public class LetterController {
 		List<LetterVO> list = null;
 		PagingUtil page = null;
 		
-		if(letter_type==0) {
+		if(letter_type==0) {//전체쪽지함
 			//글의 총 개수
 			count = letterService.selectAllRowCount(map);
 			
@@ -115,7 +115,7 @@ public class LetterController {
 				
 			}
 			
-		}else if(letter_type==1) {
+		}else if(letter_type==1) {//받은쪽지함
 			//글의 총 개수
 			count = letterService.selectRecRowCount(map);
 			
@@ -130,7 +130,7 @@ public class LetterController {
 				
 				list=letterService.selectRecList(map);
 			}
-		}else if(letter_type==2) {
+		}else if(letter_type==2) {//보낸쪽지함
 			//글의 총 개수
 			count = letterService.selectSendRowCount(map);
 			
@@ -147,12 +147,38 @@ public class LetterController {
 				
 			}
 			
-		}else if(letter_type==3) {
+		}else if(letter_type==3) {//내게쓴쪽지함
+			map.put("lt_receiver_num", String.valueOf(user.getMem_num()));
+			//글의 총 개수
+			count = letterService.selectMyRowCount(map);
 			
-		}else if(letter_type==4) {
+			logger.debug("<<count>> : "+count);
 			
-		}else if(letter_type==5) {
+			//페이지 처리
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
 			
+			if(count>0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				
+				list=letterService.selectMyList(map);
+				
+			}
+		}else if(letter_type==4) {//중요쪽지함
+			//글의 총 개수
+			count = letterService.selectImportantRowCount(map);
+			
+			logger.debug("<<count>> : "+count);
+			
+			//페이지 처리
+			page = new PagingUtil(keyfield,keyword,currentPage,count,rowCount,pageCount,"main.do?letter_type="+letter_type);
+			
+			if(count>0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				
+				list=letterService.selectImportantList(map);
+			}
 		}
 		
 		ModelAndView mav = new ModelAndView();
@@ -172,6 +198,32 @@ public class LetterController {
 		
 		LetterVO letter = letterService.selectLetter(lt_num);
 		
+		String[] rids = letter.getLt_receiver_id().split(",");
+		List<LetterVO> receiverName= letterService.selectName(rids);
+		String recname = "";
+		for(int i=0;i<receiverName.size();i++) {
+			if (i==receiverName.size()-1)
+				recname+=receiverName.get(i).getMem_name()+"("+receiverName.get(i).getMem_id()+")";
+			else
+				recname+=receiverName.get(i).getMem_name()+"("+receiverName.get(i).getMem_id()+"),";
+		}
+		letter.setLt_receiver_id(recname);
+		
+		List<LetterVO> referenceName = null;
+		String refname = "";
+		if(letter.getLt_reference_id() != null) {
+			rids = letter.getLt_reference_id().split(",");
+			referenceName= letterService.selectName(rids);
+			
+			for(int i=0;i<referenceName.size();i++) {
+				if(i==referenceName.size()-1)
+					refname+=referenceName.get(i).getMem_name()+"("+referenceName.get(i).getMem_id()+")";
+				else
+					refname+=referenceName.get(i).getMem_name()+"("+referenceName.get(i).getMem_id()+"),";
+			}
+			letter.setLt_reference_id(refname);
+		}
+		
 		letter.setLt_title(StringUtil.useNoHtml(letter.getLt_title()));
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -187,6 +239,12 @@ public class LetterController {
 			np = letterService.selectRecNP(map);
 		else if(letter_type==2)
 			np = letterService.selectSendNP(map);
+		else if(letter_type==3) {
+			map.put("lt_receiver_num", String.valueOf(user.getMem_num()));
+			np = letterService.selectMyNP(map);
+		}else if(letter_type==4) {
+			np = letterService.selectImportantNP(map);
+		}
 		
 		System.out.println("이전다음 : "+np);
 		
