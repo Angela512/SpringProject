@@ -6,12 +6,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
-
-<div class="chatroomMain"></div>
+	<!-- 채팅방 검색 및 채팅방 생성 -->
+	<div class="chatroomMain">
 	<!-- 채팅방 리스트 -->
-<div id="chatroomList"></div>
-
-	
+	<div id="chatroomList"></div>
+	</div>
+	<!-- 채팅방 생성 시 멤버 선택 -->
 	<div id="searchChatroom" style="display:none;">
 		<div id="mem_list"></div>
 		<%-- <h2>멤버 선택</h2>
@@ -41,6 +41,10 @@
 			</c:if>
 		</form>
 	</div>
+	
+
+	
+	
 	
 	<!-- 채팅 시작 -->
 	<div class="chat_form" style="display:none;"></div>

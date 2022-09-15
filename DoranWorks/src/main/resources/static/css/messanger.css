@@ -1,0 +1,36 @@
+/*=========레이아웃=========*/
+
+/* 메신저 css 시작 */
+.chatroomMain{
+	width:38%;
+	height:500px;
+	float:left;
+}
+#chatroomList{
+	width:38%;
+}
+#searchChatroom{
+	width:60%;
+	float:left;
+}
+.chat_form{
+	/* margin:0 auto; */
+	width:60%;
+	height:500px;
+	border:1px solid #000;
+	float:left;
+}
+
+
+
+
+
+
+/* 메신저 css 끝 */
+
+
+
+
+
+
+

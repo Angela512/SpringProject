@@ -1,19 +1,4 @@
 /*=========레이아웃=========*/
-
-/* 메신저 css 시작 */
-/* .chatroomMain{
-	float:left;
-} */
-.chat_form{
-	/* margin:0 auto; */
-	width:60%;
-	border:1px solid #000;
-}
-#chat_form{
-	border:none;
-}
-/* 메신저 css 끝 */
-
 div#main{
 	width:1024px;
 	margin:0 auto;

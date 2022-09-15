@@ -1,7 +1,16 @@
 $(function(){
 	$(document).on('click', '#createroom_btn', function(){
-		$('#searchChatroom').show();
-		
+		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리
+		if($('#searchChatroom').css('display') != 'none'){
+	        $('#searchChatroom').hide();
+	    }else{
+			$('#searchChatroom').show();
+			if($('#searchChatroom').css('display') != 'none'){
+				//채팅창이 열려있으면 숨김
+				$('.chat_form').hide();
+			}
+			
+		}
 		if($('#member_list *').length == 0){ 
 			//member_list테이블 아래에 아무것도 없으면 초기 데이터 호출
 			selectList();
@@ -41,11 +50,12 @@ $(function(){
 					chatroomMainUI += '<form action="list.do" id="search_form" method="get">';
 					chatroomMainUI += '<ul class="search">';
 					chatroomMainUI += '<li><input type="search" name="keyword" id="keyword" placeholder="채팅방 이름, 메시지 검색"></li>';
-					chatroomMainUI += '</ul>';
-					chatroomMainUI += '<div>';
 					
-					chatroomMainUI += '<input type="button" value="채팅방 생성" id="createroom_btn">';
-					chatroomMainUI += '</div>';
+					//chatroomMainUI += '<div>';
+					
+					chatroomMainUI += '<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>';
+					chatroomMainUI += '</ul>';
+					//chatroomMainUI += '</div>';
 					chatroomMainUI += '</form>';					
 					$('.chatroomMain').prepend(chatroomMainUI);
 					
@@ -63,12 +73,15 @@ $(function(){
 					
 					//이 div가 클릭되면 대화창 띄움
 					$(document).on('click', '.chatroom', function(){
-							createChat($(this).attr('id'));
+						//채팅창이 열린 채로 채팅방 생성하기 클릭 시 채팅창 숨김
+						if($('#searchChatroom').css('display') != 'none'){
+					        $('.chat_form').hide();
+					    }
+						createChat($(this).attr('id'));
 					}); 
 				}
 			},
 			error:function(){
-				//로딩 이미지 감추기
 				alert('chatroomList.do 네트워크 오류 발생');
 			}
 		});
