@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.letter.dao.LetterMapper;
 import kr.spring.letter.service.LetterService;
+import kr.spring.letter.vo.LetterReadVO;
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.NextPrevVO;
 import kr.spring.member.vo.MemberVO;
@@ -198,6 +200,24 @@ public class LetterController {
 		
 		LetterVO letter = letterService.selectLetter(lt_num);
 		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		LetterReadVO readVO = new LetterReadVO();
+		readVO.setLt_num(lt_num);
+		readVO.setMem_num(user.getMem_num());
+		readVO.setLt_read(1);
+		if(letter.getLt_sender_num()==user.getMem_num()) {
+			if(letter.getLt_sender_num()==Integer.parseInt(letter.getLt_receiver_num())) {
+				if(letter_type==1)
+					letterService.updateReceiveRead(readVO);
+				else
+					letterService.updateSendRead(readVO);
+			}else 
+				letterService.updateSendRead(readVO);
+			
+		}else {
+			letterService.updateReceiveRead(readVO);
+		}
+		
 		String[] rids = letter.getLt_receiver_id().split(",");
 		List<LetterVO> receiverName= letterService.selectName(rids);
 		String recname = "";
@@ -226,7 +246,7 @@ public class LetterController {
 		
 		letter.setLt_title(StringUtil.useNoHtml(letter.getLt_title()));
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mem_num", user.getMem_num());

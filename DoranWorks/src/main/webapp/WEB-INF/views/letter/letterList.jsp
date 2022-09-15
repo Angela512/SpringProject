@@ -47,6 +47,7 @@
 	</c:if>
 	<c:if test="${count>0 }">
 	<input type="button" value="읽음" id="list_read">
+	<input type="button" value="삭제" id="list_delete">
 	<table>
 		<c:forEach var="letter" items="${list }" varStatus="status">
 		<tr>
@@ -78,7 +79,10 @@
 				${letter.lt_receiver_id }
 				</c:if>
 			 </td>
-			<td><a href="detail.do?lt_num=${letter.lt_num }&letter_type=${param.letter_type}">${letter.lt_title }</a></td>
+			<td>
+				<a href="detail.do?lt_num=${letter.lt_num }&letter_type=${param.letter_type}" <c:if test="${letter.lt_read==0}">style="color:blue;"</c:if>>${letter.lt_title }</a>
+				
+			</td>
 			<td>${letter.lt_date }</td>
 		</tr>
 		</c:forEach>

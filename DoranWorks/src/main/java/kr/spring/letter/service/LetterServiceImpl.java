@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.letter.dao.LetterMapper;
+import kr.spring.letter.vo.LetterReadVO;
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.NextPrevVO;
 import kr.spring.member.vo.MemberVO;
@@ -182,6 +183,29 @@ public class LetterServiceImpl implements LetterService{
 		letterMapper.updateReceiveImportant(map);
 	}
 	
+	//쪽지함 리스트 읽음,안읽음처리
+	@Override
+	public void updateRead(LetterReadVO readVO) {
+		String[] nums = readVO.getNums();
+		for(int i=0;i<nums.length;i++) {
+			int ltnum = Integer.parseInt(nums[i]);
+			LetterVO letter = letterMapper.selectLetter(ltnum);
+			readVO.setLt_num(ltnum);
+			if(letter.getLt_sender_num()==readVO.getMem_num()) {//보낸쪽지함 읽음 업데이트
+				if(letter.getLt_sender_num()== Integer.parseInt(letter.getLt_receiver_num())) {//내게쓴쪽지일경우
+					if(readVO.getLt_type()==1) 
+						letterMapper.updateReceiveRead(readVO);
+					else
+						letterMapper.updateReceiveRead(readVO);
+				}else 
+					letterMapper.updateSendRead(readVO);
+				
+			}else {//받은쪽지함 읽음 업데이트
+				letterMapper.updateReceiveRead(readVO);
+			}
+		}
+	}
+	
 	//상세페이지 기본정보
 	@Override
 	public LetterVO selectLetter(int lt_num) {
@@ -193,6 +217,22 @@ public class LetterServiceImpl implements LetterService{
 	public List<LetterVO> selectName(String[] rids) {
 		return letterMapper.selectName(rids);
 	}
+
+	//상세페이지 보낸테이블 읽음 처리
+	@Override
+	public void updateSendRead(LetterReadVO readVO) {
+		letterMapper.updateSendRead(readVO);
+	}
+
+	//상세페이지 받는테이블 읽음 처리
+	@Override
+	public void updateReceiveRead(LetterReadVO readVO) {
+		letterMapper.updateReceiveRead(readVO);
+	}
+
+	
+
+	
 
 	
 

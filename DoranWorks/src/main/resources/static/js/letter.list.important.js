@@ -1,16 +1,21 @@
 $(function(){
 	let star;
+	let lt_type=0;
+	if($('#lt_type').val()!=''){
+		lt_type=$('#lt_type').val();
+	}
+	
+	
 	
 	//중요 등록
 	$('.output_important').click(function(){
-		let lt_type=$('#lt_type').val();
 		
 		star=$(this);
 		
 		$.ajax({
 			url:'writeImportant.do',
 			type:'post',
-			data:{lt_num:$(this).attr('data-ltnum')},
+			data:{lt_num:$(this).attr('data-ltnum'),lt_type:lt_type},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
@@ -47,6 +52,7 @@ $(function(){
 	}
 	
 	
+	//읽음버튼클릭
 	$('#list_read').click(function(){
 		let cheks='';
 		if($('input[type=checkbox]:checked').length<1){
@@ -65,12 +71,58 @@ $(function(){
 		$.ajax({
 			url:'listRead.do',
 			type:'post',
+			data:{lt_nums:cheks,lt_type:lt_type},
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인 후 가능합니다!');
+				}else if(param.result=='success'){
+					location.reload();
+				}else{
+					alert('읽음처리시 오류 발생!');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생!');
+			}
+		});
+		
+		alert(cheks);
+	});
+	
+	//삭제버튼클릭
+	$('#list_delete').click(function(){
+		let cheks='';
+		if($('input[type=checkbox]:checked').length<1){
+			alert('하나 이상 선택하세요!');
+			return;
+		}
+		
+		 $('input[type=checkbox]:checked').each(function(index){
+			if(index==0){
+				cheks+=$(this).val();
+			}else{
+				cheks+=','+$(this).val();
+			}
+		});
+		
+		$.ajax({
+			url:'',
+			type:'post',
 			data:{lt_nums:cheks},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
 			success:function(param){
-				
+				if(param.result=='logout'){
+					alert('로그인 후 가능합니다!');
+				}else if(param.result=='success'){
+					location.reload();
+				}else{
+					alert('삭제시 오류 발생!');
+				}
 			},
 			error:function(){
 				alert('네트워크 오류 발생!');

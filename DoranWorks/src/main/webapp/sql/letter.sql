@@ -6,7 +6,7 @@ create table letter_send(
 	lt_receiver_num varchar2(20) not null,
 	lt_date date default sysdate not null,
 	lt_content varchar2(500) not null,
-	lt_read number default 0 not null,
+	lt_read number default 1 not null,
 	lt_important number default 0 not null,
 	lt_uploadfile1 blob,
 	lt_uploadfile2 blob,

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.letter.vo.LetterReadVO;
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.NextPrevVO;
 import kr.spring.member.vo.MemberVO;
@@ -63,6 +64,13 @@ public interface LetterMapper {
 	//받은쪽지함 중요 업데이트
 	@Update("UPDATE letter_receive SET lt_important=#{important} WHERE snum=#{lt_num} AND lt_receiver_num=#{lt_receiver_num}")
 	public void updateReceiveImportant(Map<String, Object> map);
+	
+	//보낸쪽지함 리스트 읽음처리
+	@Update("UPDATE letter_send SET lt_read=#{lt_read} WHERE lt_num=#{lt_num}")
+	public void updateSendRead(LetterReadVO readVO);
+	//받은쪽지함 리스트 읽음처리
+	@Update("UPDATE letter_receive SET lt_read=#{lt_read} WHERE snum=#{lt_num} AND lt_receiver_num=#{mem_num}")
+	public void updateReceiveRead(LetterReadVO readVO);
 	
 	//쪽지 상세
 	public LetterVO selectLetter(int lt_num);

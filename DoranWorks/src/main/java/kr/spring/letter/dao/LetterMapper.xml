@@ -133,7 +133,8 @@
 			            lt_sender_id,
 		      			(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 				        lt_content,
-				        lt_important
+				        lt_important,
+				        lt_read
 			    	FROM
 			    		letter_send s
 			     	WHERE
@@ -152,7 +153,8 @@
 				        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
 				        lt_receiver_id,
 				        lt_content,
-				        lt_important
+				        lt_important,
+				        lt_read
 			  		FROM
 			  			letter_receive r
 			  		WHERE
@@ -265,7 +267,8 @@
 			        lt_receiver_id,
 			        lt_content,
                     mem_name,
-                    lt_important
+                    lt_important,
+                    lt_read
 		  		FROM
 		  			letter_receive l JOIN member_detail m on mem_num=lt_sender_num
 		  		WHERE
@@ -344,7 +347,8 @@
 			        lt_sender_id,
 			        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 			        lt_content,
-			        lt_important
+			        lt_important,
+			        lt_read
 		  		FROM
 		  			letter_send s
 		  		WHERE
@@ -425,7 +429,8 @@
 			        lt_sender_id,
 			        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = s.lt_receiver_id) || '('|| lt_receiver_id || ')' AS lt_receiver_id,
 			        lt_content,
-			        lt_important
+			        lt_important,
+			        lt_read
 		  		FROM
 		  			letter_send s
 		  		WHERE
@@ -503,7 +508,7 @@
 		    FROM
 		    	letter_receive r
 		    WHERE
-		    	lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1)
+		    	lt_receiver_num=#{mem_num} AND lt_important=1)
 	</select>
 	
 	<!-- 중요쪽지함 리스트 -->
@@ -529,7 +534,8 @@
 			            lt_sender_id,
 		      			(SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 				        lt_content,
-				        lt_important
+				        lt_important,
+						lt_read
 			    	FROM
 			    		letter_send s
 			     	WHERE
@@ -548,11 +554,12 @@
 				        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
 				        lt_receiver_id,
 				        lt_content,
-				        lt_important
+				        lt_important,
+				        lt_read
 			  		FROM
 			  			letter_receive r
 			  		WHERE
-			  			lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1) 
+			  			lt_receiver_num=#{mem_num} AND lt_important=1) 
 			   ORDER BY lt_date DESC)a)
 		<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
@@ -594,7 +601,7 @@
               FROM
                 letter_receive r
               WHERE
-                lt_receiver_num=#{mem_num} AND lt_sender_num!=#{mem_num} AND lt_important=1) 
+                lt_receiver_num=#{mem_num} AND lt_important=1) 
           )
                
            SELECT * FROM(

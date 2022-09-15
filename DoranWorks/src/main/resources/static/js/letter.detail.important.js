@@ -1,11 +1,17 @@
 $(function(){
+	
+	let lt_type=0;
+	if($('#lt_type').val()!=''){
+		lt_type=$('#lt_type').val();
+	}
+	
 	//중요 읽기
 	//중요 선택 여부
 	function selectData(lt_num){
 		$.ajax({
 			url:'getImportant.do',
 			type:'post',
-			data:{lt_num:lt_num},
+			data:{lt_num:lt_num,lt_type:lt_type},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
@@ -23,7 +29,7 @@ $(function(){
 		$.ajax({
 			url:'writeImportant.do',
 			type:'post',
-			data:{lt_num:$('#lt_num').val()},
+			data:{lt_num:$('#lt_num').val(),lt_type:lt_type},
 			dataType:'json',
 			cache:false,
 			timeout:30000,

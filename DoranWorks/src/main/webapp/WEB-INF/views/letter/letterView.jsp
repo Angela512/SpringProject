@@ -9,6 +9,7 @@
 	<%-- important --%>
 	<img id="output_fav" src="${pageContext.request.contextPath}/images/fav01.gif" width="40">
 	<input type="hidden" name="lt_num" id="lt_num" value="${letter.lt_num }">
+	<input type="hidden" name="lt_type" id="lt_type" value="${param.letter_type}">
 	<h2>${letter.lt_title }</h2>
 	<ul class="detail-info">
 		<li>보낸사람 : ${letter.lt_sender_id}</li>

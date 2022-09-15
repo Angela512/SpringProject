@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.letter.vo.LetterReadVO;
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.NextPrevVO;
 import kr.spring.member.vo.MemberVO;
@@ -53,8 +54,15 @@ public interface LetterService {
 	//받은쪽지함 중요 업데이트
 	public void updateReceiveImportant(Map<String, Object> map);
 	
+	//쪽지함 리스트 읽음,안읽음처리
+	public void updateRead(LetterReadVO readVO);
+	
 	//상세페이지 기본정보
 	public LetterVO selectLetter(int lt_num);
 	//상세페이지 이름정보 가져오기
 	public List<LetterVO> selectName(String[] rids);
+	//상세페이지 보낸테이블 읽음 처리
+	public void updateSendRead(LetterReadVO readVO);
+	//상세페이지 받는테이블 읽음 처리
+	public void updateReceiveRead(LetterReadVO readVO);
 }
