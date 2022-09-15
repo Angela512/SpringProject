@@ -73,10 +73,10 @@ $(function(){
 					
 					//이 div가 클릭되면 대화창 띄움
 					$(document).on('click', '.chatroom', function(){
-						//채팅창이 열린 채로 채팅방 생성하기 클릭 시 채팅창 숨김
+						//멤버 리스트가 show인데 div 클릭하면 멤버리스트 hide
 						if($('#searchChatroom').css('display') != 'none'){
-					        $('.chat_form').hide();
-					    }
+							$('#searchChatroom').hide();
+						}
 						createChat($(this).attr('id'));
 					}); 
 				}
@@ -101,6 +101,12 @@ $(function(){
 				$('.chat_form').empty();
 				$('.chat_form').show();
 				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>';
+				msgUI += '<span>멤버 : ';
+				$(param.list).each(function(index, item){
+					msgUI += item.mem_name + ' | ';
+				});
+				
+				msgUI += '</span>';
 				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
 				$(param.msgList).each(function(index, item){

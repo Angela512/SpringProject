@@ -17,6 +17,7 @@ create table chatread(
 	chatread_num number not null,
 	msg_num number not null,
 	mem_num number not null,
+	chatroom_num number not null,
 	constraint chatread_pk primary key(chatread_num),
 	constraint chatread_fk1 foreign key(msg_num) references message(msg_num),
 	constraint chatread_fk2 foreign key(mem_num) references member(mem_num)
