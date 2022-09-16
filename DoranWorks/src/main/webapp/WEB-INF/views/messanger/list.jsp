@@ -33,12 +33,11 @@
 			<div class="checked_div"></div>
 		<!-- 선택된 멤버 리스트 끝 -->
 			
-			<c:if test="${!empty user}">
 			<div class="align-right">
+				<input type="text" class="chatroom_name" placeholder="채팅방 이름">
 				<input type="button" value="취소" class="mem_reset">
 				<input type="submit" value="확인">
 			</div>
-			</c:if>
 		</form>
 	</div>
 	

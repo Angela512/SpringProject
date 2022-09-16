@@ -14,6 +14,9 @@ public class ChatmemVO {
 	private String mem_photo_name;
 	private String mem_dpt;
 	private String mem_rank;
+	private int count;
+	
+	private MessangerVO messangerVO;
 	
 	//=======================이미지 BLOB 처리=========================//
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -22,6 +25,14 @@ public class ChatmemVO {
 		setMem_photo(upload.getBytes());
 		//파일이름
 		setMem_photo_name(upload.getOriginalFilename());
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public String getChatroom_name() {
@@ -72,6 +83,15 @@ public class ChatmemVO {
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
+	
+	public MessangerVO getMessangerVO() {
+		return messangerVO;
+	}
+
+	public void setMessangerVO(MessangerVO messangerVO) {
+		this.messangerVO = messangerVO;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatmemVO [chatroom_num=" + chatroom_num + ", mem_num=" + mem_num + ", chatroom_name=" + chatroom_name

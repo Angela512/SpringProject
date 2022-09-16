@@ -84,16 +84,26 @@ public class MessangerServiceImpl implements MessangerService{
 		return null;
 	}
 
-	@Override
-	public int selectChatmemCount(Integer chatroom_num) {
-		return msgMapper.selectChatmemCount(chatroom_num);
-	}
+	
 
 	@Override
 	public List<MessangerVO> selectMsgList(Integer mem_num, Integer chatroom_num) {
 		//메시지 읽으면 삭제
 		msgMapper.deleteChatread(mem_num, chatroom_num);
 		return msgMapper.selectMsgList(chatroom_num);
+	}
+
+	@Override
+	public List<ChatmemVO> selectChatmemCount(Integer mem_num) {
+		List<ChatmemVO> list = msgMapper.selectChatmemCount(mem_num);
+		//루프를 돌면서
+		for(ChatmemVO chat : list) {
+			//채팅방 별 가장 최신 메시지 가져오기(채팅방 목록에서 보여주기 용)
+			MessangerVO recentMsg = msgMapper.selectRecentMsg(chat.getChatroom_num());
+			chat.setMessangerVO(recentMsg);
+		}
+		return list;
+		
 	}
 
 }

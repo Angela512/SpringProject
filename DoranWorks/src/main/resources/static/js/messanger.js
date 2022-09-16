@@ -34,6 +34,9 @@ $(function(){
 	
 	//================채팅방 목록==============================
 	function list(){
+		
+		
+		
 		$.ajax({
 			url:'chatroomList.do',
 			type:'post',
@@ -62,7 +65,7 @@ $(function(){
 					$(param.list).each(function(index, item){
 						let chatroomListUI = '';
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
-						chatroomListUI += '[' + item.chatroom_num + '번 채팅방]<br>';
+						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 | ' + item.messangerVO.msg_content + '<br>';
 						chatroomListUI += '</div>';
 						chatroomListUI += '';
 						chatroomListUI += '';
@@ -103,7 +106,10 @@ $(function(){
 				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>';
 				msgUI += '<span>멤버 : ';
 				$(param.list).each(function(index, item){
-					msgUI += item.mem_name + ' | ';
+					if(item.mem_num != user_num){
+						msgUI += item.mem_name + ' | ';
+					}
+					
 				});
 				
 				msgUI += '</span>';
@@ -237,6 +243,8 @@ $(function(){
 					let mem_num = $(this).attr('data-num');
 					let mem_name = $(this).attr('id');
 					let modifyUI = '';
+					let submitUI = '';
+					
 					let isChecked = $(this).attr("checked");
 					if(isChecked){ //이미 체크되어있으면 체크 해제
 						isChecked = $(this).attr("checked", false);
@@ -249,11 +257,21 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
-						modifyUI += '<span name="members" value="'+ mem_num +'" id="'+ mem_num + '">' + mem_name + '</span>';
+						modifyUI += '<input type="text" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
+						/*modifyUI += '<span name="members" value="'+ mem_num +'" id="'+ mem_num + '">' + mem_name + '</span>';*/
 						
 						//체크된 멤버 노출
 						$('.checked_div').append(modifyUI);
 					}
+					/*submitUI = '';
+					submitUI += '<input type="text" class="chatroom_name" placeholder="채팅방 이름">';
+					submitUI += '<input type="button" value="취소" class="mem_reset">';
+					submitUI += '<input type="submit" value="확인">';
+					
+					$('.align-right').append(submitUI);*/
+					
+					
+					
 				}); //end of document(checkedMember)
 				
 				//취소버튼 클릭 시 멤버 리스트 폼 숨김

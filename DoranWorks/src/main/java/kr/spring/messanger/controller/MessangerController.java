@@ -74,10 +74,11 @@ public class MessangerController {
 		if(user == null) {
 			mapAjax.put("result", "logout");
 		}else {
-			//채팅방 목록
-			List<ChatmemVO> list = messangerService.selectChatroomList(user.getMem_num());
+			//채팅방 목록 가져오기
+			List<ChatmemVO> list = messangerService.selectChatmemCount(user.getMem_num());
+			
 			mapAjax.put("result", "success");
-			mapAjax.put("list",list);
+			mapAjax.put("list", list);
 		}
 		
 		return mapAjax;
@@ -144,14 +145,12 @@ public class MessangerController {
 		logger.debug("<<선택된 채팅방>> : " + chatroom_num);
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		MessangerVO messangerVO = new MessangerVO();
-		
 		List<ChatmemVO> list = null;
 		List<MessangerVO> msgList = null;
 		//해당 채팅방의 멤버들 정보
 		list = messangerService.selectChatmem(chatroom_num); //채팅방 안에 있는 멤버들 정보 읽어옴
 		msgList = messangerService.selectMsgList(user.getMem_num(), chatroom_num); //채팅방 대화내용 읽어옴
-
+		
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		if(user != null) {
 			mapAjax.put("user_num", user.getMem_num());

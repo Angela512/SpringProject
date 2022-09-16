@@ -11,9 +11,23 @@ public class ChatroomVO {
 	private Date msg_sendtime;
 	private byte[] mem_photo;
 	private String mem_photo_name;
+	private int msg_num;
+	private String msg_content;
 	
 	private int[] members;
 	
+	public int getMsg_num() {
+		return msg_num;
+	}
+	public void setMsg_num(int msg_num) {
+		this.msg_num = msg_num;
+	}
+	public String getMsg_content() {
+		return msg_content;
+	}
+	public void setMsg_content(String msg_content) {
+		this.msg_content = msg_content;
+	}
 	public byte[] getMem_photo() {
 		return mem_photo;
 	}
