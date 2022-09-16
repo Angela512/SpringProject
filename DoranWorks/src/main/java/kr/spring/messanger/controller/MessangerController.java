@@ -76,7 +76,7 @@ public class MessangerController {
 		}else {
 			//채팅방 목록 가져오기
 			List<ChatmemVO> list = messangerService.selectChatmemCount(user.getMem_num());
-			
+			logger.debug("<<채팅방 마지막메시지>> : " + list);
 			mapAjax.put("result", "success");
 			mapAjax.put("list", list);
 		}

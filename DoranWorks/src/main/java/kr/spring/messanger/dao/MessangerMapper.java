@@ -48,12 +48,17 @@ public interface MessangerMapper {
 	@Select("SELECT * FROM chatroom c JOIN chatmem USING(chatroom_num) WHERE mem_num=#{mem_num}")
 	public List<ChatmemVO> selectChatroomList(Integer mem_num);
 	
-	//채팅방 목록 및 멤버 수
+	//내 채팅방 목록 및 채팅방 멤버 수
 	@Select("SELECT * FROM chatroom JOIN chatmem USING(chatroom_num) "
 			+ "JOIN (SELECT chatroom_num, COUNT(*) count FROM chatmem GROUP BY chatroom_num) "
 			+ "USING(chatroom_num) WHERE mem_num=#{mem_num}")
 	public List<ChatmemVO> selectChatmemCount(Integer mem_num);
 	
+	//해당 채팅방의 가장 최신 메시지 읽어옴
+	@Select("SELECT * FROM (SELECT msg_content, chatroom_num, m.msg_sendtime, total_cnt "
+			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt "
+			+ "FROM chatread GROUP BY msg_num)r USING(msg_num) "
+			+ "WHERE chatroom_num=#{chatroom_num} ORDER BY msg_sendtime DESC) WHERE rownum=1")
 	public MessangerVO selectRecentMsg(Integer chatroom_num);
 	
 	//채팅방 생성 시 멤버 선택
@@ -65,12 +70,6 @@ public interface MessangerMapper {
 	@Select("SELECT msg_num, m.mem_num, d.mem_name, msg_content, chatroom_num, m.msg_sendtime, total_cnt "
 			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r USING(msg_num) JOIN member_detail d ON m.mem_num=d.mem_num WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
 	public List<MessangerVO> selectMsgList(Integer chatroom_num);
-	
-	//채팅방 별 가장 최신 메시지 가져오기(채팅방 목록에서 보여주기 용)
-	@Select("SELECT * FROM (SELECT msg_content, chatroom_num, m.msg_sendtime, total_cnt "
-			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r "
-			+ "USING(msg_num) WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num DESC) WHERE rownum=1")
-	public MessangerVO selectRecentMsg(ChatmemVO chatmemVO);
 	
 	public int selectRowCount(Map<String, Object> map);
 	
@@ -99,7 +98,7 @@ public interface MessangerMapper {
 	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num} AND chatroom_num=#{chatroom_num}")
 	public void deleteChatread(@Param(value="mem_num") Integer mem_num, @Param(value="chatroom_num") Integer chatroom_num);
 	
-	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi') FROM dual")
+	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi:ss') FROM dual")
 	public String selectMsgSendtime();
 	
 	

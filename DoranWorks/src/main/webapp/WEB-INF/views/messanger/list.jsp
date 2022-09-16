@@ -9,8 +9,8 @@
 	<!-- 채팅방 검색 및 채팅방 생성 -->
 	<div class="chatroomMain">
 	<!-- 채팅방 리스트 -->
-	<div id="chatroomList"></div>
 	</div>
+	
 	<!-- 채팅방 생성 시 멤버 선택 -->
 	<div id="searchChatroom" style="display:none;">
 		<div id="mem_list"></div>
