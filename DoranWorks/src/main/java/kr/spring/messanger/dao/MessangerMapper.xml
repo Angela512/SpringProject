@@ -4,27 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.messanger.dao.MessangerMapper">  
   	<!-- MessangerMapper.java랑 파일명 / 메소드명 같아야함 -->
-  				<!--	타입,			 반환타입 -->
-  	<select id="selectChatroomList2" parameterType="map" resultType="chatroomVO">
-  		SELECT 
-		*
-	FROM (SELECT
-			a.*,
-			rownum rnum
-		  FROM (SELECT
-		  			c.chatroom_num,
-		  			c.chatroom_name,
-		  			d.mem_name,
-		  			msg.msg_sendtime
-		  		FROM chatroom c JOIN message msg
-		  		ON c.chatroom_num = msg.chatroom_num JOIN member_detail d ON msg.mem_num = d.mem_num 
-			<!-- <where>
-	  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
-	  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
-	  				d.mem_email LIKE '%' || #{keyword} || '%' 
-		  		</where> -->	
-		  		ORDER BY c.chatroom_num DESC)a)
-  	</select>
+  								<!--	타입,			 반환타입 -->
+  	
   	
 	<select id="selectChatmemCount" parameterType="map" resultType="chatmemVO">
 		SELECT 

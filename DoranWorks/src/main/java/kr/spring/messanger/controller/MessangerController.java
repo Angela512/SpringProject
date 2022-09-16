@@ -91,7 +91,7 @@ public class MessangerController {
 	//멤버 리스트 및 검색(완료)
 	@RequestMapping("/messanger/createChatroom.do")
 	@ResponseBody
-	public Map<String,Object> chatroomChatroom(@RequestParam(value="keyword", defaultValue="") String keyword,
+	public Map<String,Object> memSearch(@RequestParam(value="keyword", defaultValue="") String keyword,
 											HttpSession session) {
 		//파라미터들 맵으로 묶어서 보냄
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -102,8 +102,6 @@ public class MessangerController {
 		
 		logger.debug("<<count>> : " + count);
 
-		//페이지 처리
-
 		List<MemberVO> list = null;
 		
 		if(count > 0) {
@@ -112,6 +110,7 @@ public class MessangerController {
 
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		if(user != null) {
 			mapAjax.put("user_num", user.getMem_num());
 		}

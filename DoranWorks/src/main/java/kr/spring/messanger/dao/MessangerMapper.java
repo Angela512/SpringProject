@@ -64,8 +64,9 @@ public interface MessangerMapper {
 	
 //========메시지========================  
 	//대화방에서 메시지 목록들 가져오기
-	@Select("SELECT msg_num, m.mem_num, d.mem_name, msg_content, chatroom_num, m.msg_sendtime, total_cnt "
-			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r USING(msg_num) JOIN member_detail d ON m.mem_num=d.mem_num WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
+	@Select("SELECT msg_num, mem_num, mem_name, msg_content, chatroom_num, msg_sendtime, total_cnt "
+			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r "
+			+ "USING(msg_num) JOIN member_detail USING(mem_num) WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
 	public List<MessangerVO> selectMsgList(Integer chatroom_num);
 	
 	public int selectRowCount(Map<String, Object> map);
@@ -99,7 +100,6 @@ public interface MessangerMapper {
 	public String selectMsgSendtime();
 	
 //====================채팅방 검색========================
-	public ChatmemVO selectChatnameSearch(Integer mem_num);
 	
 	
 }

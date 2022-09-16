@@ -26,9 +26,9 @@ $(function(){
 	
 	//검색 유효성 체크
 	$('#search_form').submit(function(){
-		if($('#keyword').val().trim() == ''){
+		if($('#chat_keyword').val().trim() == ''){
 			alert('검색어를 입력하세요');
-			$('#keyword').val('').focus();
+			$('#chat_keyword').val('').focus();
 			return false;
 		}
 	});
@@ -38,7 +38,7 @@ $(function(){
 		$.ajax({
 			url:'chatroomList.do',
 			type:'post',
-			data:{keyword:$('#keyword').val()},
+			data:{keyword:$('#chat_keyword').val()},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
@@ -77,12 +77,8 @@ $(function(){
 		createChat($(this).attr('id'));
 	}); 
 	
-	$(document).on('keyup','#keyword',function(){
+	$(document).on('keyup','#chat_keyword',function(){
 		list();
-	});
-	
-	$(document).on('keyup', 'search', function(){
-		alert('keyup');
 	});
 	
 	//======================채팅창 띄우기==========================
@@ -201,14 +197,15 @@ $(function(){
 		$.ajax({
 			url:'createChatroom.do',
 			type:'post',
-			data:{keyword:$('#keyword').val()},
+			data:{keyword:$('#mem_keyword').val()},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
 			success:function(param){
+				$('#member_list').empty();
 				let count = param.count;
 				let user_num = param.user_num;
-				let searchChatroomUI = '';
+				/*let searchChatroomUI = '';
 				searchChatroomUI += '<h2>멤버 선택</h2>';
 				searchChatroomUI += '<form action="createChatroom.do" id="search_form" method="get">';
 				searchChatroomUI += '<ul class="search">';
@@ -218,7 +215,7 @@ $(function(){
 				searchChatroomUI += '</ul>';
 				searchChatroomUI += '<div><table id="member_list"></table></div>';
 				searchChatroomUI += '</form>';
-				$('#mem_list').append(searchChatroomUI);
+				$('#mem_list').append(searchChatroomUI);*/
 				
 				$(param.list).each(function(index, item){
 					if(user_num != item.mem_num){ //로그인한 회원은 제외하고 멤버 리스트 띄움
@@ -282,6 +279,10 @@ $(function(){
 			}
 		});
 	} //end of selectList()
+	
+	$(document).on('keyup','#mem_keyword',function(){
+		selectList();
+	});
 	
 	//멤버 선택 후 확인하면 채팅방 생성
 	$('#checked_form').submit(function(event){
