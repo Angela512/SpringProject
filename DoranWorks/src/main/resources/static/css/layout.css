@@ -14,6 +14,7 @@ div#main_body{
 	min-height: 500px;
 }
 div#main_footer{
+	clear:both;
 	background-color:yellow;
 }
 

@@ -49,10 +49,7 @@ public interface MessangerMapper {
 	public List<ChatmemVO> selectChatroomList(Integer mem_num);
 	
 	//내 채팅방 목록 및 채팅방 멤버 수
-	@Select("SELECT * FROM chatroom JOIN chatmem USING(chatroom_num) "
-			+ "JOIN (SELECT chatroom_num, COUNT(*) count FROM chatmem GROUP BY chatroom_num) "
-			+ "USING(chatroom_num) WHERE mem_num=#{mem_num}")
-	public List<ChatmemVO> selectChatmemCount(Integer mem_num);
+	public List<ChatmemVO> selectChatmemCount(Map<String,Object> map);
 	
 	//해당 채팅방의 가장 최신 메시지 읽어옴
 	@Select("SELECT * FROM (SELECT msg_content, chatroom_num, m.msg_sendtime, total_cnt "
@@ -101,7 +98,8 @@ public interface MessangerMapper {
 	@Select("SELECT to_char(SYSDATE,'yyyy-mm-dd hh24:mi:ss') FROM dual")
 	public String selectMsgSendtime();
 	
-	
+//====================채팅방 검색========================
+	public ChatmemVO selectChatnameSearch(Integer mem_num);
 	
 	
 }

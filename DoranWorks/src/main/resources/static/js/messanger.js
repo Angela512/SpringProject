@@ -1,7 +1,8 @@
 $(function(){
 	$(document).on('click', '#createroom_btn', function(){
-		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리
+		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리&선택된 멤버 초기화
 		if($('#searchChatroom').css('display') != 'none'){
+			$('#searchChatroom').empty();
 	        $('#searchChatroom').hide();
 	    }else{
 			$('#searchChatroom').show();
@@ -34,9 +35,6 @@ $(function(){
 	
 	//================채팅방 목록==============================
 	function list(){
-		
-		
-		
 		$.ajax({
 			url:'chatroomList.do',
 			type:'post',
@@ -45,27 +43,13 @@ $(function(){
 			cache:false,
 			timeout:30000,
 			success:function(param){
+				
+				$('.chatroomMain').empty();
 				if(param.result == 'logout'){
 					alert('로그인 후 사용하세요');
 				}else if(param.result == 'success'){
-					let chatroomMainUI = '';
-					chatroomMainUI += '<h2>메신저</h2>';
-					chatroomMainUI += '<form action="list.do" id="search_form" method="get">';
-					chatroomMainUI += '<ul class="search">';
-					chatroomMainUI += '<li><input type="search" name="keyword" id="keyword" placeholder="채팅방 이름, 메시지 검색"></li>';
-					
-					//chatroomMainUI += '<div>';
-					
-					chatroomMainUI += '<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>';
-					chatroomMainUI += '</ul>';
-					//chatroomMainUI += '</div>';
-					chatroomMainUI += '</form>';					
-					$('.chatroomMain').append(chatroomMainUI);
-					
 					let chatroomListUI = '<div id="chatroomList">';
-					$('.chatroomMain').append(chatroomListUI);
 					$(param.list).each(function(index, item){
-						chatroomListUI = '';
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
 						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 | ' + (item.messangerVO == null ? '' : item.messangerVO.msg_content) + '<br>';
 						chatroomListUI += '</div>';
@@ -73,18 +57,9 @@ $(function(){
 						chatroomListUI += '';
 						chatroomListUI += '';
 						chatroomListUI += '';
-						$('#chatroomList').append(chatroomListUI);
 					});
-					chatroomListUI = '</div>';
+					chatroomListUI += '</div>';
 					$('.chatroomMain').append(chatroomListUI);
-					//이 div가 클릭되면 대화창 띄움
-					$(document).on('click', '.chatroom', function(){
-						//멤버 리스트가 show인데 div 클릭하면 멤버리스트 hide
-						if($('#searchChatroom').css('display') != 'none'){
-							$('#searchChatroom').hide();
-						}
-						createChat($(this).attr('id'));
-					}); 
 				}
 			},
 			error:function(){
@@ -92,6 +67,23 @@ $(function(){
 			}
 		});
 	}
+	
+	//이 div가 클릭되면 대화창 띄움
+	$(document).on('click', '.chatroom', function(){
+		//멤버 리스트가 show인데 div 클릭하면 멤버리스트 hide
+		if($('#searchChatroom').css('display') != 'none'){
+			$('#searchChatroom').hide();
+		}
+		createChat($(this).attr('id'));
+	}); 
+	
+	$(document).on('keyup','#keyword',function(){
+		list();
+	});
+	
+	$(document).on('keyup', 'search', function(){
+		alert('keyup');
+	});
 	
 	//======================채팅창 띄우기==========================
 	function createChat(chatroom_num){
@@ -105,7 +97,9 @@ $(function(){
 			success:function(param){
 				let user_num = param.user_num;
 				$('.chat_form').empty();
+				$('.msg_formui').empty();
 				$('.chat_form').show();
+				$('.msg_formui').show();
 				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>';
 				msgUI += '<span>멤버 : ';
 				$(param.list).each(function(index, item){
@@ -131,7 +125,7 @@ $(function(){
 					$('.chat_form').append(msgUI);
 				});
 				let chatUI = '';
-				chatUI += '<form id="chat_form">';
+				chatUI += '<form id="msg_form">';
 				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
 				chatUI += '<textarea rows="8" cols="60" name="msg_content" id="msg_content" class="msgContent"></textarea>';
 				chatUI += '<div id="msg_first"><span class="letter-count">100/100</span></div>';
@@ -139,10 +133,7 @@ $(function(){
 				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송"></div>';
 				chatUI += '</form>';
 				
-				$('.chat_form').append(chatUI);
-				
-				
-				
+				$('.msg_formui').append(chatUI);
 			},
 			error:function(){
 				alert('gotochat.do 네트워크 오류 발생');
@@ -151,7 +142,7 @@ $(function(){
 	}
 	
 	//메시지 전송
-	$(document).on('submit', '#chat_form', function(event){
+	$(document).on('submit', '#msg_form', function(event){
 		if($('#msg_content').val().trim() == ''){
 			alert('내용을 입력하세요');
 			$('#msg_content').val('').focus();
@@ -263,8 +254,8 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
-						modifyUI += '<input type="text" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
-						/*modifyUI += '<span name="members" value="'+ mem_num +'" id="'+ mem_num + '">' + mem_name + '</span>';*/
+						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
+						modifyUI += '<span>' + mem_name + '</span>';
 						
 						//체크된 멤버 노출
 						$('.checked_div').append(modifyUI);

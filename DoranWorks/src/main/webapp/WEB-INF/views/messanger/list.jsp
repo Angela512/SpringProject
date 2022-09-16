@@ -7,6 +7,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
 	<!-- 채팅방 검색 및 채팅방 생성 -->
+	<h2>메신저</h2>
+	<ul class="search">
+		<li><input type="search" name="keyword" id="keyword" placeholder="채팅방 이름, 메시지 검색"></li>
+		<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>
+	</ul>
 	<div class="chatroomMain">
 	<!-- 채팅방 리스트 -->
 	</div>
@@ -46,7 +51,10 @@
 	
 	
 	<!-- 채팅 시작 -->
-	<div class="chat_form" style="display:none;"></div>
+	<div id="chatting_main">
+		<div class="chat_form" style="display:none;"></div>
+		<div class="msg_formui"></div>
+	</div>
 	<!-- 채팅 끝 -->
 	
 	

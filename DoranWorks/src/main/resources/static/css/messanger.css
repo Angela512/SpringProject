@@ -13,14 +13,19 @@
 	width:60%;
 	float:left;
 }
-.chat_form{
-	/* margin:0 auto; */
+#chatting_main{
 	width:60%;
-	height:500px;
-	border:1px solid #000;
 	float:left;
 }
-
+.chat_form{
+	/* margin:0 auto; */
+	border:1px solid #000;
+	height:350px;
+	overflow: auto;
+}
+#msg_form{
+	clear: both;
+}
 
 
 

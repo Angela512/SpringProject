@@ -75,7 +75,10 @@ public class MessangerController {
 			mapAjax.put("result", "logout");
 		}else {
 			//채팅방 목록 가져오기
-			List<ChatmemVO> list = messangerService.selectChatmemCount(user.getMem_num());
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("mem_num", user.getMem_num());
+			map.put("keyword", keyword);
+			List<ChatmemVO> list = messangerService.selectChatmemCount(map);
 			logger.debug("<<채팅방 마지막메시지>> : " + list);
 			mapAjax.put("result", "success");
 			mapAjax.put("list", list);

@@ -94,8 +94,8 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 
 	@Override
-	public List<ChatmemVO> selectChatmemCount(Integer mem_num) {
-		List<ChatmemVO> list = msgMapper.selectChatmemCount(mem_num);
+	public List<ChatmemVO> selectChatmemCount(Map<String,Object> map) {
+		List<ChatmemVO> list = msgMapper.selectChatmemCount(map);
 		//루프를 돌면서
 		
 		  for(ChatmemVO chat : list) { //채팅방 별 가장 최신 메시지 가져오기(채팅방 목록에서 보여주기 용)
