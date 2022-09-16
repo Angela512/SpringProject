@@ -68,10 +68,7 @@ public interface WorkflowMainMapper {
 		@Insert("insert into workflow_test (flow_num, sign_name, mem_num) " 
 				+"values(#{flow_num}, #{sign_name}, #{mem_num})")
 		public void insertTable_Test(WorkflowVO work);
-		
-		
-		
-		
+		public void updateBoard(WorkflowVO work);
 		
 		
 		

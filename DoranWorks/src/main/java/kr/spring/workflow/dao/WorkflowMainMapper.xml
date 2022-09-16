@@ -29,7 +29,7 @@
 		</where>   	
   	</select>
   	<select id="selectList" parameterType="map"
-  	                         resultType="workflowMainVO">
+  	                         resultType="workflowVO">
   		 SELECT
   		   *
   		FROM (SELECT
@@ -89,17 +89,19 @@
   	</select>
   	
   	<!-- 글수정 -->
-  	<update id="updateBoard" parameterType="workflowMainVO">
-  		<!-- UPDATE spboard SET
+  	<update id="updateBoard" parameterType="workflowVO">
+  		 UPDATE workflow_main SET
+  		 <!-- 
   		    <if test="filename != ''">
   		    uploadfile=#{uploadfile},
   		    filename=#{filename},
   		    </if>
-  			title=#{title},
-  			content=#{content},
-  		    ip=#{ip},
-  		    modify_date=SYSDATE
-  		WHERE board_num=#{board_num} -->
+  		     -->
+  			flow_title=#{flow_title},
+  			flow_content=#{flow_content}
+  		    
+  		    <!-- modify_date=SYSDATE -->
+  		WHERE flow_num=#{flow_num} 
   	</update>
   	
   	
@@ -111,10 +113,6 @@
 	</insert>
 	  -->
 </mapper>
-
-
-
-
 
 
 

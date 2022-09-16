@@ -25,12 +25,12 @@ public interface WorkflowMainService {
 		
 		//테스트
 		public void insertFlow_num(WorkflowVO work);
-		
+		public void updateBoard(WorkflowVO work);
 		
 		
 		
 //		public void updateHit(Integer flow_num);
-		/* public void updateBoard(WorkflowMainVO flow); */
+		
 //		public void deleteBoard(Integer flow_num);
 //		public void deleteFile(Integer flow_num);
 		

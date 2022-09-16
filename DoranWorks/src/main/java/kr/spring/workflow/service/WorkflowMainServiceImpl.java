@@ -47,6 +47,12 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		
 	}
 
+	@Override
+	public void updateBoard(WorkflowVO work) {
+		flowMapper.updateBoard(work);
+		
+	}
+
 
 	
 

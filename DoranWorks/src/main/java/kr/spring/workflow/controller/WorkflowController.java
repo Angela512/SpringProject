@@ -220,50 +220,51 @@ public class WorkflowController {
 //	return mav;
 //	}
 //	
-//	//===========게시판 글수정===========//
-//	//수정 폼
-//	@GetMapping("/board/update.do")
-//	public String formUpdate(
-//		@RequestParam int board_num,
-//		                         Model model) {
-//	BoardVO boardVO = 
-//			boardService.selectBoard(board_num);
-//	
-//	model.addAttribute("boardVO", boardVO);
-//	
-//	return "boardModify";
-//	}
-//	//수정 폼에서 전송된 데이터 처리
-//	@PostMapping("/board/update.do")
-//	public String submitUpdate(@Valid BoardVO boardVO,
-//		            BindingResult result,
-//		            HttpServletRequest request,
-//		            Model model) {
-//	logger.debug("<<글수정>> : " + boardVO);
-//	
-//	//유효성 체크 결과 오류가 있으면 폼 호출
-//	if(result.hasErrors()) {
-//		//title 또는 content가 입력되지 않아 유효성 체크에
-//		//걸리면 파일 정보를 잃어버리기 때문에 품을
-//		//호출할 때 다시 셋팅해주어야 함.
-//		BoardVO vo = boardService.selectBoard(
-//				            boardVO.getBoard_num());
-//		boardVO.setFilename(vo.getFilename());
-//		return "boardModify";
-//	}
-//	
-//	//ip셋팅
-//	boardVO.setIp(request.getRemoteAddr());
-//	//글수정
-//	boardService.updateBoard(boardVO);
-//	
-//	//View에 표히살 메시지
-//	model.addAttribute("message", "글수정 완료!!");
-//	model.addAttribute("url", 
-//			request.getContextPath()+"/board/detail.do?board_num="+boardVO.getBoard_num());	
-//	
-//	return "common/resultView";
-//	}
+	
+	
+	//===========게시판 글수정===========//
+	//수정 폼
+	@GetMapping("/workflow/update.do")
+	public String formUpdate(
+		@RequestParam int flow_num,
+		                         Model model) {
+	WorkflowVO flowVO = 
+			flowService.selectBoard(flow_num);
+	
+	model.addAttribute("workflowVO", flowVO);
+	
+	return "boardModify";
+	}
+	//수정 폼에서 전송된 데이터 처리
+	@PostMapping("/workflow/update.do")
+	public String submitUpdate(@Valid WorkflowVO flowVO,
+		            BindingResult result,
+		            HttpServletRequest request,
+		            Model model) {
+	logger.debug("<<글수정>> : " + flowVO);
+	
+	//유효성 체크 결과 오류가 있으면 폼 호출
+	if(result.hasErrors()) {
+		//title 또는 content가 입력되지 않아 유효성 체크에
+		//걸리면 파일 정보를 잃어버리기 때문에 품을
+		//호출할 때 다시 셋팅해주어야 함.
+		WorkflowVO vo = flowService.selectBoard(
+				flowVO.getFlow_num());
+//		flowVO.setFilename(vo.getFilename());
+		return "boardModify";
+	}
+	
+	
+	//글수정
+	flowService.updateBoard(flowVO);
+	
+	//View에 표히살 메시지
+	model.addAttribute("message", "글수정 완료!!");
+	model.addAttribute("url", 
+			request.getContextPath()+"/workflow/detail.do?flow_num="+flowVO.getFlow_num());	
+	
+	return "common/resultView";
+	}
 //	
 //	//==========게시판 글삭제==========//
 //	@RequestMapping("/board/delete.do")

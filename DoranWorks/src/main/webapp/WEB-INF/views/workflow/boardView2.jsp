@@ -61,13 +61,14 @@
 	<p>
 		${workflow_main.flow_content}
 	</p>
-	<%-- 
+	
 	<div>
 		좋아요
 		<img id="output_fav" src="${pageContext.request.contextPath}/images/fav01.gif" width="40">
 		<span id="output_fcount"></span>
 	</div>
 	<hr size="1" width="100%">
+	<%-- 
 	<div class="align-right">
 		<c:if test="${!empty user && user.mem_num == board.mem_num}">
 		<input type="button" value="수정" 
@@ -87,6 +88,7 @@
 		       onclick="location.href='list.do'">
 		</c:if>
 	</div>
+	 --%>
 	<hr size="1" width="100%">
 	<div id="reply_div">
 		<span class="re-title">댓글 달기</span>
@@ -95,7 +97,7 @@
 			   value="${board.board_num}" id="board_num">
 		</form>
 	</div>
-	 --%>
+	 
 </div>
 <!-- 내용 끝 -->
 

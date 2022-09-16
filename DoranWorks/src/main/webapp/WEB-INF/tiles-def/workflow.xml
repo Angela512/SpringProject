@@ -20,13 +20,6 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/boardView.jsp"/>                   
     </definition>
-    <!--  
-    <definition name="signList" extends="main">
-    	<put-attribute name="title" value="결재라인보기"/>
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/workflow/signList.jsp"/>                   
-    </definition>
-     -->
       
     <definition name="signList" template="/WEB-INF/views/workflow/signList.jsp">
     <!-- 
@@ -34,6 +27,12 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/signList.jsp"/>
       -->
+    </definition>
+    
+    <definition name="boardModify" extends="main">
+    	<put-attribute name="title" value="글수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/workflow/boardModify.jsp"/>                   
     </definition>
 </tiles-definitions>
 
