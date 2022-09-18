@@ -2,20 +2,24 @@ $(function(){
 	$(document).on('click', '#createroom_btn', function(){
 		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리&선택된 멤버 초기화
 		if($('#searchChatroom').css('display') != 'none'){
-			$('#searchChatroom').empty();
+			$('#member_list').empty();
+			$('.checked_div').empty();
 	        $('#searchChatroom').hide();
 	    }else{
 			$('#searchChatroom').show();
 			if($('#searchChatroom').css('display') != 'none'){
 				//채팅창이 열려있으면 숨김
 				$('.chat_form').hide();
+				$('.msg_formUI').hide();
 			}
 			
 		}
-		if($('#member_list *').length == 0){ 
+	//	$('#member_list').empty();
+		selectList();
+		/*if($('#member_list *').length == 0){ 
 			//member_list테이블 아래에 아무것도 없으면 초기 데이터 호출
-			selectList();
-		}
+			
+		}*/
 	});
 	
 	$('#chat_list').click(function(){
@@ -32,6 +36,17 @@ $(function(){
 			return false;
 		}
 	});
+	
+	//오늘 날짜 구하기
+	let d = new Date();
+	let strDate;
+	if(d.getMonth() + 1 < 10){ //month가 두자리수가 아니면 월 앞에 0붙임
+		strDate = d.getFullYear() + "-0" + (d.getMonth()+1) + "-" + d.getDate();
+	}else{
+		strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+	}
+	
+	
 	
 	//================채팅방 목록==============================
 	function list(){
@@ -51,10 +66,11 @@ $(function(){
 					let chatroomListUI = '<div id="chatroomList">';
 					$(param.list).each(function(index, item){
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
-						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 | ' + (item.messangerVO == null ? '' : item.messangerVO.msg_content) + '<br>';
+						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 ';
+						//최신 메시지가 오늘이면 시간만, 오늘이 아니면 날짜만 표시
+						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '<br>';
+						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content) + '</b></span>';
 						chatroomListUI += '</div>';
-						
-						chatroomListUI += '';
 						chatroomListUI += '';
 						chatroomListUI += '';
 					});
@@ -93,10 +109,13 @@ $(function(){
 			success:function(param){
 				let user_num = param.user_num;
 				$('.chat_form').empty();
-				$('.msg_formui').empty();
+				$('.msg_formUI').empty();
+				$('.chatroom').css('background-color','#FFF');
+				
 				$('.chat_form').show();
-				$('.msg_formui').show();
-				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>';
+				$('.msg_formUI').show();
+				$('#' + chatroom_num).css('background-color','#D6FFFF');
+				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>' + strDate;
 				msgUI += '<span>멤버 : ';
 				$(param.list).each(function(index, item){
 					if(item.mem_num != user_num){
@@ -108,15 +127,23 @@ $(function(){
 				msgUI += '</span>';
 				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
+				let msg_time;
 				$(param.msgList).each(function(index, item){
 					msgUI = '';
+					let sendtime = (item.msg_sendtime).substr(0,10);
+					
+					//오늘이면 날짜 표시(오늘 날짜를 한번도 안띄웠을 경우에만)
+					if(msg_time != sendtime){ //날짜가 달라질때만 날짜 띄움
+						msg_time = sendtime;
+						msgUI += '<div id="' + sendtime + '" class="align-center">' + sendtime + '</div>';
+					}
 					msgUI += '<div class=';
 					if(item.mem_num != user_num){
 						msgUI += '"align-left"';
 					}else{
 						msgUI += '"align-right"';
 					}
-					msgUI += '><b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content + '</b> <span>' + item.msg_sendtime +'</span></div>';
+					msgUI += '><b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content + '</b> <span>' + (item.msg_sendtime).substr(11,5) +'</span></div>';
 					msgUI += '';
 					$('.chat_form').append(msgUI);
 				});
@@ -129,7 +156,7 @@ $(function(){
 				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송"></div>';
 				chatUI += '</form>';
 				
-				$('.msg_formui').append(chatUI);
+				$('.msg_formUI').append(chatUI);
 			},
 			error:function(){
 				alert('gotochat.do 네트워크 오류 발생');
@@ -205,17 +232,6 @@ $(function(){
 				$('#member_list').empty();
 				let count = param.count;
 				let user_num = param.user_num;
-				/*let searchChatroomUI = '';
-				searchChatroomUI += '<h2>멤버 선택</h2>';
-				searchChatroomUI += '<form action="createChatroom.do" id="search_form" method="get">';
-				searchChatroomUI += '<ul class="search">';
-				searchChatroomUI += '<li>';
-				searchChatroomUI += '<input type="search" name="keyword" id="keyword" value="${param.keyword}" placeholder="이름, 부서, 이메일 검색">'; 
-				searchChatroomUI += '</li>';
-				searchChatroomUI += '</ul>';
-				searchChatroomUI += '<div><table id="member_list"></table></div>';
-				searchChatroomUI += '</form>';
-				$('#mem_list').append(searchChatroomUI);*/
 				
 				$(param.list).each(function(index, item){
 					if(user_num != item.mem_num){ //로그인한 회원은 제외하고 멤버 리스트 띄움
@@ -237,13 +253,13 @@ $(function(){
 					let mem_num = $(this).attr('data-num');
 					let mem_name = $(this).attr('id');
 					let modifyUI = '';
-					let submitUI = '';
-					
 					let isChecked = $(this).attr("checked");
+					
 					if(isChecked){ //이미 체크되어있으면 체크 해제
 						isChecked = $(this).attr("checked", false);
 						//폼에서도 삭제함
 						$('#' + mem_num).remove();
+						$('.' + mem_num).remove();
 						if($('.checked_div *').length == 0){//체크된 멤버가 없으면 폼 숨김
 							$('#checked_form').hide();
 						}
@@ -252,7 +268,7 @@ $(function(){
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
 						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
-						modifyUI += '<span>' + mem_name + '</span>';
+						modifyUI += '<span class="'+ mem_num + '">' + mem_name + '</span>';
 						
 						//체크된 멤버 노출
 						$('.checked_div').append(modifyUI);

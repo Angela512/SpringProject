@@ -6,9 +6,33 @@
 	height:500px;
 	float:left;
 }
-#chatroomList{
-	width:38%;
+#createroom_btn{ /* 채팅방 생성 버튼 */
+	width:200px;
+	height:30px;
+	margin:0 0 9px 0;
+	background-color:#5AAEFF;
+	border:none;
+	color:#FFF;
+	cursor:pointer;
 }
+#chat_keyword{ /* 검색창 */
+	width:200px;
+	height:30px;
+	border: 1px solid #555;
+	padding: 9px 4px 9px 40px;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
+	
+}
+#chatroomList{
+	/* width:38%; */
+}
+div.chatroom{
+	width:50%;
+	height:50px;
+	
+}
+
+/* 채팅방 생성 멤버 리스트 */
 #searchChatroom{
 	width:60%;
 	float:left;
@@ -26,6 +50,34 @@
 #msg_form{
 	clear: both;
 }
+.page-main ul.chat_search{
+	margin:0 0 9px 0;
+	padding: 0;
+}
+
+#searchIcon{
+	position:relative;
+	left:46px;
+	top:4px;
+	width: 18px; 
+	height: 18px;
+	
+} 
+
+#write_button_box{
+	padding-left: 26px;
+	color: #fff;
+	width: 120px; 
+	height: 35px;
+	font-size:15px;
+	font-weight: 600;
+	border: 0;
+	background-color: #FA5D57;
+	border-radius: 3px;
+	margin:20px 0 0 0;
+	cursor:pointer;
+}
+
 
 
 

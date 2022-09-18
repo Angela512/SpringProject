@@ -8,9 +8,12 @@
 <div class="page-main">
 	<!-- 채팅방 검색 및 채팅방 생성 -->
 	<h2>메신저</h2>
-	<ul class="search">
-		<li><input type="search" name="keyword" id="chat_keyword" placeholder="채팅방 이름, 메시지 검색"></li>
+	<ul class="chat_search">
 		<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>
+		<li>
+			<!-- <img src="../images/searchIcon.png" id="searchIcon"> -->
+			<input type="search" name="keyword" id="chat_keyword" placeholder="채팅방 이름 검색">
+		</li>
 	</ul>
 	<div class="chatroomMain">
 	<!-- 채팅방 리스트 -->
@@ -53,7 +56,7 @@
 	<!-- 채팅 시작 -->
 	<div id="chatting_main">
 		<div class="chat_form" style="display:none;"></div>
-		<div class="msg_formui"></div>
+		<div class="msg_formUI"></div>
 	</div>
 	<!-- 채팅 끝 -->
 	
