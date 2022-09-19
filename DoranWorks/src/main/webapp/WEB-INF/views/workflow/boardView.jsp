@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- 내용 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/workflow.view.js"></script>
 <HTML>
 <HEAD>
     <meta http-equiv="Content-Language" content="ko">
@@ -87,6 +89,7 @@
 	 <fmt:parseDate value="${workflow.flow_end}" var="endPlanDate" pattern="yyyy-MM-dd"/> 
 	 <fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
 	<h2>${workflow.flow_title}</h2>
+	<input type="hidden" value="${workflow.flow_num}" id="fw_num">
 	<ul class="detail-info">
 		<%-- <li>
 			<c:if test="${!empty workflow.flow_photo_name}">
@@ -97,6 +100,7 @@
 			</c:if>
 		</li> --%>
 		
+		
 		<li>
 			[${workflow.mem_dpt}] ${workflow.mem_name} ${workflow.mem_rank}
 			<br>
@@ -106,6 +110,9 @@
 		</li>
 		<li>
 			<input type="button" value="인쇄" onclick="window.print()" >
+		</li>
+		<li>
+			<input type="button" value="승인" id="test">
 		</li>
 	</ul>
 	<hr size="1" width="100%">
@@ -126,9 +133,10 @@
 				}
 			};
 		</script>  
+		
+		</c:if>
 		<input type="button" value="목록"
 		       onclick="location.href='list.do'">
-		</c:if>
 	</div>
 	
 	

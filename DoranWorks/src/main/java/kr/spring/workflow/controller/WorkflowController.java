@@ -59,50 +59,6 @@ public class WorkflowController {
 	
 	
 	
-	//===========게시판 글 등록============//
-	/*
-	//등록 폼
-	@GetMapping("/workflow/write.do")
-	public String form() {
-	return "boardWrite";
-	}
-	//등록 폼에서 전송된 데이터 처리
-	@PostMapping("/workflow/write.do")
-	public String submit(@Valid WorkflowMainVO flowVO,
-		      BindingResult result,
-		      HttpServletRequest request,
-		      HttpSession session,
-		      Model model) {
-	
-	logger.debug("<<게시판 글 저장>> : " + flowVO);
-	
-	//유효성 검사 결과 오류가 있으면 폼 호출
-	if(result.hasErrors()) {
-		return form();
-	}
-	
-	MemberVO user = 
-			(MemberVO)session.getAttribute("user");
-	
-	//회원번호 셋팅
-	flowVO.setMem_num(user.getMem_num());
-	//ip셋팅
-//	flowVO.setIp(request.getRemoteAddr());
-	System.out.println("하이 : "+flowVO);
-	//글쓰기
-	flowService.insertBoard(flowVO);
-	
-	//View에 표시할 메시지
-	model.addAttribute(
-			"message", "글 등록이 완료되었습니다.");
-	model.addAttribute(
-	"url", request.getContextPath()+"/workflow/list.do");
-	
-	return "common/resultView";
-	}
-	
-	*/
-	
 	
 	//===========게시판 글 목록============//
 	@RequestMapping("/workflow/list.do")
@@ -112,12 +68,18 @@ public class WorkflowController {
 		@RequestParam(value="keyfield",defaultValue="")
 		String keyfield,
 		@RequestParam(value="keyword",defaultValue="")
-		String keyword) {
+		String keyword,
+		HttpSession session) {
 	
+    MemberVO user = (MemberVO)session.getAttribute("user");
+    
+		
 	Map<String,Object> map = 
 			    new HashMap<String,Object>();
 	map.put("keyfield", keyfield);
 	map.put("keyword", keyword);
+	map.put("sign", user.getMem_name()); //이름 + 직책
+	map.put("mem_num", user.getMem_num());
 	
 	//글의 총개수(검색된 글의 개수)
 	int count = flowService.selectRowCount(map);
@@ -151,30 +113,6 @@ public class WorkflowController {
 	return mav;
 	}
 	
-	
-	
-	//========게시판 글상세===========//
-//	@RequestMapping("/workflow/detail.do")
-//	public ModelAndView detail(
-//		          @RequestParam int flow_num) {
-//	
-//	logger.debug("<<board_num>> : " + flow_num);
-//	
-//	WorkflowVO workflow = 
-//			flowService.selectBoard(flow_num);
-//	
-//	//제목에 태그를 허용하지 않음
-//	workflow.setFlow_title(
-//		 StringUtil.useNoHtml(workflow.getFlow_title()));
-//	//내용에 줄바꿈 처리하면서 태그를 허용하지 않음
-//	//ckeditor 사용시 아래 코드 주석 처리
-//	/*
-//	board.setContent(
-//	StringUtil.useBrNoHtml(board.getContent()));
-//	*/
-//	                         //뷰 이름    속성명   속성값
-//	return new ModelAndView("boardView","workflow_main",workflow);
-//	}
 	
 	
 	
@@ -288,69 +226,7 @@ public class WorkflowController {
 //	}
 	
 	
-	
-	
-	
-	
-	//========결재 라인===========//
-//		@RequestMapping("/workflow/sign.do")
-//		public String line() {
-//			return "signList";		
-//		}
-	
-	
-	
-	 
-	
-	
-	/////-------------------테스트 코드 확인 완료-----------------------////////////////
-	
-	/*
-		@RequestMapping("/workflow/signList.do")
-		public ModelAndView line(
-			@RequestParam(value="pageNum",defaultValue="1") 
-			int currentPage,
-			@RequestParam(value="keyfield",defaultValue="")
-			String keyfield,
-			@RequestParam(value="keyword",defaultValue="")
-			String keyword) {
-		
-		Map<String,Object> map = 
-				    new HashMap<String,Object>();
-		map.put("keyfield", keyfield);
-		map.put("keyword", keyword);
-		
-		//글의 총개수(검색된 글의 개수)
-		int count = memberService.selectRowCount(map);
-		logger.debug("<<count>> : " + count);
-		
-		//페이지 처리
-		PagingUtil page = 
-				new PagingUtil(keyfield,keyword,
-						currentPage,count,
-						rowCount,pageCount,"list.do");
-		
-		List<MemberVO> list = null;
-		if(count > 0) {
-			
-			map.put("start", page.getStartRow());
-			map.put("end", page.getEndRow());
-			
-			list = memberService.selectSignList(map);
-		}
-		
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("signList"); 
-		mav.addObject("count", count);
-		mav.addObject("list", list);
-		mav.addObject("page", page.getPage());
-		
-		return mav;
-		}
-		
-		*/
-	////////-------------여기 까지-----------------//////////
+
 	
 	@RequestMapping("/workflow/signList.do")
 	public ModelAndView line() {

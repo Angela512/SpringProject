@@ -19,6 +19,7 @@ $('#list_read').click(function(){
 		self.close();
 	});
 	
+
 	});
 	
 	

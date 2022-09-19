@@ -42,8 +42,8 @@
 			<li>주소 : ${member.mem_addr1}</li>
 			<li>상세주소 : ${member.mem_addr2}</li>
 			<li>생년월일 : ${member.mem_birthdate}</li>
-			<li>부서명 : ${member.mem_dpt_num}</li>
-			<li>직급 : ${member.mem_rank_num}</li>
+			<li>부서명 : ${member.mem_dpt}</li>
+			<li>직급 : ${member.mem_rank}</li>
 			<li>고용형태 : ${member.mem_type}</li>
 			<li>가입일 : ${member.mem_date}</li>
 			<c:if test="${!empty member.mem_modify_date}">

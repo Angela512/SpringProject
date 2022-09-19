@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 //import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.workflow.vo.WorkflowMainVO;
 import kr.spring.workflow.vo.WorkflowSignVO;
@@ -71,8 +72,8 @@ public interface WorkflowMainMapper {
 		public void updateBoard(WorkflowVO work);
 		public void updateSign(WorkflowVO work);
 		
-		
-		
+		@Update("UPDATE workflow_main SET flow_no=1 WHERE flow_num=#{flow_")
+		public void updateIi(int flow_num);
 		
 //		@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 //		public void updateHit(Integer board_num);

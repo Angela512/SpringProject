@@ -9,24 +9,26 @@
 		  COUNT(*)
 		FROM workflow_main b JOIN member m
 		ON b.mem_num = m.mem_num
-		<where>
+		JOIN workflow_test c 
+        ON b.flow_num = c.flow_num
+		WHERE (b.mem_num = #{mem_num} OR sign_name LIKE '%' || #{sign} || '%') 		
 			<if test="keyword != null and keyword != ''">
+				
 				<if test="keyfield == 1">
-					b.flow_title LIKE '%' || #{keyword} || '%'
+					AND b.flow_title LIKE '%' || #{keyword} || '%'
 				</if>
 				<!-- <if test="keyfield == 2">
-					m.id LIKE '%' || #{keyword} || '%' OR
-					m.nick_name LIKE '%' || #{keyword} || '%'
+					AND m.id LIKE '%' || #{keyword} || '%' OR
+					AND m.nick_name LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 3">
-					b.content LIKE '%' || #{keyword} || '%'
+					AND b.content LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 4">
-					b.title LIKE '%' || #{keyword} || '%' OR
-					b.content LIKE '%' || #{keyword} || '%'
+					AND b.title LIKE '%' || #{keyword} || '%' OR
+					AND b.content LIKE '%' || #{keyword} || '%'
 				</if> -->
-			</if>
-		</where>   	
+			</if>  	
   	</select>
   	<select id="selectList" parameterType="map"
   	                         resultType="workflowVO">
@@ -64,24 +66,23 @@
 					
 					left join workflow_test t
 					ON t.flow_num = b.flow_num 
-  		             <where>
+					WHERE (b.mem_num = #{mem_num} OR sign_name LIKE '%' || #{sign} || '%') 
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
-								b.flow_title LIKE '%' || #{keyword} || '%'
+								AND b.flow_title LIKE '%' || #{keyword} || '%'
 							</if>
 							<!-- <if test="keyfield == 2">
-								m.id LIKE '%' || #{keyword} || '%' OR
-								m.nick_name LIKE '%' || #{keyword} || '%'
+								AND m.id LIKE '%' || #{keyword} || '%' OR
+								AND m.nick_name LIKE '%' || #{keyword} || '%'
 							</if>
 							<if test="keyfield == 3">
-								b.content LIKE '%' || #{keyword} || '%'
+								AND b.content LIKE '%' || #{keyword} || '%'
 							</if>
 							<if test="keyfield == 4">
-								b.title LIKE '%' || #{keyword} || '%' OR
-								b.content LIKE '%' || #{keyword} || '%'
+								AND b.title LIKE '%' || #{keyword} || '%' OR
+								AND b.content LIKE '%' || #{keyword} || '%'
 							</if> -->
-						</if>
-					</where>  
+						</if> 
   		            ORDER BY b.flow_num DESC)a)
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}

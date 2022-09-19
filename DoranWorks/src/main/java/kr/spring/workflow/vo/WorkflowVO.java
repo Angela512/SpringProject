@@ -43,9 +43,6 @@ public class WorkflowVO {
 	private String mem_dpt;
 	private String mem_rank;
 	
-	
-	
-	
 	public String getFlow_line() {
 		return flow_line;
 	}
