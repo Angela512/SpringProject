@@ -40,7 +40,8 @@ public class AppConfig implements WebMvcConfigurer{
 				"/WEB-INF/tiles-def/reservation.xml",
 				"/WEB-INF/tiles-def/workflow.xml",
 				"/WEB-INF/tiles-def/letter.xml",
-				"/WEB-INF/tiles-def/messanger.xml"
+				"/WEB-INF/tiles-def/messanger.xml",
+				"/WEB-INF/tiles-def/notice.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;

@@ -1,4 +1,6 @@
 $(function(){
+	let wsocket;
+	
 	$(document).on('click', '#createroom_btn', function(){
 		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리&선택된 멤버 초기화
 		if($('#searchChatroom').css('display') != 'none'){
@@ -69,7 +71,7 @@ $(function(){
 						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 ';
 						//최신 메시지가 오늘이면 시간만, 오늘이 아니면 날짜만 표시
 						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '<br>';
-						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content) + '</b></span>';
+						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')) + '</b></span>';
 						chatroomListUI += '</div>';
 						chatroomListUI += '';
 						chatroomListUI += '';
@@ -121,7 +123,6 @@ $(function(){
 					if(item.mem_num != user_num){
 						msgUI += item.mem_name + ' | ';
 					}
-					
 				});
 				
 				msgUI += '</span>';
@@ -135,17 +136,39 @@ $(function(){
 					//오늘이면 날짜 표시(오늘 날짜를 한번도 안띄웠을 경우에만)
 					if(msg_time != sendtime){ //날짜가 달라질때만 날짜 띄움
 						msg_time = sendtime;
-						msgUI += '<div id="' + sendtime + '" class="align-center">' + sendtime + '</div>';
+						msgUI += '<div id="' + sendtime + '" class="msg_sendtime">' + sendtime + '</div>';
 					}
+					
+					//채팅 말풍선 시작
 					msgUI += '<div class=';
 					if(item.mem_num != user_num){
-						msgUI += '"align-left"';
+						msgUI += '"your_chat">'; 
+						msgUI += '<div class="you_name">' + item.mem_name + '</div>';
+						//msgUI += '<li>';
+						msgUI += '<div class="you_bubble">';
+						
 					}else{
-						msgUI += '"align-right"';
+						msgUI += '"my_chat">';
+						//msgUI += '<li>';
+						msgUI += '<div class="me_bubble">';
 					}
-					msgUI += '><b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content + '</b> <span>' + (item.msg_sendtime).substr(11,5) +'</span></div>';
+					msgUI += item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>');
+					msgUI += '</div>';
+					msgUI += '<div class="time_count">';
+					msgUI += item.total_cnt + '<br>';
+					msgUI += (item.msg_sendtime).substr(11,5);
+					msgUI += '</div>';
+					msgUI += '</div>';
+					
+					
+					
+					//msgUI += '<b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>') + '</b> <span>' + (item.msg_sendtime).substr(11,5) +'</span></div>';
+					
+					msgUI += '';
+					msgUI += '';
 					msgUI += '';
 					$('.chat_form').append(msgUI);
+					
 				});
 				let chatUI = '';
 				chatUI += '<form id="msg_form">';
@@ -159,6 +182,7 @@ $(function(){
 				$('.msg_formUI').append(chatUI);
 			},
 			error:function(){
+				wsocket.close();
 				alert('gotochat.do 네트워크 오류 발생');
 			}
 		});
@@ -183,16 +207,19 @@ $(function(){
 			processData:false,
 			success:function(param){
 				if(param.result == 'logout'){
+					wsocket.close();
 					alert('로그인 후 사용 가능');
 				}else if(param.result == 'success'){
 					let chatroom_num = param.chatroom_num;
 					$('.chatroomMain').empty();
 				//	$('#chatroomList').empty();
+				    wsocket.send('msg:'+chatroom_num);
 					list();
 					createChat(chatroom_num);
 				}
 			},
 			error:function(){
+				wsocket.close();
 				alert('네트워크 오류 발생');
 			}
 		});
@@ -216,6 +243,14 @@ $(function(){
 				$('#msg_first .letter-count').text(remain);
 			}
 		}
+	});
+	
+	$(document).on('keydown', 'textarea', function(event){
+        if (event.keyCode == 13)
+            if (!event.shiftKey){
+                event.preventDefault();
+                $('#msg_form').submit();
+            }
 	});
 	
 	
@@ -332,7 +367,31 @@ $(function(){
 	//초기 데이터 호출
 	list();
 	
-	
+	function connect() {
+         wsocket = new WebSocket("ws://localhost:8080/chat-ws.do");
+         wsocket.onopen = function(evt) {
+            wsocket.send("msg");
+         };
+         //서버로부터 메시지를 받으면 호출되는 함수 지정
+         wsocket.onmessage = function(evt) {
+            let data = evt.data;
+			list();
+			if(data.substring(0,4) == 'msg:'){
+				console.log(data.substring(4));
+				createChat(data.substring(4));
+			}
+            
+            //setTimeout(() => {
+               
+            //}, 10);
+         };
+         wsocket.onclose = function(evt) {
+            //소켓이 종료된 후 부과적인 작업이 있을 경우 명시
+            console.log('chat close');
+            alert('채팅이 종료되었습니다!');
+         };         
+      }
+      connect();
 	
 	
 });
