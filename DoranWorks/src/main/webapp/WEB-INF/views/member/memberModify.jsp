@@ -42,7 +42,7 @@
 	<div class="align-center">
 		<form:button>전송</form:button>
 		<input type="button" value="MyPage" onclick="location.href='myPage.do'">
-	</div>
+	</div> 
 	</form:form>
 </div>
 <!-- 우편번호 검색 시작 -->
