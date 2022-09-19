@@ -51,7 +51,6 @@ create table notice(
 	mem_num number not null,
 	notice_title varchar2(50) not null,
 	notice_date date default sysdate not null,
-	notice_count number default 0 not null,
 	notice_content clob not null,
 	notice_uploadfile1 blob,
 	notice_uploadfile2 blob,
