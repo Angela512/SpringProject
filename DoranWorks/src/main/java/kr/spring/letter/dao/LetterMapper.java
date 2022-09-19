@@ -3,6 +3,7 @@ package kr.spring.letter.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -58,6 +59,10 @@ public interface LetterMapper {
 	@Update("UPDATE letter_send SET lt_important=#{important} WHERE lt_num=#{lt_num}")
 	public void updateSendImportant(Map<String, Object> map);
 	
+	//중요 업데이트 보낸테이블 기본정보 가져오기
+	@Select("SELECT * FROM letter_send WHERE lt_num=#{lt_num}")
+	public LetterVO selectSendLetter(int lt_num);
+	
 	//받은쪽지함 정보 가져오기
 	@Select("SELECT * FROM letter_receive WHERE snum=#{lt_num} AND lt_receiver_num=#{lt_receiver_num}")
 	public LetterVO selectRecLetter(Map<String, Object> map);
@@ -72,9 +77,16 @@ public interface LetterMapper {
 	@Update("UPDATE letter_receive SET lt_read=#{lt_read} WHERE snum=#{lt_num} AND lt_receiver_num=#{mem_num}")
 	public void updateReceiveRead(LetterReadVO readVO);
 	
+	//보낸쪽지함 리스트 삭제 처리
+	@Update("UPDATE letter_send SET lt_delete=1 WHERE lt_num=#{lt_num}")
+	public void deleteSendDelete(int lt_num);
+	//받은쪽지함 리스트 삭제 처리
+	@Update("UPDATE letter_receive SET lt_delete=1 WHERE snum=#{lt_num} AND lt_receiver_num=#{mem_num}")
+	public void deleteReceiveDelete(LetterReadVO readVO);
+	
+	
 	//쪽지 상세
 	public LetterVO selectLetter(int lt_num);
 	public List<LetterVO> selectName(String[] rids);
-	
 	
 }

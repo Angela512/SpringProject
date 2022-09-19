@@ -22,6 +22,18 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/letter/letterView.jsp"/>                   
     </definition>
+
+    <definition name="letterReply" extends="main">
+    	<put-attribute name="title" value="쪽지답장"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterReply.jsp"/>                   
+    </definition>
+
+    <definition name="letterForward" extends="main">
+    	<put-attribute name="title" value="쪽지전달"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterForward.jsp"/>                   
+    </definition>
 </tiles-definitions>
 
 

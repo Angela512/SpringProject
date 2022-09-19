@@ -124,7 +124,7 @@ public class LetterController {
 			logger.debug("<<count>> : "+count);
 			
 			//페이지 처리
-			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do","letter_type="+letter_type);
 			
 			if(count>0) {
 				map.put("start", page.getStartRow());
@@ -139,7 +139,7 @@ public class LetterController {
 			logger.debug("<<count>> : "+count);
 			
 			//페이지 처리
-			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do","letter_type="+letter_type);
 			
 			if(count>0) {
 				map.put("start", page.getStartRow());
@@ -157,7 +157,7 @@ public class LetterController {
 			logger.debug("<<count>> : "+count);
 			
 			//페이지 처리
-			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do?letter_type="+letter_type);
+			page = new PagingUtil(keyfield, keyword, currentPage, count, rowCount,pageCount,"main.do","letter_type="+letter_type);
 			
 			if(count>0) {
 				map.put("start", page.getStartRow());
@@ -173,7 +173,7 @@ public class LetterController {
 			logger.debug("<<count>> : "+count);
 			
 			//페이지 처리
-			page = new PagingUtil(keyfield,keyword,currentPage,count,rowCount,pageCount,"main.do?letter_type="+letter_type);
+			page = new PagingUtil(keyfield,keyword,currentPage,count,rowCount,pageCount,"main.do","letter_type="+letter_type);
 			
 			if(count>0) {
 				map.put("start", page.getStartRow());
@@ -200,19 +200,18 @@ public class LetterController {
 		
 		LetterVO letter = letterService.selectLetter(lt_num);
 		
+		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		LetterReadVO readVO = new LetterReadVO();
 		readVO.setLt_num(lt_num);
 		readVO.setMem_num(user.getMem_num());
 		readVO.setLt_read(1);
 		if(letter.getLt_sender_num()==user.getMem_num()) {
-			if(letter.getLt_sender_num()==Integer.parseInt(letter.getLt_receiver_num())) {
-				if(letter_type==1)
-					letterService.updateReceiveRead(readVO);
-				else
-					letterService.updateSendRead(readVO);
-			}else 
-				letterService.updateSendRead(readVO);
+			letterService.updateSendRead(readVO);
+			
+			if(!letter.getLt_receiver_num().contains(",") && letter.getLt_sender_num()==Integer.parseInt(letter.getLt_receiver_num())) {
+				letterService.updateReceiveRead(readVO);
+			}
 			
 		}else {
 			letterService.updateReceiveRead(readVO);
@@ -272,6 +271,104 @@ public class LetterController {
 		mav.setViewName("letterView");
 		mav.addObject("letter",letter);
 		mav.addObject("np",np);
+		
+		return mav;
+	}
+	
+	//==================상세페이지 글 삭제=============//
+	@RequestMapping("/letter/detailDelete.do")
+	public String submitDetailDelete(int lt_num,Model model,HttpServletRequest request,HttpSession session) {
+		logger.debug("<<글삭제>> : "+lt_num);
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		LetterReadVO readVO = new LetterReadVO();
+		readVO.setLt_num(lt_num);
+		readVO.setMem_num(user.getMem_num());
+		LetterVO letter = letterService.selectSendLetter(lt_num);
+		if(letter.getLt_sender_num()==readVO.getMem_num()) {//보낸쪽지함 삭제 경우
+			if(letter.getLt_sender_id().equals(letter.getLt_receiver_id())) {//내게쓴쪽지일경우
+				letterService.deleteSendDelete(lt_num);
+				letterService.deleteReceiveDelete(readVO);
+			}else 
+				letterService.deleteSendDelete(lt_num);
+		}else {//받은쪽지함 삭제 경우
+			letterService.deleteReceiveDelete(readVO);
+		}
+		
+		//View에 표시할 메시지
+		model.addAttribute("message","글삭제 완료!!");
+		model.addAttribute("url",request.getContextPath()+"/letter/main.do");
+		
+		return "common/resultView";
+	}
+	
+	//=========================상세페이지 답장=======================//
+	@RequestMapping("/letter/reply.do")
+	public ModelAndView detailReply(int lt_num) {
+		
+		logger.debug("<<상세페이지 답장>> : "+lt_num);
+		
+		LetterVO letter = letterService.selectSendLetter(lt_num);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("letterReply");
+		mav.addObject("letter",letter);
+		
+		return mav;
+	}
+	
+	//=====================상세페이지 전달================================//
+	@RequestMapping("/letter/forward.do")
+	public ModelAndView detailForward(int lt_num) {
+		
+		logger.debug("<<상세페이지 전달>> : "+lt_num);
+		
+		LetterVO letter = letterService.selectSendLetter(lt_num);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("letterForward");
+		mav.addObject("letter",letter);
+		
+		return mav;
+	}
+	
+	//=================파일 다운로드==============================//
+	@RequestMapping("/letter/file.do")
+	public ModelAndView download(@RequestParam int lt_num,int file_type) {
+		
+		LetterVO letter = letterService.selectSendLetter(lt_num);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("downloadView");
+		
+		if(file_type==1) {
+			mav.addObject("downloadFile",letter.getLt_uploadfile1());
+			mav.addObject("filename",letter.getLt_filename1());
+		}else if(file_type==2) {
+			mav.addObject("downloadFile",letter.getLt_uploadfile2());
+			mav.addObject("filename",letter.getLt_filename2());
+		}
+		
+		return mav;
+	}
+	
+	//======================이미지 출력===========================//
+	@RequestMapping("/letter/imageView.do")
+	public ModelAndView viewImage(int lt_num,int image_type) {
+		
+		LetterVO letter = letterService.selectSendLetter(lt_num);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("imageView");
+		
+		if(image_type==1) {
+			mav.addObject("imageFile",letter.getLt_uploadfile1());
+			mav.addObject("filename",letter.getLt_filename1());
+		}else if(image_type==2) {
+			mav.addObject("imageFile",letter.getLt_uploadfile2());
+			mav.addObject("filename",letter.getLt_filename2());
+		}
 		
 		return mav;
 	}

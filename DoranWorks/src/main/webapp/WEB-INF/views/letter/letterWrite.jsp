@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 내용 시작 -->
+<!-- include libraries(jquery,bootstrap) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+.ck-editor__editable_inline{
+	min-height:250px;
+}
+</style>
+<!-- include ckedtor js -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <div class="page-main">
 	<h2>쪽지쓰기</h2>
 	<form action="write.do" id="register_form" enctype="multipart/form-data" method="post">
@@ -20,7 +32,6 @@
 			</li>
 
 			<li>
-				<input type="checkbox" value="1" name="lt_important" id="lt_important"> 중요!
 				<label for="lt_title">제목</label>
 				<input type="text" id="lt_title" name="lt_title">
 			</li>
@@ -36,7 +47,25 @@
 			</li>
 			
 			<li>
-				<textarea rows="5" cols="30" name="lt_content"></textarea>
+				<textarea rows="5" cols="30" name="lt_content" id="lt_content"></textarea>
+				<script>
+				 function MyCustomUploadAdapterPlugin(editor) {
+					    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+					        return new UploadAdapter(loader);
+					    }
+					}
+				 
+				 ClassicEditor
+		            .create( document.querySelector( '#lt_content' ),{
+		            	extraPlugins: [MyCustomUploadAdapterPlugin]
+		            })
+		            .then( editor => {
+						window.editor = editor;
+					} )
+		            .catch( error => {
+		                console.error( error );
+		            } );
+			    </script>   
 			</li>
 		</ul>
 	</form>

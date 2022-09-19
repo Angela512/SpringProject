@@ -15,7 +15,7 @@ $(function(){
 		$.ajax({
 			url:'writeImportant.do',
 			type:'post',
-			data:{lt_num:$(this).attr('data-ltnum'),lt_type:lt_type},
+			data:{lt_num:$(this).attr('data-ltnum')},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
@@ -71,7 +71,7 @@ $(function(){
 		$.ajax({
 			url:'listRead.do',
 			type:'post',
-			data:{lt_nums:cheks,lt_type:lt_type},
+			data:{lt_nums:cheks},
 			dataType:'json',
 			cache:false,
 			timeout:30000,
@@ -89,7 +89,6 @@ $(function(){
 			}
 		});
 		
-		alert(cheks);
 	});
 	
 	//삭제버튼클릭
@@ -109,7 +108,7 @@ $(function(){
 		});
 		
 		$.ajax({
-			url:'',
+			url:'listDelete.do',
 			type:'post',
 			data:{lt_nums:cheks},
 			dataType:'json',
@@ -119,6 +118,7 @@ $(function(){
 				if(param.result=='logout'){
 					alert('로그인 후 가능합니다!');
 				}else if(param.result=='success'){
+					alert($('input[type=checkbox]:checked').length+'개의 쪽지가 삭제되었습니다.');
 					location.reload();
 				}else{
 					alert('삭제시 오류 발생!');
@@ -129,6 +129,5 @@ $(function(){
 			}
 		});
 		
-		alert(cheks);
 	});
 });

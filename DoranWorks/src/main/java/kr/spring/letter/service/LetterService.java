@@ -49,6 +49,9 @@ public interface LetterService {
 	//보낸쪽지함 중요 업데이트
 	public void updateSendImportant(Map<String, Object> map);
 	
+	//중요 업데이트 보낸테이블 기본정보 가져오기
+	public LetterVO selectSendLetter(int lt_num);
+	
 	//받은쪽지함 정보 가져오기
 	public LetterVO selectRecLetter(Map<String, Object> map);
 	//받은쪽지함 중요 업데이트
@@ -56,6 +59,13 @@ public interface LetterService {
 	
 	//쪽지함 리스트 읽음,안읽음처리
 	public void updateRead(LetterReadVO readVO);
+	
+	//보낸쪽지함 리스트 삭제 처리
+	public void deleteSendDelete(int lt_num);
+	//받은쪽지함 리스트 삭제 처리
+	public void deleteReceiveDelete(LetterReadVO readVO);
+	//목록 리스트 삭제 처리
+	public void deleteLetterList(LetterReadVO readVO);
 	
 	//상세페이지 기본정보
 	public LetterVO selectLetter(int lt_num);

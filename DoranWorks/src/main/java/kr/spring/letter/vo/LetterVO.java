@@ -22,6 +22,7 @@ public class LetterVO {
 	private String lt_sender_id;
 	private String lt_receiver_id;
 	private String lt_reference_id;
+	private int lt_delete;
 	
 	private String lt_sender_name;
 	private String lt_receiver_name;
@@ -235,6 +236,17 @@ public class LetterVO {
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
 	}
+	
+	
+	
+
+	public int getLt_delete() {
+		return lt_delete;
+	}
+
+	public void setLt_delete(int lt_delete) {
+		this.lt_delete = lt_delete;
+	}
 
 	@Override
 	public String toString() {
@@ -242,10 +254,13 @@ public class LetterVO {
 				+ ", lt_receiver_num=" + lt_receiver_num + ", lt_date=" + lt_date + ", lt_content=" + lt_content
 				+ ", lt_read=" + lt_read + ", lt_important=" + lt_important + ", lt_filename1=" + lt_filename1
 				+ ", lt_filename2=" + lt_filename2 + ", lt_sender_id=" + lt_sender_id + ", lt_receiver_id="
-				+ lt_receiver_id + ", lt_reference_id=" + lt_reference_id + ", lt_sender_name=" + lt_sender_name
-				+ ", lt_receiver_name=" + lt_receiver_name + ", rids=" + Arrays.toString(rids) + ", rids2="
-				+ Arrays.toString(rids2) + ", snum=" + snum + ", mem_name=" + mem_name + ", mem_id=" + mem_id + "]";
+				+ lt_receiver_id + ", lt_reference_id=" + lt_reference_id + ", lt_delete=" + lt_delete
+				+ ", lt_sender_name=" + lt_sender_name + ", lt_receiver_name=" + lt_receiver_name + ", rids="
+				+ Arrays.toString(rids) + ", rids2=" + Arrays.toString(rids2) + ", snum=" + snum + ", mem_name="
+				+ mem_name + ", mem_id=" + mem_id + "]";
 	}
+
+	
 
 	
 	

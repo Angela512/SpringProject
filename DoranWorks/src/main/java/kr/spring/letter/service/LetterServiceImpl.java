@@ -172,6 +172,12 @@ public class LetterServiceImpl implements LetterService{
 		letterMapper.updateSendImportant(map);
 	}
 	
+	//중요 업데이트 보낸테이블 기본정보 가져오기
+	@Override
+	public LetterVO selectSendLetter(int lt_num) {
+	return letterMapper.selectSendLetter(lt_num);
+	}
+	
 	//받는쪽지함 정보 가져오기
 	@Override
 	public LetterVO selectRecLetter(Map<String, Object> map) {
@@ -189,19 +195,49 @@ public class LetterServiceImpl implements LetterService{
 		String[] nums = readVO.getNums();
 		for(int i=0;i<nums.length;i++) {
 			int ltnum = Integer.parseInt(nums[i]);
-			LetterVO letter = letterMapper.selectLetter(ltnum);
+			LetterVO letter = letterMapper.selectSendLetter(ltnum);
 			readVO.setLt_num(ltnum);
 			if(letter.getLt_sender_num()==readVO.getMem_num()) {//보낸쪽지함 읽음 업데이트
-				if(letter.getLt_sender_num()== Integer.parseInt(letter.getLt_receiver_num())) {//내게쓴쪽지일경우
-					if(readVO.getLt_type()==1) 
-						letterMapper.updateReceiveRead(readVO);
-					else
+				if(letter.getLt_sender_id().equals(letter.getLt_receiver_id())) {//내게쓴쪽지일경우
+						letterMapper.updateSendRead(readVO);
 						letterMapper.updateReceiveRead(readVO);
 				}else 
 					letterMapper.updateSendRead(readVO);
 				
 			}else {//받은쪽지함 읽음 업데이트
 				letterMapper.updateReceiveRead(readVO);
+			}
+		}
+	}
+	
+	//보낸쪽지함 삭제
+	@Override
+	public void deleteSendDelete(int lt_num) {
+		letterMapper.deleteSendDelete(lt_num);
+	}
+
+	//받는쪽지함 삭제
+	@Override
+	public void deleteReceiveDelete(LetterReadVO readVO) {
+		letterMapper.deleteReceiveDelete(readVO);
+	}
+
+	//목록리스트 삭제
+	@Override
+	public void deleteLetterList(LetterReadVO readVO) {
+		String[] nums = readVO.getNums();
+		for(int i=0;i<nums.length;i++) {
+			int lt_num = Integer.parseInt(nums[i]);
+			LetterVO letter = letterMapper.selectSendLetter(lt_num);
+			readVO.setLt_num(lt_num);
+			if(letter.getLt_sender_num()==readVO.getMem_num()) {//보낸쪽지함 삭제 경우
+				if(letter.getLt_sender_id().equals(letter.getLt_receiver_id())) {//내게쓴쪽지일경우
+					letterMapper.deleteSendDelete(lt_num);
+					letterMapper.deleteReceiveDelete(readVO);
+				}else
+					letterMapper.deleteSendDelete(lt_num);
+			}else {//받은쪽지함 삭제 경우
+				letterMapper.deleteReceiveDelete(readVO);
 			}
 		}
 	}
@@ -218,17 +254,21 @@ public class LetterServiceImpl implements LetterService{
 		return letterMapper.selectName(rids);
 	}
 
-	//상세페이지 보낸테이블 읽음 처리
+	//상세페이지 보낸테이블 읽음/안읽음 처리
 	@Override
 	public void updateSendRead(LetterReadVO readVO) {
 		letterMapper.updateSendRead(readVO);
 	}
 
-	//상세페이지 받는테이블 읽음 처리
+	//상세페이지 받는테이블 읽음/안읽음 처리
 	@Override
 	public void updateReceiveRead(LetterReadVO readVO) {
 		letterMapper.updateReceiveRead(readVO);
 	}
+
+	
+
+	
 
 	
 
