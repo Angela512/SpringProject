@@ -200,9 +200,15 @@
     			</tr>
     			<tr>
     				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
-    				<td height="60" width="80"></td>   				
+    				<td height="60" width="80">
+    				
+    				<c:if test="${!empty workflow.flow_no}">
+    				<img src="${pageContext.request.contextPath}/images/seal.png" width="100" height="80" class="my-photo">
+    				</c:if>
+    				
+    				</td>   				
 					</c:forTokens>
-
+                    
     			</tr>
  		   </table>
  		   

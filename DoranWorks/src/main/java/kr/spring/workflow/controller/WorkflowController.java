@@ -257,6 +257,7 @@ public class WorkflowController {
 	
 	//글수정
 	flowService.updateBoard(flowVO);
+	flowService.updateSign(flowVO);
 	
 	//View에 표히살 메시지
 	model.addAttribute("message", "글수정 완료!!");

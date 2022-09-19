@@ -53,6 +53,12 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		
 	}
 
+	@Override
+	public void updateSign(WorkflowVO work) {
+		flowMapper.updateSign(work);
+		
+	}
+
 
 	
 

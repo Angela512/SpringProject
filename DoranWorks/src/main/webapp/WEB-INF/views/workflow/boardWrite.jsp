@@ -100,14 +100,7 @@
 		            window.open(url,"","width=500,height=400,left=600");
 		        }
 			</script>
-			<!-- 
-			<li>
-				<label for="flow_sign">* 결재정보</label>
-				<input type="text" name="sign_name" placeholder="새 테스트"/>
-				<a href="#" onclick="window.open('signList.do', '_blank', 'width=600 height=600')">결재선 지정</a>
-				<br>
-			</li>
-			 -->
+			
 			<li>
 				<label for="">* 결재정보</label>
 				<input type="button" value="찾기"  onclick="nwindow()"/> 

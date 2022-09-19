@@ -69,6 +69,7 @@ public interface WorkflowMainMapper {
 				+"values(#{flow_num}, #{sign_name}, #{mem_num})")
 		public void insertTable_Test(WorkflowVO work);
 		public void updateBoard(WorkflowVO work);
+		public void updateSign(WorkflowVO work);
 		
 		
 		

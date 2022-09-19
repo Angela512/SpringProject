@@ -63,7 +63,7 @@
 					ON m.mem_dpt_num = d.mem_dpt_num 
 					
 					left join workflow_test t
-					ON t.flow_num = b.flow_num
+					ON t.flow_num = b.flow_num 
   		             <where>
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
@@ -98,9 +98,21 @@
   		    </if>
   		     -->
   			flow_title=#{flow_title},
-  			flow_content=#{flow_content}
+  			flow_content=#{flow_content},
+  			flow_start=#{flow_start},
+  			flow_end=#{flow_end},
+  			flow_subsort=#{flow_subsort}
+  			<!-- sign_name=#{sign_name} -->
   		    
   		    <!-- modify_date=SYSDATE -->
+  		WHERE flow_num=#{flow_num} 
+  	</update>
+  	
+  	<update id="updateSign" parameterType="workflowVO">
+  		 UPDATE workflow_test SET			
+  			 
+  			 sign_name=#{sign_name} 
+  
   		WHERE flow_num=#{flow_num} 
   	</update>
   	

@@ -26,6 +26,7 @@ public interface WorkflowMainService {
 		//테스트
 		public void insertFlow_num(WorkflowVO work);
 		public void updateBoard(WorkflowVO work);
+		public void updateSign(WorkflowVO work);
 		
 		
 		
