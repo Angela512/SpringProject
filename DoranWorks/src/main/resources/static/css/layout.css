@@ -1,4 +1,14 @@
 /*=========레이아웃=========*/
+/* 관리자 페이지 시작 */
+.admin_table {
+	border: 1px #a39485 solid;
+	font-size: 16px;
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+}
+/* 관리자 페이지 끝 */
 div#main{
 	width:1024px;
 	margin:0 auto;
@@ -283,4 +293,6 @@ ul.detail-info li{
 	list-style:none;
 	padding:10px;
 }
+
+
 

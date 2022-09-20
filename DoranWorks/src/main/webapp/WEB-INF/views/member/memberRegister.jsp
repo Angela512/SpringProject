@@ -5,7 +5,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
 <div class="page-main">
-	<h2>회원가입</h2>
+	<h2>DORANWORKS 관리자 페이지</h2>
+	<h3 class="align-center">회원 등록</h3>
 	<form:form id="register_form" action="registerUser.do" modelAttribute="memberVO">
 	<form:errors element="div" cssClass="error-color"/>
 	<ul>
@@ -28,7 +29,7 @@
 		</li>
 		<li>
 			<label for="mem_phone">전화번호</label>
-			<form:input path="mem_phone"/>
+			<form:input path="mem_phone" placeholder="010-1234-5678"/>
 			<form:errors path="mem_phone" cssClass="error-color"/>
 		</li>
 		<li>
@@ -58,13 +59,28 @@
 			<form:errors path="mem_birthdate" cssClass="error-color"/>
 		</li>
 		<li>
-			<label for="mem_dpt_num">부서명</label>
-			<form:input path="mem_dpt_num"/>
+			<label for="mem_dpt_num">부서</label>
+			<form:select path="mem_dpt_num">
+				<form:option value="1">개발팀</form:option>
+				<form:option value="2">인사팀</form:option>
+				<form:option value="3">기획팀</form:option>
+				<form:option value="4">마케팅팀</form:option>
+				<form:option value="5">총무팀</form:option>
+				<form:option value="6">경영지원팀</form:option>
+			</form:select>
 			<form:errors path="mem_dpt_num" cssClass="error-color"/>
 		</li>
 		<li>
 			<label for="mem_rank_num">직급</label>
-			<form:input path="mem_rank_num"/>
+			<form:select path="mem_rank_num">
+				<form:option value="1">사장</form:option>
+				<form:option value="2">부장</form:option>
+				<form:option value="3">차장</form:option>
+				<form:option value="4">과장</form:option>
+				<form:option value="5">대리</form:option>
+				<form:option value="6">사원</form:option>
+				<form:option value="7">인턴</form:option>
+			</form:select>
 			<form:errors path="mem_rank_num" cssClass="error-color"/>
 		</li>
 		<li>
@@ -75,7 +91,7 @@
 		
 	</ul>
 	<div class="align-center">
-		<form:button>전송</form:button>
+		<form:button>등록하기</form:button>
 		<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</div>
 	</form:form>

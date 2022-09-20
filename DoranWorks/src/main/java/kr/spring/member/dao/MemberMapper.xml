@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.member.dao.MemberMapper">  
-  	<!-- MemberMapper.java랑 파일명 / 메소드명 같아야함 -->
+  	
   	<select id="selectRowCount" parameterType="map" resultType="integer">
   	SELECT COUNT(*)
   	FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
@@ -32,31 +32,31 @@
   	SELECT *
   	FROM (SELECT a.*, rownum rnum
   		  FROM (SELECT *
-  		  		FROM mem_dpt dpt LEFT OUTER JOIN member_detail d
-  		  		ON dpt.mem_dpt_num = d.mem_dpt_num
+  		  		FROM mem_dpt LEFT OUTER JOIN member_detail 
+  		  		USING(mem_dpt_num)
+                JOIN mem_rank USING(mem_rank_num)
   		  		<where>
 			  		<if test="keyword != null and keyword != ''">
 			  			<if test="keyfield == 1">
-			  				d.mem_name LIKE '%' || #{keyword} || '%'
+			  				mem_name LIKE '%' || #{keyword} || '%'
 			  			</if>
 			  			<if test="keyfield == 2">
-			  				dpt.mem_dpt LIKE '%' || #{keyword} || '%'
+			  				mem_dpt LIKE '%' || #{keyword} || '%'
 			  			</if>
 			  			<if test="keyfield == 3">
-			  				d.mem_email LIKE '%' || #{keyword} || '%'
+			  				mem_email LIKE '%' || #{keyword} || '%'
 			  			</if>
 			  			<if test="keyfield == 4">
-			  				d.mem_name LIKE '%' || #{keyword} || '%' OR 
-			  				dpt.mem_dpt LIKE '%' || #{keyword} || '%' OR 
-			  				d.mem_email LIKE '%' || #{keyword} || '%' 
+			  				mem_name LIKE '%' || #{keyword} || '%' OR 
+			  				mem_dpt LIKE '%' || #{keyword} || '%' OR 
+			  				mem_email LIKE '%' || #{keyword} || '%' 
 			  			</if>
 			  		</if>
 			  	</where>
-  		  		ORDER BY d.mem_name ASC)a)
+  		  		ORDER BY mem_name ASC)a)
   	<![CDATA[
   	WHERE rnum >= #{start} AND rnum <= #{end}
   	]]>
-  	
   	</select>
 
 	<select id="selectMsgMemberRowCount" parameterType="map" resultType="integer">

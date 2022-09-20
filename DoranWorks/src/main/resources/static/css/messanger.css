@@ -59,7 +59,7 @@ div.chatroom{
 	height:350px;
 	overflow: auto;
 
-    list-style-type:none;
+    /* list-style-type:none;
 
     display:flex;
 
@@ -71,7 +71,7 @@ div.chatroom{
 
     border-top:2px solid #fff;
 
-    border-bottom:2px solid #fff;
+    border-bottom:2px solid #fff; */
 	
 }
 .msg_sendtime{ /* 메시지 날짜(한번만 띄움) */
@@ -88,7 +88,7 @@ div.chatroom{
 	width: 150px;
 	height: 50px;
 	padding: 1%;
-	margin: 2%;
+	margin: 1%;
 	background: skyblue;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;

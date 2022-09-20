@@ -35,32 +35,7 @@ public class MemberController {
 		return new MemberVO();
 	}
 	
-	//=========회원가입==========
-	//회원등록 폼 호출
-	@GetMapping("/member/registerUser.do")
-	public String form() {
-		return "memberRegister";
-	}
 	
-	//회원가입 데이터 전송
-	//회원가입 폼에서 전송된 데이터 처리
-	@PostMapping("/member/registerUser.do")							//jsp에 데이터 셋팅 위해 model 추가
-	public String submit(@Valid MemberVO memberVO, BindingResult result, Model model) {
-		//로그 처리
-		logger.debug("<<회원가입>> : " + memberVO);
-
-		//유효성 체크 결과 오류 있으면 폼 호출
-		if(result.hasErrors()) {
-			return form();
-		}
-
-		memberService.insertMember(memberVO);
-
-		//속성명		속성값
-		model.addAttribute("accessMsg", "회원가입 완료");	
-
-		return "common/notice"; 
-	}
 	
 	//================회원로그인============================//
 	//로그인 폼
