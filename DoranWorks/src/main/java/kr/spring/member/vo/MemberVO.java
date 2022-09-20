@@ -44,7 +44,21 @@ public class MemberVO {
 	private String mem_dpt;
 	private String mem_rank;
 	
-	
+	//비밀번호 변경시 현재 비밀번호를 저장하는 용도
+	@Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$")
+	private String now_passwd;
+		
+		
+	public String getNow_passwd() {
+		return now_passwd;
+	}
+
+
+	public void setNow_passwd(String now_passwd) {
+		this.now_passwd = now_passwd;
+	}
+
+
 	//=================================비밀번호 일치 여부 체크===================//
 	public boolean isCheckedPasswd(String userPasswd) {
 		System.out.println("널2 : " + mem_pw);

@@ -25,11 +25,23 @@
     	<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>                 
     </definition>
     
+    <definition name="memberChangePassword" extends="main">
+    	<put-attribute name="title" value="비밀번호변경"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/member/memberChangePassword.jsp"/>                   
+    </definition>
+    
+    
+    
+    
+    
     <!-- 관리자 메뉴 -->
     <definition name="admin_memberList" extends="main">
     	<put-attribute name="title" value="회원목록(관리자용)"/>
     	<put-attribute name="body" value="/WEB-INF/views/member/admin_memberList.jsp"/>                 
     </definition>
+    
+    
     
 </tiles-definitions>
 

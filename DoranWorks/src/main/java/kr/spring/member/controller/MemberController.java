@@ -226,7 +226,57 @@ public class MemberController {
 	}
 	
 	
-	
+	//===========비밀번호 변경===========//
+		//비밀번호 변경 폼
+		@GetMapping("/member/changePassword.do")
+		public String formChangePassword() {
+			return "memberChangePassword";
+		}
+		
+		//비밀번호 변경 폼에서 전송된 데이터 처리
+		@PostMapping("/member/changePassword.do")
+		public String submitChangePassword(
+				@Valid MemberVO memberVO,
+				BindingResult result,
+				HttpSession session,
+				Model model,
+				HttpServletRequest request) {
+			logger.debug("<<비밀번호 변경 처리>> : " + memberVO);
+			
+			//유효성 체크 결과 오류가 있으면 폼 호출
+			//now_passwd,passwd만 체크
+			if(result.hasFieldErrors("now_passwd") || 
+					result.hasFieldErrors("mem_pw")) {
+				return formChangePassword();
+			}
+			
+			MemberVO user = 
+				  (MemberVO)session.getAttribute("user");
+			memberVO.setMem_num(user.getMem_num());
+			
+			//비밀번호 일치 여부 체크를 위해서 회원정보 호출
+			MemberVO db_member = 
+					memberService.selectMember(
+							     memberVO.getMem_num());
+			//폼에서 전송한 현재 비밀번호와 DB에서 받아온
+			//현재 비밀번호 일치 여부 체크
+			if(!db_member.getMem_pw().equals(
+					memberVO.getNow_passwd())) {
+				result.rejectValue(
+						"now_passwd", "invalidPassword");
+				return formChangePassword();
+			}
+			
+			//비밀번호 변경
+			memberService.updatePassword(memberVO);
+			
+			//View에 표시할 메시지
+			model.addAttribute("message", "비밀번호변경 완료!");
+			model.addAttribute("url", 
+			  request.getContextPath()+"/member/myPage.do");
+			
+			return "common/resultView";
+		}
 	
 	
 	

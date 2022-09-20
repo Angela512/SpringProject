@@ -59,4 +59,9 @@ public interface MemberMapper {
 	
 	//전자결재 회원 목록 호출
 	public List<MemberVO> selectSignList();
+
+	//회원 비밀번호 변경
+	@Update("UPDATE member_detail SET mem_pw=#{mem_pw} "
+			+ "WHERE mem_num=#{mem_num}")
+	public void updatePassword(MemberVO member);
 }
