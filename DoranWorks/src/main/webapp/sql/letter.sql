@@ -57,6 +57,7 @@ create table notice(
 	notice_filename1 varchar2(100),
 	notice_filename2 varchar2(100),
 	notice_head number default 0 not null,
+	notice_replyagree number default 0 not null,
 	constraint notice_pk primary key (notice_num),
 	constraint notice_fk foreign key (mem_num) references member (mem_num)
 );
@@ -82,6 +83,7 @@ create table notice_reply(
 	notice_num number not null,
 	reply_content varchar2(1000) not null,
 	reply_date date default sysdate not null,
+	reply_mdate date,
 	constraint reply_pk primary key (reply_num),
 	constraint reply_fk1 foreign key (mem_num) references member (mem_num),
 	constraint reply_fk2 foreign key (notice_num) references notice (notice_num)

@@ -3,7 +3,140 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.notice.dao.NoticeMapper">  
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM notice n JOIN member m
+		ON n.mem_num = m.mem_num
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<if test="keyfield == 1">
+					n.notice_title LIKE '%' || #{keyword} || '%'
+				</if>
 
+				<if test="keyfield == 2">
+					m.mem_id LIKE '%' || #{keyword} || '%' OR
+					m.mem_name LIKE '%' || #{keyword} || '%'
+				</if>
+
+				<if test="keyfield == 3">
+					n.content LIKE '%' || #{keyword} || '%'
+				</if>
+
+				<if test="keyfield == 4">
+					n.title LIKE '%' || #{keyword} || '%' OR
+					n.content LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" parameterType="map" resultType="noticeVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			  FROM (SELECT
+			  			n.notice_num,
+			  			<![CDATA[
+			  			REPLACE(REPLACE(n.notice_title,'<','&lt;'),'>','&gt;') notice_title,
+			  			]]>
+			  			n.notice_filename1,
+			  			n.notice_filename2,
+			  			n.notice_date,
+			  			n.notice_head,
+			  			n.mem_num,
+			  			m.mem_id,
+			  			d.mem_name
+			  		FROM notice n JOIN member m
+			  		ON n.mem_num = m.mem_num
+			  		JOIN member_detail d
+			  		ON m.mem_num=d.mem_num
+			  		<where>
+						<if test="keyword != null and keyword != ''">
+							<if test="keyfield == 1">
+								n.notice_title LIKE '%' || #{keyword} || '%'
+							</if>
+			
+							<if test="keyfield == 2">
+								m.mem_id LIKE '%' || #{keyword} || '%' OR
+								d.mem_name LIKE '%' || #{keyword} || '%'
+							</if>
+			
+							<if test="keyfield == 3">
+								n.content LIKE '%' || #{keyword} || '%'
+							</if>
+			
+							<if test="keyfield == 4">
+								n.title LIKE '%' || #{keyword} || '%' OR
+								n.content LIKE '%' || #{keyword} || '%'
+							</if>
+						</if>
+					</where>
+			  		ORDER BY n.notice_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
+	<update id="deleteFile" parameterType="map">
+		UPDATE notice SET
+		<if test="file_type==1">
+			notice_uploadfile1='',
+			notice_filename1=''
+		</if>
+		<if test="file_type==2">
+			notice_uploadfile2='',
+			notice_filename2=''
+		</if>
+		WHERE notice_num=#{notice_num}
+	</update>
+	
+	<update id="updateNotice" parameterType="noticeVO">
+		UPDATE notice SET
+		<if test="notice_filename1 != ''">
+			notice_uploadfile1=#{notice_uploadfile1},
+			notice_filename1=#{notice_filename1},
+		</if>
+		<if test="notice_filename2 != ''">
+			notice_uploadfile2=#{notice_uploadfile2},
+			notice_filename2=#{notice_filename2},
+		</if>
+			notice_title=#{notice_title},
+			notice_content=#{notice_content},
+			notice_head=#{notice_head},
+			notice_replyagree=#{notice_replyagree}
+		WHERE notice_num=#{notice_num}
+	</update>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectListReply" parameterType="map" resultType="noticeReplyVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			  FROM (SELECT
+			  			reply_num,
+			  			<![CDATA[
+			  			REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
+			  			]]>
+			  			reply_date,
+			  			reply_mdate,
+			  			notice_num,
+			  			mem_num,
+			  			mem_id,
+			  			mem_name
+			  		FROM notice_reply r
+			  		JOIN member m USING(mem_num)
+			  		JOIN member_detail d USING(mem_num)
+			  		WHERE notice_num = #{notice_num}
+			  		ORDER BY reply_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= ${end}
+		]]>
+	</select>
 </mapper>
 
 

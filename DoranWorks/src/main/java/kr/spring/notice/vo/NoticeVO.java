@@ -20,10 +20,15 @@ public class NoticeVO {
 	private String notice_filename1;
 	private String notice_filename2;
 	private int notice_head; // 말머리
+	private int notice_replyagree;
 	
 	private String mem_id;//회원아이디
 	private String mem_name;//회원이름
 	private byte[] mem_photo; // 프로필 사진
+	private String mem_photo_name;//프로필 사진 이름
+	
+	private int next_num; //다음글번호
+	private int prev_num; //이전글번호
 	
 	//=======================이미지 BLOB 처리=========================//
 		//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -121,13 +126,56 @@ public class NoticeVO {
 	public void setMem_photo(byte[] mem_photo) {
 		this.mem_photo = mem_photo;
 	}
+	
+	
+	public int getNext_num() {
+		return next_num;
+	}
+
+	public void setNext_num(int next_num) {
+		this.next_num = next_num;
+	}
+
+	public int getPrev_num() {
+		return prev_num;
+	}
+
+	public void setPrev_num(int prev_num) {
+		this.prev_num = prev_num;
+	}
+	
+	
+
+	public String getMem_photo_name() {
+		return mem_photo_name;
+	}
+
+	public void setMem_photo_name(String mem_photo_name) {
+		this.mem_photo_name = mem_photo_name;
+	}
+	
+	
+
+	public int getNotice_replyagree() {
+		return notice_replyagree;
+	}
+
+	public void setNotice_replyagree(int notice_replyagree) {
+		this.notice_replyagree = notice_replyagree;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeVO [notice_num=" + notice_num + ", mem_num=" + mem_num + ", notice_title=" + notice_title
 				+ ", notice_date=" + notice_date + ", notice_content=" + notice_content + ", notice_filename1="
 				+ notice_filename1 + ", notice_filename2=" + notice_filename2 + ", notice_head=" + notice_head
-				+ ", mem_id=" + mem_id + ", mem_name=" + mem_name + "]";
+				+ ", notice_replyagree=" + notice_replyagree + ", mem_id=" + mem_id + ", mem_name=" + mem_name
+				+ ", mem_photo_name=" + mem_photo_name + ", next_num=" + next_num + ", prev_num=" + prev_num + "]";
 	}
+
+	
+	
+	
 	
 	
 	

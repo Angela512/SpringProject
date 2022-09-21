@@ -11,6 +11,24 @@
     	  value="/WEB-INF/views/notice/noticeList.jsp"/>                   
     </definition>
 
+    <definition name="noticeWrite" extends="main">
+    	<put-attribute name="title" value="공지 글쓰기"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/noticeWrite.jsp"/>                   
+    </definition>
+
+    <definition name="noticeView" extends="main">
+    	<put-attribute name="title" value="공지 상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/noticeView.jsp"/>                   
+    </definition>
+
+    <definition name="noticeModify" extends="main">
+    	<put-attribute name="title" value="공지 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/noticeModify.jsp"/>                   
+    </definition>
+
 </tiles-definitions>
 
 

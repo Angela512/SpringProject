@@ -57,9 +57,9 @@
 	<div class="align-center">
 		<img src="imageView.do?lt_num=${letter.lt_num}&image_type=1" style="max-width:500px;">
 	</div>
+	<br>
 	</c:if>
 	
-	<br>
 	
 	<c:if test="${fn:endsWith(letter.lt_filename2,'.jpg') ||
 				  fn:endsWith(letter.lt_filename2,'.JPG') ||
