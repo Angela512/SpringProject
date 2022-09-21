@@ -115,11 +115,12 @@
 				<form:textarea path="flow_content"/>
 				<form:errors path="flow_content" 
 				             cssClass="error-color"/>               
-			</li>			
+			</li>
+						
 			
 		</ul>
-	
-		    
+		
+		
 		<div class="align-center">
 		
 			<form:button>전송</form:button>

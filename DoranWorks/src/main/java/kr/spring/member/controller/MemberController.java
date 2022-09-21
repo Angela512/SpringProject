@@ -74,7 +74,7 @@ public class MemberController {
 				logger.debug("<<인증 성공>>");
 				logger.debug("<<id>> : "+member.getMem_id());
 				
-				return "redirect:/main/main.do";
+				return "redirect:/notice/list.do";
 			}
 			
 			//인증 실패

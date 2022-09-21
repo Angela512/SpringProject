@@ -75,6 +75,8 @@ public interface WorkflowMainMapper {
 		@Update("UPDATE workflow_main SET flow_no=1 WHERE flow_num=#{flow_")
 		public void updateIi(int flow_num);
 		
+		public void updateSignOk(WorkflowVO flowVO);
+		
 //		@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 //		public void updateHit(Integer board_num);
 //		public void updateBoard(WorkflowMainVO board);   ////

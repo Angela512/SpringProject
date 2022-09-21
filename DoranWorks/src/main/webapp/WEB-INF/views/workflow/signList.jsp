@@ -11,8 +11,7 @@
 <form action="/workflow/signList.do" method="post" id="request">
 
 		<c:forEach var="flow" items="${list}">
-
-		<input type="checkbox"  value="${flow.mem_name} ${flow.mem_rank}"/>
+		<input type="checkbox"  value="${flow.mem_name}"/>
 		${flow.mem_name}
 		${flow.mem_rank}
 		${flow.mem_dpt}

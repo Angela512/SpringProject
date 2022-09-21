@@ -112,7 +112,20 @@
 			<input type="button" value="인쇄" onclick="window.print()" >
 		</li>
 		<li>
-			<input type="button" value="승인" id="test">
+			<form action="/workflow/ok.do" method="post" style="border:none;">
+			<c:if test="${workflow.mem_name!=user_name}">
+			<input type="submit" value="승인">
+			</c:if>
+			<input type="hidden" name="flow_num" value="${workflow.flow_num}">			
+			
+			<c:set var="myArray" value="${fn:split(workflow.sign_name,',')}" />
+			<c:if test="${myArray[0] == user_name}">
+			<input type="hidden" name="flow_no" value="1,0">
+			</c:if>
+			<c:if test="${myArray[1] == user_name}">
+			<input type="hidden" name="flow_no" value="1,1">
+			</c:if>
+			</form>
 		</li>
 	</ul>
 	<hr size="1" width="100%">
@@ -122,8 +135,8 @@
 		<c:if test="${!empty user && user.mem_num == workflow.mem_num}">
 		<input type="button" value="수정" 
 		  onclick="location.href='update.do?flow_num=${workflow.flow_num}'">
-		<input type="button" value="삭제" id="delete_btn">
-		<script type="text/javascript">
+		<!-- <input type="button" value="삭제" id="delete_btn"> -->
+		<!-- <script type="text/javascript">
 			let delete_btn = document.getElementById('delete_btn');
 			//이벤트 연결
 			delete_btn.onclick=function(){
@@ -132,7 +145,7 @@
 					location.replace('delete.do?board_num=${board.board_num}');
 				}
 			};
-		</script>  
+		</script> -->  
 		
 		</c:if>
 		<input type="button" value="목록"
@@ -175,25 +188,7 @@
         <td>&nbsp;</td>
       </tr>
     </table>
-    <!-- 테이블 테스트 -->
-    <%-- 
-    <table border="solid" align="right" class="form10">
-   				<tr>
-    				<td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b" rowspan="2">11</td>
-    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
-    				<td><c:out value="${name}" /></td>
-    				</c:forTokens>
-
-    			</tr>
-    			<tr>
-    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
-    				<td height="30" width="50"><c:out value="${name}" /></td>   				
-					</c:forTokens>
-
-    			</tr>
- 		   </table>
- 	 --%>	   
-    <!--  -->
+   
     <table width="644" border="1"  cellspacing="0" cellpadding="0" bordercolor="#000000" style="border-collapse:collapse; border:none;" align="center" class="form10">
     <tr >
     	<td colspan="7" style="border:none;">
@@ -207,12 +202,12 @@
 
     			</tr>
     			<tr>
-    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
-    				<td height="60" width="80">
-    				
-    				<c:if test="${!empty workflow.flow_no}">
-    				<img src="${pageContext.request.contextPath}/images/seal.png" width="100" height="80" class="my-photo">
-    				</c:if>
+    				<c:forTokens items="${workflow.flow_no}" delims = "," var="name">
+    				<td height="60" width="80"> 
+    				 				
+    				<c:if test="${name == '1' }">
+    				<img src="${pageContext.request.contextPath}/images/seal.png" width="40" height="60" style="" class="my-photo">  				
+    				</c:if>	
     				
     				</td>   				
 					</c:forTokens>
@@ -231,9 +226,7 @@
         <td align="center" class="form10"><DIV   id="to_date" style="padding:3px;"></DIV>${workflow.flow_date}</td>
       </tr>
     
-      <tr>
-        <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">이 름</td>
-        <td align="center" class="form10"><div id="username"></div>${workflow.mem_name}</td>
+      <tr>r
         <td align="center" bgcolor="#D9E2F3" class="form10b">직 책</td>
         <td align="center" class="form10"><div id="pp"></div>${workflow.mem_rank}</td>
       </tr>

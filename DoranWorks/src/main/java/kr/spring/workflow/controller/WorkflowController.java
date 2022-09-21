@@ -197,7 +197,7 @@ public class WorkflowController {
 	flowService.updateBoard(flowVO);
 	flowService.updateSign(flowVO);
 	
-	//View에 표히살 메시지
+	//View에 표시할 메시지
 	model.addAttribute("message", "글수정 완료!!");
 	model.addAttribute("url", 
 			request.getContextPath()+"/workflow/detail.do?flow_num="+flowVO.getFlow_num());	
@@ -314,12 +314,15 @@ public class WorkflowController {
 		//========게시판 글상세===========//
 		@RequestMapping("/workflow/detail.do")
 		public ModelAndView detail(
-			          @RequestParam int flow_num) {
+			          @RequestParam int flow_num,HttpSession session) {
 		
 		logger.debug("<<board_num>> : " + flow_num);
 		
 		WorkflowVO workflow = 
 				flowService.selectBoard(flow_num);
+		
+		MemberVO user = 
+				(MemberVO)session.getAttribute("user");
 		
 		List<MemberVO> list = memberService.selectSignList();
 		
@@ -327,6 +330,7 @@ public class WorkflowController {
 		mav.setViewName("boardView"); 
 		mav.addObject("workflow",workflow);
 		mav.addObject("list", list);
+		mav.addObject("user_name", user.getMem_name());
 		
 		
 		//제목에 태그를 허용하지 않음
@@ -345,7 +349,43 @@ public class WorkflowController {
 		
 		
 		
+		//===========승인 테스트===========//
+		@GetMapping("/workflow/ok.do")
+		public String formUpdate2(
+			@RequestParam int flow_num,
+			                         Model model) {
+		WorkflowVO flowVO = 
+				flowService.selectBoard(flow_num);
 		
+		model.addAttribute("workflowVO", flowVO);
+		
+		return "boardModify";
+		}
+		
+		
+		
+		
+		//수정 폼에서 전송된 데이터 처리
+		@PostMapping("/workflow/ok.do")
+		public String submitUpdate2(@Valid WorkflowVO flowVO,
+			            BindingResult result,
+			            HttpServletRequest request,
+			            Model model) {
+		logger.debug("<<글수정>> : " + flowVO);
+		
+		
+		
+		//글수정
+
+		flowService.updateSignOk(flowVO);
+		
+		//View에 표시할 메시지
+		model.addAttribute("message", "승인 완료!!");
+		model.addAttribute("url", 
+				request.getContextPath()+"/workflow/detail.do?flow_num="+flowVO.getFlow_num());		
+		
+		return "common/resultView";
+		}
 		
 	
 		

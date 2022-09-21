@@ -117,6 +117,14 @@
   		WHERE flow_num=#{flow_num} 
   	</update>
   	
+  	<update id="updateSignOk" parameterType="workflowVO">
+  		 UPDATE workflow_main SET			
+  			 
+  			 flow_no=#{flow_no} 
+  
+  		WHERE flow_num=#{flow_num} 
+  	</update>
+  	
   	
   	<!-- 
   	게시판 결재라인 등록

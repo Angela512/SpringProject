@@ -169,6 +169,16 @@ public class WorkflowVO {
 	public void setMem_rank(String mem_rank) {
 		this.mem_rank = mem_rank;
 	}
+	@Override
+	public String toString() {
+		return "WorkflowVO [flow_num=" + flow_num + ", form_num=" + form_num + ", mem_num=" + mem_num + ", flow_title="
+				+ flow_title + ", flow_sort=" + flow_sort + ", flow_state=" + flow_state + ", flow_no=" + flow_no
+				+ ", flow_content=" + flow_content + ", flow_start=" + flow_start + ", flow_end=" + flow_end
+				+ ", flow_subsort=" + flow_subsort + ", flow_date=" + flow_date + ", flow_modify=" + flow_modify
+				+ ", flow_line=" + flow_line + ", mem_photo_name=" + mem_photo_name + ", sign_num=" + sign_num
+				+ ", sign_no=" + sign_no + ", sign_name=" + sign_name + ", mem_name=" + mem_name + ", mem_dpt="
+				+ mem_dpt + ", mem_rank=" + mem_rank + "]";
+	}
 	
 	
 }
