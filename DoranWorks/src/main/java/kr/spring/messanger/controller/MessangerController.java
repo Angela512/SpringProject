@@ -34,8 +34,6 @@ import kr.spring.messanger.controller.MessangerController;
 @Controller
 public class MessangerController {
 	private static final Logger logger = LoggerFactory.getLogger(MessangerController.class);
-	private int rowCount = 20;
-	private int pageCount = 10;
 	
 	@Autowired
 	private MessangerService messangerService;

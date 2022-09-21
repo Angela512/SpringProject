@@ -117,7 +117,7 @@ $(function(){
 				$('.chat_form').show();
 				$('.msg_formUI').show();
 				$('#' + chatroom_num).css('background-color','#D6FFFF');
-				let msgUI = '<h3>' + chatroom_num + '번 채팅방</h3>' + strDate;
+				let msgUI = '<div class="chat_head"><h3>' + chatroom_num + '번 채팅방</h3>' + strDate;
 				msgUI += '<span>멤버 : ';
 				$(param.list).each(function(index, item){
 					if(item.mem_num != user_num){
@@ -125,12 +125,13 @@ $(function(){
 					}
 				});
 				
-				msgUI += '</span>';
+				msgUI += '</span></div>';
 				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
 				let msg_time;
+				msgUI = '<div class="chat_body">';
 				$(param.msgList).each(function(index, item){
-					msgUI = '';
+					//msgUI = '';
 					let sendtime = (item.msg_sendtime).substr(0,10);
 					
 					//오늘이면 날짜 표시(오늘 날짜를 한번도 안띄웠을 경우에만)
@@ -144,12 +145,10 @@ $(function(){
 					if(item.mem_num != user_num){
 						msgUI += '"your_chat">'; 
 						msgUI += '<div class="you_name">' + item.mem_name + '</div>';
-						//msgUI += '<li>';
 						msgUI += '<div class="you_bubble">';
 						
 					}else{
 						msgUI += '"my_chat">';
-						//msgUI += '<li>';
 						msgUI += '<div class="me_bubble">';
 					}
 					msgUI += item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>');
@@ -161,20 +160,21 @@ $(function(){
 					msgUI += '</div>';
 					
 					
-					
 					//msgUI += '<b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>') + '</b> <span>' + (item.msg_sendtime).substr(11,5) +'</span></div>';
 					
 					msgUI += '';
 					msgUI += '';
 					msgUI += '';
-					$('.chat_form').append(msgUI);
-					
+					//$('.chat_form').append(msgUI);
 				});
+				msgUI += '</div>';
+				$('.chat_form').append(msgUI);
+				
 				let chatUI = '';
 				chatUI += '<form id="msg_form">';
 				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
 				chatUI += '<textarea rows="8" cols="60" name="msg_content" id="msg_content" class="msgContent"></textarea>';
-				chatUI += '<div id="msg_first"><span class="letter-count">100/100</span></div>';
+				chatUI += '<div id="msg_first"><span class="letter-count"></span></div>';
 				chatUI += '<input type="file" name="upload">';
 				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송"></div>';
 				chatUI += '</form>';
@@ -227,12 +227,12 @@ $(function(){
 		event.preventDefault();
 	});
 	
-	//글자수 
+	/*//글자수 
 	$(document).on('keyup', 'textarea', function(){
 		//입력한 글자 수
 		let inputLength = $(this).val().length;
 		
-		if(inputLength > 100){ //100자 이상인 경우
+		if(inputLength > 4000){ //100자 이상인 경우
 			$(this).val($(this).val().substring(0,100)); //100자 넘으면 잘라냄
 		}else{ //300자 이하인 경우
 			//남은 글자 수 구하기
@@ -243,7 +243,7 @@ $(function(){
 				$('#msg_first .letter-count').text(remain);
 			}
 		}
-	});
+	});*/
 	
 	$(document).on('keydown', 'textarea', function(event){
         if (event.keyCode == 13)
