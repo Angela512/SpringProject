@@ -13,25 +13,22 @@
 			<li>
 				<label for="now_passwd">현재 비밀번호</label>
 				<form:password path="now_passwd"/>
-				<form:errors path="now_passwd" 
-				                   cssClass="error-color"/>
+				<form:errors path="now_passwd" cssClass="error-color"/>
 			</li>
 			<li>
-				<label for="mem_pw">새비밀번호</label>
+				<label for="mem_pw">새 비밀번호</label>
 				<form:password path="mem_pw"/>
-				<form:errors path="mem_pw" 
-				                   cssClass="error-color"/>
+				<form:errors path="mem_pw" cssClass="error-color"/>
 			</li>
 			<li>
-				<label for="confirm_passwd">새비밀번호 확인</label>
+				<label for="confirm_passwd">새 비밀번호 확인</label>
 				<input type="password" id="confirm_passwd">
 				<span id="message_id"></span>
 			</li>
 		</ul>  
 		<div class="align-center">
-			<input type="submit" value="전송">
-			<input type="button" value="MY페이지" 
-			 onclick="location.href='myPage.do'">
+			<input type="submit" value="변경하기">
+			<input type="button" value="MY페이지" onclick="location.href='myPage.do'">
 		</div>
 	</form:form>
 </div>
