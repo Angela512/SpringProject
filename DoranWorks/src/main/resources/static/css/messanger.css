@@ -1,12 +1,26 @@
 /*=========레이아웃=========*/
 
 /* 메신저 css 시작 */
+#msg_title{
+	margin-top:0;
+	padding-left:1%;
+}
 .main_list{
 	float:left;
 	width:40%;
+	height:450px;
+	padding-left:1%;
+}
+.page-main ul.chat_search{
+	margin:0 0 9px 0;
+	padding: 0;
+	position:fixed;
+	background-color:white;
+	width:307px;
 }
 .chatroomMain{
 	height:500px;
+	margin-top:80px;
 }
 #createroom_btn{ /* 채팅방 생성 버튼 */
 	width:100%;
@@ -26,8 +40,9 @@
 	
 }
 #chatroomList{
-	width:100%;
 	overflow: auto;
+	width:307px;
+	height:400px;
 }
 div.chatroom{
 	height:50px;
@@ -110,7 +125,7 @@ div.chatroom{
 	float:right;
 }
 .my_chat .time_count{
-	width: 380px; 
+	width: 290px; 
 	height:50px;
 	padding: 1%;
 	margin:2%;
@@ -119,7 +134,7 @@ div.chatroom{
 	text-align:right;
 }
 .your_chat .time_count{
-	width: 380px; 
+	width: 300px; 
 	height:50px;
 	padding: 1%;
 	margin:2%;
@@ -136,12 +151,8 @@ div.chatroom{
 	padding: 0;
 	border:0;
 }
-.page-main ul.chat_search{
-	margin:0 0 9px 0;
-	padding: 0;
-}
 textarea{
-	width:99%;
+	width:100%;
 }
 
 #searchIcon{

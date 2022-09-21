@@ -3,15 +3,33 @@
 .nav_bar a{
 	display:block;
 }
-ul.nav{
+ul.nav_profile{
+	list-style:none;
+	height:100%;
+	margin:21px;
+	padding:0;
+	text-align:center;
+}
+ul.nav_profile li{
+	display:block;
+}
+ul.nav_profile .li_logout{ /* 로그아웃에는 밑줄 */
+	text-decoration:underline;
+}
+ul.nav_menu{
 	list-style:none;
 	height:100%;
 	margin:0;
 	padding:0;
+	text-align:center;
+	line-height:35px;
+	margin:0 21px 21px 21px;
 }
-ul.nav li{
+ul.nav_menu li{
 	display:block;
+	font-size:15pt;
 }
+/* 헤더 끝 */
 
 /* footer 시작 */
 * {
@@ -74,6 +92,8 @@ div#main_header{
 div#main_nav{
 	width:20%;
 	float:left;
+	min-height:530px;
+	background-color:lightgrey;
 }
 div#main_body{
 	padding:5px 5px 30px 5px;

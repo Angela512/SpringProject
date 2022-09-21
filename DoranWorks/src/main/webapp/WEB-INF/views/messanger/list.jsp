@@ -7,7 +7,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
 	<!-- 채팅방 검색 및 채팅방 생성 -->
-	<h2>메신저</h2>
+	<h2 id="msg_title">메신저</h2>
 	<div class="main_list">
 	<ul class="chat_search">
 		<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>
