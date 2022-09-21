@@ -5,6 +5,12 @@
 }
 ul.nav{
 	list-style:none;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+ul.nav li{
+	display:block;
 }
 /* 관리자 페이지 시작 */
 .admin_table {
@@ -26,6 +32,10 @@ div#main_header{
 	margin-bottom: 10px;
 	padding: 0 10px 0 0;
 }
+div#main_nav{
+	width:20%;
+	float:left;
+}
 div#main_body{
 	padding:5px 5px 30px 5px;
 	min-height: 500px;
@@ -46,8 +56,8 @@ div#main_menu ul li{
 
 /*==========페이지 기본 스타일======*/
 .page-main{
-	width:98%;
-	margin:0 auto;
+	width:80%;
+	margin-left:20%;
 }
 .page-one{
 	width:600px;
