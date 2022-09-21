@@ -12,6 +12,45 @@ ul.nav{
 ul.nav li{
 	display:block;
 }
+
+/* footer 시작 */
+* {
+   box-sizing: border-box;
+}
+.footer_container{
+	float:left;
+	width:100%;
+	font-family: Verdana, sans-serif;
+}
+.footer {
+	background-color: red;
+}
+
+.footer_logo {
+	float:left;
+	width:30%;
+	text-align: right;
+	padding-top: 20px;
+	color: #FA5D57;
+	padding-left: 10%;
+	padding-right:2%;
+}
+
+.footer_logo a:visited {
+	color: #FA5D57;
+}
+
+.footer_content {
+	float:right;
+	width:70%;
+	text-align: left;
+	padding-right: 10%;
+	padding-left:2%;
+	font-size: 10pt;
+}
+/* footer 끝 */
+
+
 /* 관리자 페이지 시작 */
 .admin_table {
 	border: 1px #a39485 solid;
