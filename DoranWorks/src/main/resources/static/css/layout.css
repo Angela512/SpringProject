@@ -1,4 +1,11 @@
 /*=========레이아웃=========*/
+/* 헤더 */
+.nav_bar a{
+	display:block;
+}
+ul.nav{
+	list-style:none;
+}
 /* 관리자 페이지 시작 */
 .admin_table {
 	border: 1px #a39485 solid;
