@@ -100,7 +100,7 @@ public class MemberController {
 		//로그아웃
 		session.invalidate();
 		
-		return "redirect:/main/main.do";
+		return "redirect:/member/main.do";
 	}
 	
 	//==========My Page==========
