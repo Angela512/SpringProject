@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <!-- 내용 시작 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/board.js"></script>
@@ -43,13 +45,14 @@
 	<div class="result-display">표시할 게시물이 없습니다.</div>	
 	</c:if>
 	<c:if test="${count > 0}">
-	<table>
+	<table class="table table-hover">
 		<tr>
 			<th>문서번호</th>
 			<th width="400">제목</th>
 			<th>작성자</th>
 			<th>결재 종류</th>
 			<th>작성일</th>
+			<th>결재 상태</th>
 		</tr>
 		<c:forEach var="flow" items="${list}">
 		
@@ -59,7 +62,8 @@
 		
 			<td>${flow.mem_name} ${flow.mem_rank}</td>
 			<td>${flow.flow_sort}</td>
-			<td>${flow.flow_date}</td> 		
+			<td>${flow.flow_date}</td> 	
+			<td>${flow.flow_state}</td>	
 		</tr>
 		
 		</c:forEach>
@@ -75,4 +79,4 @@
 <!-- 내용 끝 -->
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

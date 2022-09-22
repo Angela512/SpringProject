@@ -120,7 +120,7 @@
   	<update id="updateSignOk" parameterType="workflowVO">
   		 UPDATE workflow_main SET			
   			 
-  			 flow_no=#{flow_no} 
+  			 flow_no=#{flow_no}, flow_state=#{flow_state}
   
   		WHERE flow_num=#{flow_num} 
   	</update>

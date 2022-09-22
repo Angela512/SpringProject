@@ -52,22 +52,6 @@
 				             cssClass="error-color"/>
 			</li>
 			<li>
-				<label for="">수신참조</label>
-				<input type="text" name="" disabled />				
-			</li>
-			<li>
-				<label for="upload">참조문서</label>
-				<input type="file" name=""  disabled/>
-			</li>
-			<li>
-				<label for="">시행자</label>
-				<input type="text" name="" disabled />
-			</li>
-			<li>
-				<label for="flow_state">state 테스트</label>
-				<input type="text" name="flow_state" placeholder="작성 x" />
-			</li>
-			<li>
 				<label for="flow_subsort">* 휴가구분</label>
 				<form:select path="flow_subsort">
 				    <form:option value="">종류 선택</form:option>
@@ -104,7 +88,7 @@
 			<li>
 				<label for="">* 결재정보</label>
 				<input type="button" value="찾기"  onclick="nwindow()"/> 
-				<input type="text"  name="sign_name" id="sign_name" readonly style="width:400px"/>
+				<input type="text"  name="sign_name" id="sign_name" readonly style="width:300px"/>
 				<br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form:errors path="sign_name" 
 				             cssClass="error-color"/>      			    
@@ -115,6 +99,9 @@
 				<form:textarea path="flow_content"/>
 				<form:errors path="flow_content" 
 				             cssClass="error-color"/>               
+			</li>
+			<li>
+				<input type="hidden" name="flow_state" value="결재 진행중"/>
 			</li>
 						
 			

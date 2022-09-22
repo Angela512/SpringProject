@@ -111,6 +111,7 @@
 		<li>
 			<input type="button" value="인쇄" onclick="window.print()" >
 		</li>
+		
 		<li>
 			<form action="/workflow/ok.do" method="post" style="border:none;">
 			<c:if test="${workflow.mem_name!=user_name}">
@@ -118,13 +119,39 @@
 			</c:if>
 			<input type="hidden" name="flow_num" value="${workflow.flow_num}">			
 			
+			
 			<c:set var="myArray" value="${fn:split(workflow.sign_name,',')}" />
-			<c:if test="${myArray[0] == user_name}">
-			<input type="hidden" name="flow_no" value="1,0">
+			
+			<c:if test="${fn:length(myArray) == 1}">
+				<c:if test="${myArray[0] == user_name}">
+				<input type="hidden" name="flow_no" value="1">
+				<input type="hidden" name="flow_state" value="결재 승인"/>
+				</c:if>
 			</c:if>
-			<c:if test="${myArray[1] == user_name}">
-			<input type="hidden" name="flow_no" value="1,1">
+			
+			<c:if test="${fn:length(myArray) == 2}">
+				<c:if test="${myArray[0] == user_name}">
+				<input type="hidden" name="flow_no" value="1,0">
+				</c:if>
+				<c:if test="${myArray[1] == user_name}">
+				<input type="hidden" name="flow_no" value="1,1">
+				<input type="hidden" name="flow_state" value="결재 승인"/>
+				</c:if>
 			</c:if>
+			
+			<c:if test="${fn:length(myArray) == 3}">
+				<c:if test="${myArray[0] == user_name}">
+				<input type="hidden" name="flow_no" value="1,0,0">
+				</c:if>
+				<c:if test="${myArray[1] == user_name}">
+				<input type="hidden" name="flow_no" value="1,1,0">
+				</c:if>
+				<c:if test="${myArray[2] == user_name}">
+				<input type="hidden" name="flow_no" value="1,1,1">
+				<input type="hidden" name="flow_state" value="결재 승인"/>
+				</c:if>
+			</c:if>
+			
 			</form>
 		</li>
 	</ul>
@@ -202,7 +229,16 @@
 
     			</tr>
     			<tr>
-    				<c:forTokens items="${workflow.flow_no}" delims = "," var="name">
+    				
+    			<c:if test="${empty workflow.flow_no }">
+    				<c:forTokens items="${workflow.sign_name}" delims = "," var="name">
+    				<td height="60" width="80">
+    				</td>
+    				</c:forTokens>
+    			</c:if>
+    			
+    			<c:if test="${!empty workflow.flow_no }">
+    			    <c:forTokens items="${workflow.flow_no}" delims = "," var="name">
     				<td height="60" width="80"> 
     				 				
     				<c:if test="${name == '1' }">
@@ -210,11 +246,12 @@
     				</c:if>	
     				
     				</td>   				
-					</c:forTokens>
+					</c:forTokens> 
+                </c:if>
                     
     			</tr>
  		   </table>
- 		   
+ 		  
 	   
     	<!-- 테이블 테스트 끝 -->
     	</td>
@@ -226,7 +263,9 @@
         <td align="center" class="form10"><DIV   id="to_date" style="padding:3px;"></DIV>${workflow.flow_date}</td>
       </tr>
     
-      <tr>r
+      <tr>
+        <td height="40" colspan="3" align="center" bgcolor="#D9E2F3"  class="form10b">이 름</td>
+        <td align="center" class="form10"><div id="username"></div>${workflow.mem_name}</td>
         <td align="center" bgcolor="#D9E2F3" class="form10b">직 책</td>
         <td align="center" class="form10"><div id="pp"></div>${workflow.mem_rank}</td>
       </tr>

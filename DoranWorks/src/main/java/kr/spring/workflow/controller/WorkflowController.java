@@ -378,7 +378,7 @@ public class WorkflowController {
 		//글수정
 
 		flowService.updateSignOk(flowVO);
-		
+		System.out.println("테스트 : "+"");
 		//View에 표시할 메시지
 		model.addAttribute("message", "승인 완료!!");
 		model.addAttribute("url", 
