@@ -62,7 +62,7 @@ public interface MessangerMapper {
 	public int selectCheckedMemberCount(Map<String, Object> map);
 	public List<ChatroomVO> selectCheckedMemberList(Map<String, Object> map);
 	
-//========메시지========================  
+//====================메시지========================  
 	//대화방에서 메시지 목록들 가져오기
 	@Select("SELECT msg_num, mem_num, mem_name, msg_content, chatroom_num, msg_sendtime, total_cnt "
 			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r "
@@ -91,6 +91,10 @@ public interface MessangerMapper {
 	//해당 채팅방에 있는 멤버들의 회원번호(mem_num) 가져옴
 	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num}")
 	public List<Integer> selectMsgMem_num(Integer chatroom_num);
+	
+	//메시지 알림용
+	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num}")
+	public List<Integer> selectMemberList(Integer chatroom_num);
 	
 	//타인이 보낸 메시지를 읽으면 읽은 사람의 회원번호로 삭제
 	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num} AND chatroom_num=#{chatroom_num}")

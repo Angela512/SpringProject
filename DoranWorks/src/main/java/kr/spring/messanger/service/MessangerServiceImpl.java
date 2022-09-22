@@ -107,4 +107,9 @@ public class MessangerServiceImpl implements MessangerService{
 		
 	}
 
+	@Override
+	public List<Integer> selectMemberList(Integer chatroom_num) {
+		return msgMapper.selectMemberList(chatroom_num);
+	}
+
 }

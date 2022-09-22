@@ -188,7 +188,7 @@ $(function(){
 		});
 	}
 	
-	//메시지 전송
+	//====================메시지 전송======================
 	$(document).on('submit', '#msg_form', function(event){
 		if($('#msg_content').val().trim() == ''){
 			alert('내용을 입력하세요');
@@ -214,6 +214,15 @@ $(function(){
 					$('.chatroomMain').empty();
 				//	$('#chatroomList').empty();
 				    wsocket.send('msg:'+chatroom_num);
+
+				//===========알림 처리===================
+                   let member_list='';
+                   $.each(param.member_list,function(index,item){
+                        if(index>0) member_list += ',';
+                         member_list+=item;
+                  });
+                  alarm_socket.send("msg:1:"+member_list);
+
 					list();
 					createChat(chatroom_num);
 				}

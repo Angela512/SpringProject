@@ -14,13 +14,10 @@
 .page-main ul.chat_search{
 	margin:0 0 9px 0;
 	padding: 0;
-	position:fixed;
 	background-color:white;
 	width:307px;
 }
 .chatroomMain{
-	height:500px;
-	margin-top:80px;
 }
 #createroom_btn{ /* 채팅방 생성 버튼 */
 	width:100%;
@@ -72,7 +69,6 @@ div.chatroom{
 	/* margin:0 auto; */
 	border:1px solid #000;
 	height:350px;
-	padding-left:5px;
 	/* overflow: auto; */
 
     /* list-style-type:none;
@@ -91,15 +87,13 @@ div.chatroom{
 	
 }
 .chat_head{ /* 채팅방 헤더 */
-	position:fixed;
 	background-color:white;
 	width:484px;
 	padding-bottom:5px;
 }
 .chat_body{
 	overflow:auto;
-	height:275px;
-	margin-top:69px;
+	height:270px;
 }
 .msg_sendtime{ /* 메시지 날짜(한번만 띄움) */
 	text-align:center;

@@ -170,6 +170,8 @@ public class MessangerController {
 		logger.debug("<<chatroom_num>> : " + messangerVO.getChatroom_num());
 		MemberVO user = (MemberVO)session.getAttribute("user");
 
+		List<Integer> member_list = messangerService.selectMemberList(messangerVO.getChatroom_num());
+		
 		Map<String, Object> mapAjax = new HashMap<String, Object>();
 
 		if(user == null) { //로그인 안 된 경우
@@ -180,6 +182,7 @@ public class MessangerController {
 			
 			mapAjax.put("chatroom_num", messangerVO.getChatroom_num());
 			mapAjax.put("result", "success");
+			mapAjax.put("member_list", member_list);
 		}
 
 		return mapAjax;
