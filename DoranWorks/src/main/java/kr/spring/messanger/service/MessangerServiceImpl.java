@@ -50,7 +50,7 @@ public class MessangerServiceImpl implements MessangerService{
 	public void insertChatroom(ChatroomVO chatroomVO) {
 		//채팅방 이름은 멤버들 이름으로 생성(나중에 변경 가능)
 		String arr_name = ""; //이름을 쭉 일자로 넣을거임
-		int len = chatroomVO.getMem_names().length;
+		int len = chatroomVO.getMem_names().length; //나 빼고임
 		int i = 1;
 		for(String mem_name : chatroomVO.getMem_names()) {
 			arr_name += mem_name;

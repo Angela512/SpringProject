@@ -24,6 +24,7 @@ public class AppConfig implements WebMvcConfigurer{
 															.addPathPatterns("/messanger/chatroomList.do")
 															.addPathPatterns("/messanger/createChatroom.do")
 															.addPathPatterns("/messanger/confirm.do")
+															.addPathPatterns("/messanger/list.do")
 															.addPathPatterns("/messanger/gotochat.do")
 															.addPathPatterns("/messanger/writeMsg.do")
 															.addPathPatterns("/letter/write.do")
