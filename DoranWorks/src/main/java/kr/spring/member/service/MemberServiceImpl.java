@@ -85,4 +85,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> selectSignList() {
 		return memberMapper.selectSignList();
 	}
+
+	@Override
+	public void updateRandomPassword(MemberVO member) {
+		memberMapper.updateRandomPassword(member);
+	}
 }
