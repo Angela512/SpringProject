@@ -31,7 +31,15 @@
     	  value="/WEB-INF/views/member/memberChangePassword.jsp"/>                   
     </definition>
     
-    
+    <definition name="memberFindPassword" extends="main">
+    	<put-attribute name="title" value="비밀번호 찾기"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberFindPassword.jsp"/>                 
+    </definition>
+
+    <definition name="emailSendSuccess" extends="main">
+    	<put-attribute name="title" value="비밀번호 찾기 완료"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/emailSendSuccess.jsp"/>                 
+    </definition>
     
     
     

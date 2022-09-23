@@ -32,7 +32,7 @@ public interface MemberMapper {
 			+ "WHERE m.mem_num=#{mem_num}")
 	public MemberVO selectMember(Integer mem_num); 
 	
-	@Select("SELECT m.mem_num,m.mem_id,m.auth,d.mem_pw,d.mem_name,d.mem_photo,dpt.mem_dpt, r.mem_rank "
+	@Select("SELECT m.mem_num,m.mem_id,d.mem_email,m.auth,d.mem_pw,d.mem_name,d.mem_photo,dpt.mem_dpt, r.mem_rank "
 			+ "FROM member m LEFT JOIN member_detail d ON m.mem_num=d.mem_num "
 			+ "JOIN mem_dpt dpt ON d.mem_dpt_num=dpt.mem_dpt_num "
 			+ "JOIN mem_rank r ON d.mem_rank_num=r.mem_rank_num "
