@@ -86,19 +86,33 @@ public class MemberFindPasswordController {
 	//비밀번호 보안을 위한 난수 발생 메소드
 	public String randomPassword(int length){
 		int index = 0;
-		char[] charSet = new char[]{
+		
+		char[] charSet1 = new char[]{
+				'0','1','2','3','4','5','6','7','8','9'
+		};
+		
+		char[] charSet2 = new char[]{
+				'@','$','!','%','*','#','?','&'
+		};
+		
+		char[] charSet3 = new char[]{
 				'0','1','2','3','4','5','6','7','8','9'
 				,'A','B','C','D','E','F','G','H','I','J','K','L','M'
 				,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 				,'a','b','c','d','e','f','g','h','i','h','k','l','m'
 				,'n','o','p','q','r','s','t','u','v','w','x','y','z'
 		};
-
+		
 		StringBuffer sb = new StringBuffer();
-
-		for(int i=0;i<length;i++){
-			index = (int)(charSet.length * Math.random());
-			sb.append(charSet[index]);
+		index = (int)(charSet1.length * Math.random());
+		sb.append(charSet1[index]);
+		
+		index = (int)(charSet2.length * Math.random());
+		sb.append(charSet2[index]);
+		
+		for(int i=0;i<length-2;i++){
+			index = (int)(charSet3.length * Math.random());
+			sb.append(charSet3[index]);
 		}
 
 		return sb.toString();
