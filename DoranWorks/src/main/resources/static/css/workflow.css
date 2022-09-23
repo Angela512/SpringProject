@@ -159,7 +159,13 @@ a:hover{
 	text-decoration:underline;
 	color:#999999;
 }
-
+#write_button{
+	background-color:#5AAEFF;
+	border:none;
+	color:#FFF;
+	border-radius: 5px;
+	height:30px;
+}
 .image-space .horizontal-area{
 	margin:2px;
 	padding:3px;

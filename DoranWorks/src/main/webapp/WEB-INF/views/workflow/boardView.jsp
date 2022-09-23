@@ -111,7 +111,7 @@
 		<li>
 			<form action="/workflow/ok.do" method="post" style="border:none;">
 			<c:if test="${workflow.mem_name!=user_name}">
-			<input type="submit" value="승인">
+			<input type="submit" id="write_button" value="승인" style="background-color:#09E81F;">
 			</c:if>
 			<input type="hidden" name="flow_num" value="${workflow.flow_num}">			
 			
@@ -159,7 +159,7 @@
 
 	<div class="align-right">
 		<c:if test="${!empty user && user.mem_num == workflow.mem_num}">
-		<input type="button" value="수정" 
+		<input type="button" value="수정"  id="write_button"
 		  onclick="location.href='update.do?flow_num=${workflow.flow_num}'">
 		<!-- <input type="button" value="삭제" id="delete_btn"> -->
 		<!-- <script type="text/javascript">
@@ -175,8 +175,8 @@
 		
 		</c:if>
 				
-		<input type="button" value="인쇄" onclick="window.print()" >
-		<input type="button" value="목록"
+		<input type="button" id="write_button" value="인쇄" onclick="window.print()" >
+		<input type="button" id="write_button" value="목록"
 		       onclick="location.href='list.do'">
 	</div>
 	
