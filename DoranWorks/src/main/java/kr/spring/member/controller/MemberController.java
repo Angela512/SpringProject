@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
+import kr.spring.util.CipherTemplate;
 import kr.spring.util.FileUtil;
 
 @Controller
@@ -28,6 +29,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+    private CipherTemplate cipherAES;
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -65,7 +69,7 @@ public class MemberController {
 			if(member!=null) {
 				//비밀번호 일치 여부 체크
 				System.out.println("널 : " + memberVO.getMem_pw());
-				check=member.isCheckedPasswd(memberVO.getMem_pw());
+				check=member.isCheckedPasswd(cipherAES.encrypt(memberVO.getMem_pw()));
 			}
 			if(check) {
 				//인증 성공, 로그인 처리
@@ -236,13 +240,15 @@ public class MemberController {
 			//폼에서 전송한 현재 비밀번호와 DB에서 받아온
 			//현재 비밀번호 일치 여부 체크
 			if(!db_member.getMem_pw().equals(
-					memberVO.getNow_passwd())) {
+					cipherAES.encrypt(memberVO.getNow_passwd()))) {
 				result.rejectValue(
 						"now_passwd", "invalidPassword");
 				return formChangePassword();
 			}
 			
-			//비밀번호 변경
+			  //CipherTemplate을 이용한 암호화
+		      memberVO.setMem_pw(cipherAES.encrypt(memberVO.getMem_pw()));
+		      //비밀번호 변경
 			memberService.updatePassword(memberVO);
 			
 			//View에 표시할 메시지

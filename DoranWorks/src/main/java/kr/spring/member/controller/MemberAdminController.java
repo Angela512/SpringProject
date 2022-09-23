@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.util.CipherTemplate;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 
@@ -37,6 +38,9 @@ public class MemberAdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+    private CipherTemplate cipherAES;
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -96,7 +100,7 @@ public class MemberAdminController {
 		if(result.hasErrors()) {
 			return form();
 		}
-
+        memberVO.setMem_pw(cipherAES.encrypt(memberVO.getMem_pw()));
 		memberService.insertMember(memberVO);
 
 		//속성명		속성값

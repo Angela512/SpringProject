@@ -10,7 +10,7 @@ create table member(
 create table member_detail(
 	mem_num number not null,
 	mem_name varchar2(15) not null,
-	mem_pw varchar2(15) not null,
+	mem_pw varchar2(35) not null,
 	mem_phone varchar2(15) not null,
 	mem_email varchar2(50) not null,
 	mem_zipcode varchar2(5) not null,
