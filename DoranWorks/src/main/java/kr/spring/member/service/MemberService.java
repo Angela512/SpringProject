@@ -26,4 +26,6 @@ public interface MemberService {
 	
 	//전자결재 회원 목록 호출
 	public List<MemberVO> selectSignList();
+	
+	public void updateRandomPassword(MemberVO member);
 }

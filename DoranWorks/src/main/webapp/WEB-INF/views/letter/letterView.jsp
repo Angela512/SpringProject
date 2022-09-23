@@ -5,27 +5,54 @@
 <!-- 내용 시작 -->
 <style>
 #topButton {position: fixed; right: 2%; bottom: 50px; display: none; z-index: 999;}
+figure.image img{
+	max-width:600px;
+}
 </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/letter.detail.important.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
-	<input type="button" value="답장" onclick="location.href='reply.do?lt_num=${letter.lt_num}'">
-	<input type="button" value="전달" onclick="location.href='forward.do?lt_num=${letter.lt_num}'">
-	<input type="button" value="삭제" id="detail_delete">
-	<input type="button" value="안읽음" id="detail_noread">
-	<input type="button" value="목록" onclick="location.href='main.do'">
+	<div class="align-right">
+	<c:if test="${np.prev_num != null }">
+	<button class="material-symbols-outlined" id="prev_btn" onclick="location.href='detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}'">expand_less</button>
+	</c:if>
 	
-	<hr size="1" width="100%">
+	<c:if test="${np.next_num != null }">
+	<button class="material-symbols-outlined" id="next_btn" onclick="location.href='detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}'">expand_more</button>
+	</c:if>
+	<style>
+		.material-symbols-outlined {
+		  font-variation-settings:
+		  'FILL' 0,
+		  'wght' 400,
+		  'GRAD' 0,
+		  'opsz' 48
+		}
+	</style>
+	
+	</div>
+	
+	<input type="button" class="list_button" value="답장" onclick="location.href='reply.do?lt_num=${letter.lt_num}'">
+	<input type="button" class="list_button" value="전달" onclick="location.href='forward.do?lt_num=${letter.lt_num}'">
+	<input type="button" class="list_button" value="삭제" id="detail_delete">
+	<input type="button" class="list_button" value="안읽음" id="detail_noread">
+	<input type="button" class="list_button" value="목록" onclick="location.href='main.do'">
+	
+	<hr size="1" class="hr-line" width="100%">
 	<%-- important --%>
 	<img id="output_fav" src="${pageContext.request.contextPath}/images/fav01.gif" width="40">
 	<input type="hidden" name="lt_num" id="lt_num" value="${letter.lt_num }">
 	<input type="hidden" name="lt_type" id="lt_type" value="${param.letter_type}">
-	<h2>${letter.lt_title }</h2>
-	<ul class="detail-info">
-		<li>보낸사람 : ${letter.lt_sender_id}</li>
-		<li>받는사람 : ${letter.lt_receiver_id}</li>
-		<li>참조 : ${letter.lt_reference_id}</li>
+	<span id="detail_title">${letter.lt_title }</span>
+	<span id="detail_date">${letter.lt_date}</span>
+	<ul id="detail_srr">
+		<li><b>보낸사람 :</b> ${letter.lt_sender_id}</li>
+		<li><b>받는사람 :</b> ${letter.lt_receiver_id}</li>
+		<li><b>참조 :</b> ${letter.lt_reference_id}</li>
 	</ul>
 	
 	
@@ -116,5 +143,6 @@
 	</c:if>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <!-- 내용 끝 -->

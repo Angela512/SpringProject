@@ -68,4 +68,8 @@ public interface MemberMapper {
 	@Update("UPDATE member_detail SET mem_pw=#{mem_pw} "
 			+ "WHERE mem_num=#{mem_num}")
 	public void updatePassword(MemberVO member);
+	
+	//비밀번호 찾기
+   @Update("UPDATE member_detail SET mem_pw=#{mem_pw} WHERE mem_num=#{mem_num}")
+   public void updateRandomPassword(MemberVO member);
 }
