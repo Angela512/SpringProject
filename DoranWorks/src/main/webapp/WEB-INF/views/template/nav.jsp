@@ -31,10 +31,7 @@
 		<li><a href="${pageContext.request.contextPath}/notice/list.do">공지사항</a></li>
 		<li><a href="${pageContext.request.contextPath}/messanger/list.do">메신저</a></li>
 		<li><a href="${pageContext.request.contextPath}/letter/main.do">쪽지</a></li>
-		<li><a href="${pageContext.request.contextPath}/reservation/main.do">회의실예약</a></li>
-		<li><a href="${pageContext.request.contextPath}/calendar/main.do">캘린더</a></li>
 		<li><a href="${pageContext.request.contextPath}/workflow/list.do">전자결재</a></li>
-		<li><a href="${pageContext.request.contextPath}/member/main.do">주소록</a></li>
 	</c:if>
 	<li>
 		<c:if test="${!empty user && user.auth == 1}">
@@ -47,6 +44,6 @@
 		</c:if>
 	</li>
 	<li>
-		<a href="${pageContext.request.contextPath}/main/main.do">홈으로</a>
+		<a href="${pageContext.request.contextPath}/notice/list.do">홈으로</a>
 	</li>
 </ul>
