@@ -25,18 +25,12 @@ public interface MessangerMapper {
 	public int selectChatroom_num();
 	
 	//채팅방 생성
-	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_name})")
+	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_num})")
 	public void insertChatroom(ChatroomVO chatroomVO);
 	
 	//채팅멤버 생성
 	@Insert("INSERT INTO chatmem (chatroom_num, mem_num) VALUES (#{chatroom_num}, #{mem_num})")
 	public void insertChatmem(ChatmemVO chatmemVO);
-	
-	//채팅방 이름 변경
-	/*
-	 * @Update("UPDATE chatroom SET chatroom_name= WHERE chatroom_num=#{chatroom_num}"
-	 * ) public void updateChatroom_name(Integer chatroom_num);
-	 */
 	
 	//해당 채팅방의 멤버들 정보 가져오기
 	@Select("SELECT chatroom_num, mem_num, chatroom_name, mem_name, mem_photo_name, mem_dpt, mem_rank "

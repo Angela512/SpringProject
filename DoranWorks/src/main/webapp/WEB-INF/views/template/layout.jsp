@@ -45,12 +45,10 @@
       //서버로부터 메시지를 받으면 호출되는 함수 지정
       alarm_socket.onmessage = function(evt) {
          //talk 알림
-         var data = evt.data;
-            if (data.substring(0, 4) == "msg:") {
-               if(user!=''){
-                  getAlarm(1);
-               }
-            }
+    		//talk 알림
+    	  if(user!=''){
+              getAlarm(1);
+           }
       };
       alarm_socket.onclose = function(evt) {
          //소켓이 종료된 후 부과적인 작업이 있을 경우 명시

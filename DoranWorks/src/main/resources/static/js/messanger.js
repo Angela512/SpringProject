@@ -231,12 +231,7 @@ $(function(){
 				    wsocket.send('msg:'+chatroom_num);
 
 				//=================알림 처리===================
-                   let member_list='';
-                   $.each(param.member_list,function(index,item){
-                        if(index>0) member_list += ',';
-						member_list+=item;
-                  });
-                  alarm_socket.send("msg:1:"+member_list);
+                  alarm_socket.send("msg");
 
 					list();
 					createChat(chatroom_num);
