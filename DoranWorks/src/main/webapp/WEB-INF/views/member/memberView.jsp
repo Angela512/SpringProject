@@ -32,7 +32,7 @@
 			<input type="button" value="회원 탈퇴" onclick="location.href='delete.do'">
 		</p>
 	</div>
-	<div class="mypage-div">
+	<div class="w">
 		<h2>회원상세정보</h2>
 		<ul>
 			<li>이름 : ${member.mem_name}</li>

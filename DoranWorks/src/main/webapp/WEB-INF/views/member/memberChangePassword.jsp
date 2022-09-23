@@ -30,8 +30,8 @@
 			</li>
 		</ul>  
 		<div class="align-center">
-			<button type="submit" class="btn btn-primary" style="width:30%; border-radius: 20px;">변경하기</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='myPage.do'" style="width:30%; border-radius: 20px;">MY페이지</button>
+			<button type="submit" class="btn btn-primary" style="width:20%; border-radius: 20px; font-size:1em;">변경하기</button>
+			<button type="button" class="btn btn-secondary" onclick="location.href='myPage.do'" style="width:20%; border-radius: 20px; font-size:1em;">MY페이지</button>
 		</div>
 	</form:form>
 </div>

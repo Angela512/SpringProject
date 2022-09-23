@@ -13,7 +13,7 @@
 	</li>
 	<li>
 		<c:if test="${!empty user && !empty user.mem_name}">
-			<span class="user_name">${user.mem_name} ${user.mem_rank} | ${user.mem_dpt}</span>
+			<span class="user_name">${user.mem_name} ${user.mem_rank}<c:if test="${!empty user.mem_dpt}"> | ${user.mem_dpt}</c:if></span>
 		</c:if>
 	</li>
 	<li>

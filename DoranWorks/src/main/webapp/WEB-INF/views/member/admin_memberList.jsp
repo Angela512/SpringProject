@@ -61,7 +61,7 @@
 					</c:if>
 					</td>
 					<td>${member.mem_name}</td>
-					<td>${member.mem_dpt} | ${member.mem_rank}</td>
+					<td><c:if test="${!empty member.mem_rank}">${member.mem_dpt} | ${member.mem_rank}</c:if></td>
 					<td>${member.mem_phone}</td>
 					
 					

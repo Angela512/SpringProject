@@ -37,7 +37,7 @@ public class WorkflowController {
 		         LoggerFactory.getLogger(
 				          WorkflowController.class);
 	
-	private int rowCount = 20;
+	private int rowCount = 4;
 	private int pageCount = 10;
 	
 	@Autowired

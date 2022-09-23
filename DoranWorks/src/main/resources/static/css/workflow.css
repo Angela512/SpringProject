@@ -1,0 +1,378 @@
+/*=========레이아웃=========*/
+/* 헤더 */
+.nav_bar a{
+	display:block;
+}
+ul.nav_profile{
+	list-style:none;
+	height:100%;
+	margin:21px;
+	padding:0;
+	text-align:center;
+}
+ul.nav_profile li{
+	display:block;
+}
+ul.nav_profile .li_logout{ /* 로그아웃에는 밑줄 */
+	text-decoration:underline;
+}
+ul.nav_menu{
+	list-style:none;
+	height:100%;
+	margin:0;
+	padding:0;
+	text-align:center;
+	line-height:35px;
+	margin:0 21px 21px 21px;
+}
+ul.nav_menu li{
+	display:block;
+	font-size:15pt;
+}
+/* 헤더 끝 */
+
+/* footer 시작 */
+* {
+   box-sizing: border-box;
+}
+.footer_container{
+	float:left;
+	width:100%;
+	font-family: Verdana, sans-serif;
+}
+.footer {
+	background-color: red;
+}
+
+.footer_logo {
+	float:left;
+	width:30%;
+	text-align: right;
+	padding-top: 20px;
+	color: #FA5D57;
+	padding-left: 10%;
+	padding-right:2%;
+}
+
+.footer_logo a:visited {
+	color: #FA5D57;
+}
+
+.footer_content {
+	float:right;
+	width:70%;
+	text-align: left;
+	padding-right: 10%;
+	padding-left:2%;
+	font-size: 10pt;
+}
+/* footer 끝 */
+
+
+/* 관리자 페이지 시작 */
+/* 
+.admin_table {
+	border: 1px #a39485 solid;
+	font-size: 16px;
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+}
+ */
+/* 관리자 페이지 끝 */
+div#main{
+	width:1200px;
+	margin:0 auto;
+	font-size:10pt;
+	font-family: "맑은 고딕";
+}
+div#main_header{
+	margin-bottom: 10px;
+	padding: 0 10px 0 0;
+}
+div#main_nav{
+	width:20%;
+	float:left;
+	min-height:900px;
+	background-color:lightgrey;
+}
+div#main_body{
+	padding:5px 5px 30px 5px;
+	min-height: 1200px;
+}
+div#main_footer{
+	clear:both;
+	background-color:yellow;
+}
+
+/*==========메뉴==========*/
+div#main_menu ul{
+	list-style:none;
+}
+
+div#main_menu ul li{
+	margin-bottom:5px; 
+}
+
+/*==========페이지 기본 스타일======*/
+.page-main{
+	width:80%;
+	margin-left:20%;
+}
+.page-one{
+	width:600px;
+	margin:0 auto;
+}
+/*==========메시지======*/
+.result-display{
+	width:400px;
+	height:200px;
+	margin:50px auto;/*상하 좌우*/
+	border:1px solid #000;/*테두리*/
+	display: flex;/*하위 요소를 수직으로 쌓을 수 있는 공간을 만듬*/
+  	align-items: center;/*세로 정렬*/
+  	justify-content: center;/*가로 정렬*/
+}
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}
+.align-left{
+	text-align:left;
+}
+.error-color{
+	color:#ff0000;
+}
+/*메인*/
+a:link{
+	text-decoration:none;
+	color:#000000;
+}
+a:visited{
+	text-decoration:none;
+	color:#000000;
+}
+a:hover{
+	text-decoration:underline;
+	color:#999999;
+}
+
+.image-space .horizontal-area{
+	margin:2px;
+	padding:3px;
+	width:180px;
+	height:220px;
+	float:left;
+	overflow:hidden;
+}
+.image-space .horizontal-area img{
+	width:175px;
+	height:175px;
+}
+.image-space .horizontal-area span{
+	padding:5px;
+	margin:5px;
+}
+.image-space .float-clear{
+	clear:both;
+}
+
+.image-cine .horizontal-area{
+	margin:2px;
+	padding:3px;
+	width:180px;
+	height:370px;
+	float:left;
+	overflow:hidden;
+}
+.image-cine .horizontal-area img{
+	width:175px;
+	height:250px;
+}
+.image-cine .horizontal-area span{
+	padding:5px;
+	margin:5px;
+}
+.image-cine .float-clear{
+	clear:both;
+}
+
+/*Mypage*/
+.mypage-div{
+	width:48%;
+	float:left;
+	padding:5px;
+}
+.mypage-end{
+	clear:both;
+}
+.my-photo{
+	object-fit: cover;
+    object-position: top; /*정사각형이 아니라 직사각형일 경우 원 안에 보여지게 할 중심 이미지의 위치를 지정*/
+    border-radius: 50%;/*사각형의 모서리 둥근 정도를 지정하는 속성인데 50%를 지정하면 완전한 원이 됨*/
+}
+
+/*목록*/
+.page-main form#search_form{
+	border: none;
+}
+.page-main ul.search{
+	width:500px;
+	list-style:none;
+	padding:0;
+	margin:0 auto;
+}
+.page-main ul.search li{
+	margin:0 0 9px 0;
+	padding:0;
+	display:inline;
+}
+.page-main .list-space{
+	width:700px;
+	margin:10px auto;
+}
+/* 
+.page-main table{
+	width:100%;
+	margin:5px auto;
+	border:1px solid #000;
+	border-collapse:collapse;
+}
+.page-main table td, .page-main table th{
+	border:1px solid #000;
+	padding:5px;
+}
+ */
+/*글상세*/
+ul.detail-info{
+	list-style: none;
+}
+ul.detail-info li{
+	display: inline-block;
+}
+.detail-img{
+	max-width: 500px;
+}
+.page-main .detail-img{
+	max-width: 500px;
+}
+.page-main div#reply_div{
+	padding:5px 10px 40px 10px;
+	margin-top:10px;
+	background-color:#eeeeee;
+}
+.page-main #output_fav, .output_rfav{
+	cursor : pointer;
+}
+.page-main #output_fcount{
+	width:50px;
+	display:inline-block;
+}
+.page-main form#re_form{
+	width:650px;
+	border:none;
+}
+.page-main span.re-title{
+	color:#000;
+	font-size:12pt;
+	line-height:200%;
+}
+.page-main span.letter-count{
+	font-size:10pt;
+	color:#999;
+}
+.page-main textarea.rep-content{
+	width:90%;
+	height:50px;
+	margin:10px 10px;
+}
+.page-main div#re_first, .page-main div#mre_first{
+	float:left;
+	width:70%;
+	padding-left:15px;
+	margin-bottom:10px;
+}
+.page-main div#re_second, .page-main div#mre_second{
+	float:left;
+	width:19%;
+	margin-bottom:10px;
+}
+.page-main div#loading{
+	width:100px;
+	height:50px;
+	/*정중앙에 div를 배치하기 위한 설정*/
+	position:absolute;
+    top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	/*하위 요소를 수직으로 쌓을 수 있는 공간을 만듬*/
+	display: flex;
+	/*세로 정렬*/
+  	align-items: center;
+  	/*가로 정렬*/
+  	justify-content: center;
+}
+.page-main div.paging-button{
+	text-align:right;
+}
+.page-main div#output{
+	clear:both;
+}
+.page-main form#mre_form, .page-main form#tre_form, .page-main form#wre_form{
+	border:none;
+	margin:5px;
+}
+.page-main div.titem{
+	padding-left:50px;
+}
+/*등록,수정폼*/
+.page-main form{
+	width:500px;
+	margin:0 auto;
+	border:1px solid #000;
+	padding:10px 10px 10px 30px;
+}
+/*CKEditor 사용시 등록,수정폼*/
+.page-main form#register_form, .page-main form#update_form{
+	width:700px;
+}
+.page-main ul{
+	list-style:none;
+}
+.page-main label{
+	width:130px;
+	float:left;
+}
+.page-main input[type="text"],.page-main input[type="password"],.page-main input[type="email"]{
+	width:200px;
+}
+.page-main #register_form input[id="id"]{
+	width:113px;
+}
+.page-main input[id="zipcode"]{
+	width:95px;
+}
+.page-main .form-notice{
+	margin-left:130px;
+}
+
+.page-main ul.paging-button{
+	overflow:hidden;
+}
+.page-main li.paging-num{
+	float:left;
+	list-style:none;
+	padding:10px;
+	cursor:pointer;
+}
+.page-main li.paging-current{
+	float:left;
+	list-style:none;
+	padding:10px;
+}
+
+
+

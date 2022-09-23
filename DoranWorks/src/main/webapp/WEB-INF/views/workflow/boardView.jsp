@@ -107,11 +107,7 @@
 			결재 종류 :${workflow.flow_sort}
 			<br>
 			작성일 : ${workflow.flow_date}
-		</li>
-		<li>
-			<input type="button" value="인쇄" onclick="window.print()" >
-		</li>
-		
+		</li>	
 		<li>
 			<form action="/workflow/ok.do" method="post" style="border:none;">
 			<c:if test="${workflow.mem_name!=user_name}">
@@ -132,6 +128,7 @@
 			<c:if test="${fn:length(myArray) == 2}">
 				<c:if test="${myArray[0] == user_name}">
 				<input type="hidden" name="flow_no" value="1,0">
+				<input type="hidden" name="flow_state" value="결재 진행중"/>
 				</c:if>
 				<c:if test="${myArray[1] == user_name}">
 				<input type="hidden" name="flow_no" value="1,1">
@@ -142,9 +139,11 @@
 			<c:if test="${fn:length(myArray) == 3}">
 				<c:if test="${myArray[0] == user_name}">
 				<input type="hidden" name="flow_no" value="1,0,0">
+				<input type="hidden" name="flow_state" value="결재 진행중"/>
 				</c:if>
 				<c:if test="${myArray[1] == user_name}">
 				<input type="hidden" name="flow_no" value="1,1,0">
+				<input type="hidden" name="flow_state" value="결재 진행중"/>
 				</c:if>
 				<c:if test="${myArray[2] == user_name}">
 				<input type="hidden" name="flow_no" value="1,1,1">
@@ -175,6 +174,8 @@
 		</script> -->  
 		
 		</c:if>
+				
+		<input type="button" value="인쇄" onclick="window.print()" >
 		<input type="button" value="목록"
 		       onclick="location.href='list.do'">
 	</div>
@@ -242,7 +243,7 @@
     				<td height="60" width="80"> 
     				 				
     				<c:if test="${name == '1' }">
-    				<img src="${pageContext.request.contextPath}/images/seal.png" width="40" height="60" style="" class="my-photo">  				
+    				<img src="${pageContext.request.contextPath}/images/seal.png" width="40" height="60" style="margin:0 0 0 15px;" class="my-photo">  				
     				</c:if>	
     				
     				</td>   				
