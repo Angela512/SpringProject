@@ -93,11 +93,11 @@ public class AppConfig implements WebMvcConfigurer{
        return javaMail;
     }
 	
-	//@Bean
+	@Bean
     public CipherTemplate cipherTempate() {
        CipherTemplate cipher = new CipherTemplate();
        cipher.setAlgorithm("AES");
-       cipher.setSecretKey("");
+       cipher.setSecretKey("j2sroojcj2vgz5v9qap2sps9u");
        return cipher;
     }
 }
