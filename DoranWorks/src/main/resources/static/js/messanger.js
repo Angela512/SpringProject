@@ -68,7 +68,7 @@ $(function(){
 					let chatroomListUI = '<div id="chatroomList">';
 					$(param.list).each(function(index, item){
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
-						chatroomListUI += '[' + item.chatroom_num + '번 채팅방] ' + item.count + '명 ';
+						chatroomListUI += '[' + item.chatroom_name + '] ' + item.count + '명 ';
 						//최신 메시지가 오늘이면 시간만, 오늘이 아니면 날짜만 표시
 						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '<br>';
 						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')) + '</b></span>';
@@ -117,12 +117,23 @@ $(function(){
 				$('.chat_form').show();
 				$('.msg_formUI').show();
 				$('#' + chatroom_num).css('background-color','#D6FFFF');
-				let msgUI = '<div class="chat_head"><h3>' + chatroom_num + '번 채팅방</h3>' + strDate;
-				msgUI += '<span>멤버 : ';
+				let msgUI = '<div class="chat_head">';
+				var i = 0;
+				let len = $(param.list).length;
 				$(param.list).each(function(index, item){
-					if(item.mem_num != user_num){
-						msgUI += item.mem_name + ' | ';
+					for(i; i < 1; i++){ //한번만 실행
+						msgUI += '<h3>' + item.chatroom_name + '</h3>';
+						msgUI += '<span>멤버 : ' ;
 					}
+					msgUI += 'index : ' + index + 'len : ' + len;
+					
+					if(item.mem_num != user_num){
+						msgUI += item.mem_name;
+						if(len - 1 != index){ 
+							msgUI += ' , ';
+						}
+					}
+					
 				});
 				
 				msgUI += '</span></div>';
@@ -169,7 +180,8 @@ $(function(){
 				});
 				msgUI += '</div>';
 				$('.chat_form').append(msgUI);
-				
+				$(".chat_body").scrollTop($(".chat_body")[0].scrollHeight);
+
 				let chatUI = '';
 				chatUI += '<form id="msg_form">';
 				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
@@ -312,6 +324,7 @@ $(function(){
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
 						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
+						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '"';
 						modifyUI += '<span class="'+ mem_num + '">' + mem_name + '</span>';
 						
 						//체크된 멤버 노출

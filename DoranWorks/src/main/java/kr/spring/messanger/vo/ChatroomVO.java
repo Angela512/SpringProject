@@ -14,8 +14,15 @@ public class ChatroomVO {
 	private int msg_num;
 	private String msg_content;
 	
-	private int[] members;
+	private int[] members; //선택된 멤버들의 mem_num
+	private String[] mem_names; //선택된 멤버들의 이름(초기 채팅방 이름 지정용)
 	
+	public String[] getMem_names() {
+		return mem_names;
+	}
+	public void setMem_names(String[] mem_names) {
+		this.mem_names = mem_names;
+	}
 	public int getMsg_num() {
 		return msg_num;
 	}
@@ -73,7 +80,10 @@ public class ChatroomVO {
 	@Override
 	public String toString() {
 		return "ChatroomVO [chatroom_num=" + chatroom_num + ", chatroom_name=" + chatroom_name + ", mem_name="
-				+ mem_name + ", msg_sendtime=" + msg_sendtime + ", mem_photo_name=" + mem_photo_name + "]";
+				+ mem_name + ", msg_sendtime=" + msg_sendtime + ", mem_photo_name=" + mem_photo_name + ", msg_num="
+				+ msg_num + ", msg_content=" + msg_content + ", members=" + Arrays.toString(members) + ", mem_names="
+				+ Arrays.toString(mem_names) + "]";
 	}
+	
 	
 }

@@ -43,24 +43,36 @@ public class MessangerServiceImpl implements MessangerService{
 			chatreadVO.setChatroom_num(chatroom_num);
 
 			msgMapper.insertChatread(chatreadVO); 
-			
 		}
-		 
 	}
 	
 	@Override
 	public void insertChatroom(ChatroomVO chatroomVO) {
+		//채팅방 이름은 멤버들 이름으로 생성(나중에 변경 가능)
+		String arr_name = ""; //이름을 쭉 일자로 넣을거임
+		int len = chatroomVO.getMem_names().length;
+		int i = 1;
+		for(String mem_name : chatroomVO.getMem_names()) {
+			arr_name += mem_name;
+			if(len != i) {
+				arr_name += ", ";
+			}
+			System.out.println("len : " + len);
+			i++;
+		}
+		
 		chatroomVO.setChatroom_num(msgMapper.selectChatroom_num());
+		chatroomVO.setChatroom_name(arr_name);
 		msgMapper.insertChatroom(chatroomVO);
 		
 		ChatmemVO chatmemVO = new ChatmemVO();
+		
 		for(int mem_num : chatroomVO.getMembers()) {
 			chatmemVO.setChatroom_num(chatroomVO.getChatroom_num());
 			chatmemVO.setMem_num(mem_num);
 			
 			msgMapper.insertChatmem(chatmemVO);
 		}
-		
 	}
 	
 	@Override
@@ -108,8 +120,8 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 
 	@Override
-	public List<Integer> selectMemberList(Integer chatroom_num) {
-		return msgMapper.selectMemberList(chatroom_num);
+	public List<Integer> selectMemberList(MessangerVO messanger) {
+		return msgMapper.selectMemberList(messanger);
 	}
 
 }

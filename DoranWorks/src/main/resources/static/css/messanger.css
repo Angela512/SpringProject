@@ -66,25 +66,8 @@ div.chatroom{
 	float:left;
 }
 .chat_form{
-	/* margin:0 auto; */
 	border:1px solid #000;
 	height:350px;
-	/* overflow: auto; */
-
-    /* list-style-type:none;
-
-    display:flex;
-
-    flex-direction: column-reverse;
-
-    overflow-y:auto;
-
-    
-
-    border-top:2px solid #fff;
-
-    border-bottom:2px solid #fff; */
-	
 }
 .chat_head{ /* 채팅방 헤더 */
 	background-color:white;

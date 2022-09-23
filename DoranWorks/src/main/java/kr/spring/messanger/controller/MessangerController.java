@@ -169,8 +169,9 @@ public class MessangerController {
 		logger.debug("<<메시지 전송>> : " + messangerVO);
 		logger.debug("<<chatroom_num>> : " + messangerVO.getChatroom_num());
 		MemberVO user = (MemberVO)session.getAttribute("user");
-
-		List<Integer> member_list = messangerService.selectMemberList(messangerVO.getChatroom_num());
+		
+		//알림용(나를 제외한 채팅방 멤버들 mem_num 읽어옴)
+		List<Integer> member_list = messangerService.selectMemberList(messangerVO);
 		
 		Map<String, Object> mapAjax = new HashMap<String, Object>();
 
@@ -184,7 +185,7 @@ public class MessangerController {
 			mapAjax.put("result", "success");
 			mapAjax.put("member_list", member_list);
 		}
-
+		
 		return mapAjax;
 	}
 	

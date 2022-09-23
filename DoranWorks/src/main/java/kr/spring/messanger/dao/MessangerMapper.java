@@ -25,7 +25,7 @@ public interface MessangerMapper {
 	public int selectChatroom_num();
 	
 	//채팅방 생성
-	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_num})")
+	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_name})")
 	public void insertChatroom(ChatroomVO chatroomVO);
 	
 	//채팅멤버 생성
@@ -92,9 +92,9 @@ public interface MessangerMapper {
 	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num}")
 	public List<Integer> selectMsgMem_num(Integer chatroom_num);
 	
-	//메시지 알림용
-	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num}")
-	public List<Integer> selectMemberList(Integer chatroom_num);
+	//메시지 알림용(나를 제외한 채팅방 멤버들 가져옴)
+	@Select("SELECT mem_num FROM chatroom JOIN chatmem USING(chatroom_num) WHERE chatroom_num=#{chatroom_num} AND NOT mem_num=#{mem_num}")
+	public List<Integer> selectMemberList(MessangerVO messanger);
 	
 	//타인이 보낸 메시지를 읽으면 읽은 사람의 회원번호로 삭제
 	@Delete("DELETE FROM chatread WHERE mem_num=#{mem_num} AND chatroom_num=#{chatroom_num}")
