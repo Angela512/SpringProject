@@ -25,7 +25,22 @@ public class AppConfig implements WebMvcConfigurer{
 															.addPathPatterns("/messanger/createChatroom.do")
 															.addPathPatterns("/messanger/confirm.do")
 															.addPathPatterns("/messanger/gotochat.do")
-															.addPathPatterns("/messanger/writeMsg.do");
+															.addPathPatterns("/messanger/writeMsg.do")
+															.addPathPatterns("/letter/write.do")
+															.addPathPatterns("/letter/detail.do")
+															.addPathPatterns("/letter/detailDelete.do")
+															.addPathPatterns("/letter/reply.do")
+															.addPathPatterns("/letter/forward.do")
+															.addPathPatterns("/notice/write.do")
+															.addPathPatterns("/notice/list.do")
+															.addPathPatterns("/notice/detail.do")
+															.addPathPatterns("/notice/update.do")
+															.addPathPatterns("/notice/delete.do")
+															.addPathPatterns("/workflow/list.do")
+															.addPathPatterns("/workflow/update.do")
+															.addPathPatterns("/workflow/signList.do")
+															.addPathPatterns("/workflow/write.do")
+															.addPathPatterns("/workflow/detail.do");
 	
 		registry.addInterceptor(new AdminCheckInterceptor()).addPathPatterns("/member/admin_list.do")
 															.addPathPatterns("/member/registerUser.do");
