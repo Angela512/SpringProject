@@ -27,6 +27,7 @@ import kr.spring.messanger.vo.ChatmemVO;
 import kr.spring.messanger.vo.ChatroomVO;
 import kr.spring.messanger.vo.MessangerVO;
 import kr.spring.util.PagingUtil;
+import kr.spring.alarm.service.AlarmService;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.messanger.controller.MessangerController;
@@ -39,6 +40,8 @@ public class MessangerController {
 	private MessangerService messangerService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private AlarmService alarmService;
 	
 	//자바빈 초기화
 	@ModelAttribute 
@@ -172,6 +175,11 @@ public class MessangerController {
 		
 		//알림용(나를 제외한 채팅방 멤버들 mem_num 읽어옴)
 		List<Integer> member_list = messangerService.selectMemberList(messangerVO);
+		member_list.remove((Integer)user.getMem_num());
+		logger.debug("<<member_list>> : " + member_list);
+		
+		//알람 정보 저장
+        alarmService.insertAlarm(1,member_list);
 		
 		Map<String, Object> mapAjax = new HashMap<String, Object>();
 

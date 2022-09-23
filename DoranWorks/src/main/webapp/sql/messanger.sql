@@ -39,5 +39,17 @@ create table chatmem(
 );
 create sequence chatmem_seq;
 
+--알림
+create table spalarm(
+  alarm_num number not null,
+  alarm_kind number not null,
+  mem_num number not null,
+  constraint spalarm_pk primary key (alarm_num),
+  constraint spalarm_fk foreign key (mem_num) references member (mem_num)
+);
+
+create sequence spalarm_seq;
+
+
 
 

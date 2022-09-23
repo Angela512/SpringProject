@@ -122,16 +122,18 @@ $(function(){
 				let len = $(param.list).length;
 				$(param.list).each(function(index, item){
 					for(i; i < 1; i++){ //한번만 실행
-						msgUI += '<h3>' + item.chatroom_name + '</h3>';
-						msgUI += '<span>멤버 : ' ;
+						msgUI += '<h3>' + item.chatroom_name + ' | ' + item.chatroom_num + '</h3>';
+						msgUI += '<span>멤버 : ';
 					}
-					msgUI += 'index : ' + index + 'len : ' + len;
-					
+				//	msgUI += 'index : ' + index + ', len : ' + len;
+
 					if(item.mem_num != user_num){
 						msgUI += item.mem_name;
-						if(len - 1 != index){ 
-							msgUI += ' , ';
+						if(len > 2 && len - 1 != index){
+							msgUI += ', ';
+							
 						}
+						
 					}
 					
 				});
@@ -142,6 +144,8 @@ $(function(){
 				let msg_time;
 				msgUI = '<div class="chat_body">';
 				$(param.msgList).each(function(index, item){
+					//알람 삭제(알람,페이지 이동이 없으면 0)
+                	deleteAlarm(1,0);
 					//msgUI = '';
 					let sendtime = (item.msg_sendtime).substr(0,10);
 					
@@ -169,10 +173,6 @@ $(function(){
 					msgUI += (item.msg_sendtime).substr(11,5);
 					msgUI += '</div>';
 					msgUI += '</div>';
-					
-					
-					//msgUI += '<b>'+item.total_cnt+'[' + item.mem_name + '] : ' + item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>') + '</b> <span>' + (item.msg_sendtime).substr(11,5) +'</span></div>';
-					
 					msgUI += '';
 					msgUI += '';
 					msgUI += '';
@@ -181,7 +181,7 @@ $(function(){
 				msgUI += '</div>';
 				$('.chat_form').append(msgUI);
 				$(".chat_body").scrollTop($(".chat_body")[0].scrollHeight);
-
+	
 				let chatUI = '';
 				chatUI += '<form id="msg_form">';
 				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
@@ -222,16 +222,19 @@ $(function(){
 					wsocket.close();
 					alert('로그인 후 사용 가능');
 				}else if(param.result == 'success'){
+					
+					
+					
 					let chatroom_num = param.chatroom_num;
 					$('.chatroomMain').empty();
 				//	$('#chatroomList').empty();
 				    wsocket.send('msg:'+chatroom_num);
 
-				//===========알림 처리===================
+				//=================알림 처리===================
                    let member_list='';
                    $.each(param.member_list,function(index,item){
                         if(index>0) member_list += ',';
-                         member_list+=item;
+						member_list+=item;
                   });
                   alarm_socket.send("msg:1:"+member_list);
 
