@@ -101,15 +101,7 @@
 			
 			<c:if test="${letter.lt_read==1 }">
 			<span class="material-symbols-outlined">drafts</span>
-			<style>
-				.material-symbols-outlined {
-				  font-variation-settings:
-				  'FILL' 0,
-				  'wght' 400,
-				  'GRAD' 0,
-				  'opsz' 48
-				}
-			</style>
+			
 			</c:if>
 			</td>
 			<td width="150" <c:if test="${letter.lt_read==0}">style="color:blue;"</c:if>>

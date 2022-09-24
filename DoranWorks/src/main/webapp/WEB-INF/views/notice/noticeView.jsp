@@ -3,17 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 내용 시작 -->
+<style>
+#topButton {position: fixed; right: 2%; bottom: 120px; display: none; z-index: 999;}
+figure.image img{
+	max-width:600px;
+}
+figure.image{
+	text-align: center;
+}
+</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/notice.reply.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
+	<h2>공지사항</h2>
 	<div class="align-right">
-		<input type="button" value="목록" onclick="location.href='list.do'">
+		<input type="button" class="list_button" value="목록" onclick="location.href='list.do'">
 		<c:if test="${notice.prev_num != 0}">
-		<input type="button" value="이전글" onclick="location.href='detail.do?notice_num=${notice.prev_num}'">
+		<input type="button" class="list_button" value="▲" onclick="location.href='detail.do?notice_num=${notice.prev_num}'">
 		</c:if>
 		<c:if test="${notice.next_num != 0}">
-		<input type="button" value="다음글" onclick="location.href='detail.do?notice_num=${notice.next_num}'">
+		<input type="button" class="list_button" value="▼" onclick="location.href='detail.do?notice_num=${notice.next_num}'">
 		</c:if>
 	</div>
 	<hr size="1" width="100%">
@@ -39,7 +50,7 @@
 	<hr size="1" width="100%">
 		<ul>
 			<li>
-				첨부파일
+				<b>첨부파일</b>
 			</li>
 			<li>
 				<a href="file.do?notice_num=${notice.notice_num}&file_type=1">${notice.notice_filename1}</a>
@@ -84,10 +95,14 @@
 		${notice.notice_content }
 	</p>
 	
+	<div id="topButton">
+		<input type="button" value="맨위로▲" id="topButtonImg" class="list_button">
+	</div>
+	
 	<div class="align-right">
 		<c:if test="${!empty user && user.auth==2 }">
-		<input type="button" value="수정" onclick="location.href='update.do?notice_num=${notice.notice_num}'">
-		<input type="button" value="삭제" id="delete_btn">
+		<input type="button" class="list_button" value="수정" onclick="location.href='update.do?notice_num=${notice.notice_num}'">
+		<input type="button" class="list_button" value="삭제" id="delete_btn">
 		<script type="text/javascript">
 			let delete_btn = document.getElementById('delete_btn');
 			//이벤트 연결
@@ -100,7 +115,7 @@
 		</script>
 		</c:if>
 	</div>
-	
+	<hr size="1" width="100%">
 	
 	
 	
@@ -121,7 +136,7 @@
 			</div>
 			
 			<div id="re_second" class="align-right">
-				<input type="submit" value="전송">
+				<input type="submit" class="list_button" value="전송">
 			</div>
 			</c:if>
 		</form>
@@ -131,7 +146,7 @@
 	<!-- 댓글 목록 출력 -->
 	<div id="output"></div>
 	<div class="paging-button" style="display:none;">
-		<input type="button" value="다음글 보기">
+		<input type="button" class="list_button" value="다음글 보기">
 	</div>
 	
 	<div id="loading" style="display:none;">
@@ -141,14 +156,5 @@
 	</c:if>
 	<!-- 댓글 UI 끝 -->
 	
-	<div class="align-right">
-		<input type="button" value="목록" onclick="location.href='list.do'">
-		<c:if test="${notice.prev_num != 0}">
-		<input type="button" value="이전글" onclick="location.href='detail.do?notice_num=${notice.prev_num}'">
-		</c:if>
-		<c:if test="${notice.next_num != 0}">
-		<input type="button" value="다음글" onclick="location.href='detail.do?notice_num=${notice.next_num}'">
-		</c:if>
-	</div>
 </div>
 <!-- 내용 끝 -->

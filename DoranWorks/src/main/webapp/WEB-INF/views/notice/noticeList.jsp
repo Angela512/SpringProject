@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 내용 시작 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <div class="page-main">
 	<h2>공지사항 목록</h2>
 	<form action="list.do" id="search_form" method="get">
@@ -31,20 +32,18 @@
 	</c:if>
 	
 	<c:if test="${count>0 }">
-	<table>
-		<tr>
-			<th></th>
-			<th>필독여부</th>
-			<th width="400">제목</th>
-			<th>날짜</th>
+	<table class="letter_table">
+		<tr height="30">
+			<th width="15%">필독여부</th>
+			<th>제목</th>
+			<th width="15%">날짜</th>
 		</tr>
 		
 		<c:forEach var="notice" items="${list }">
-		<tr>
-			<td></td>
+		<tr height="30">
 			<td>
-				<c:if test="${notice.notice_head==1 }">필독</c:if>
-				<c:if test="${notice.notice_head==0 }">공지</c:if>
+				<c:if test="${notice.notice_head==1 }"><div class="notice_head1">필독</div></c:if>
+				<c:if test="${notice.notice_head==0 }"><div class="notice_head2">공지</div></c:if>
 			</td>
 			<td><a href="detail.do?notice_num=${notice.notice_num }">${notice.notice_title }</a></td>
 			<td>${notice.notice_date }</td>
@@ -56,7 +55,7 @@
 	
 	<c:if test="${!empty user && user.auth==2}">
 	<div class="align-right">
-		<input type="button" value="글쓰기" onclick="location.href='write.do'">
+		<input type="button" class="list_button" value="글쓰기" onclick="location.href='write.do'">
 	</div>
 	</c:if>
 </div>

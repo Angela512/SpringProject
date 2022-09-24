@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 내용 시작 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <!-- include libraries(jquery,bootstrap) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -18,7 +19,7 @@
 	<h2>쪽지전달</h2>
 	<form action="write.do" id="register_form" enctype="multipart/form-data" method="post">
 		<div class="align-right">
-			<button>보내기</button>
+			<button class="list_button">보내기</button>
 		</div>
 		
 		<ul>

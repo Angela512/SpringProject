@@ -210,7 +210,8 @@
                 lt_date,
                 lt_sender_id,
                 (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
-                lt_delete
+                lt_delete,
+                lt_read
               FROM
                 letter_send s
               WHERE
@@ -226,7 +227,8 @@
                 lt_date,
                 (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
                 lt_receiver_id,
-                lt_delete
+                lt_delete,
+                lt_read
               FROM
                 letter_receive r
               WHERE
@@ -240,10 +242,14 @@
 	               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
 	               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
 	               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+	               LAG(lt_date,1) OVER(ORDER BY lt_num) prev_date,
+	               LAG(lt_read,1) OVER(ORDER BY lt_num) prev_read,
 	               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
 	               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
 	               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
-	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
+	               LEAD(lt_date,1) OVER(ORDER BY lt_num) next_date,
+	               LEAD(lt_read,1) OVER(ORDER BY lt_num) next_read
                FROM tta 
                )
            WHERE lt_num=#{lt_num}
@@ -307,7 +313,8 @@
 	          lt_sender_id,
 	          lt_receiver_id,
 	          mem_name,
-	          lt_delete
+	          lt_delete,
+	          lt_read
 			FROM
 			  letter_receive l JOIN member_detail m ON mem_num = lt_sender_num
 			WHERE
@@ -322,11 +329,15 @@
 		               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
 		               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
 	                   LAG(mem_name,1) OVER(ORDER BY lt_num) prev_mem_name,
+	                   LAG(lt_date,1) OVER(ORDER BY lt_num) prev_date,
+	               	   LAG(lt_read,1) OVER(ORDER BY lt_num) prev_read,
 		               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
 		               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
 		               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
 		               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
-	                   LEAD(mem_name,1) OVER(ORDER BY lt_num) next_mem_name
+	                   LEAD(mem_name,1) OVER(ORDER BY lt_num) next_mem_name,
+	                   LEAD(lt_date,1) OVER(ORDER BY lt_num) next_date,
+	                   LEAD(lt_read,1) OVER(ORDER BY lt_num) next_read
 	               FROM tta 
 	               )
            WHERE lt_num=#{lt_num}
@@ -391,7 +402,8 @@
 		        lt_sender_id,
 		        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
 		        lt_content,
-		        lt_delete
+		        lt_delete,
+		        lt_read
 	  		FROM
 	  			letter_send s
 	  		WHERE
@@ -406,10 +418,14 @@
               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+              LAG(lt_date,1) OVER(ORDER BY lt_num) prev_date,
+	          LAG(lt_read,1) OVER(ORDER BY lt_num) prev_read,
               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
-              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
+              LEAD(lt_date,1) OVER(ORDER BY lt_num) next_date,
+              LEAD(lt_read,1) OVER(ORDER BY lt_num) next_read
                 
              FROM tta 
          	)
@@ -475,7 +491,8 @@
 		        lt_sender_id,
 		        (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = s.lt_receiver_id) || '('|| lt_receiver_id || ')' AS lt_receiver_id,
 		        lt_content,
-		        lt_delete
+		        lt_delete,
+		        lt_read
 	  		FROM
 	  			letter_send s
 	  		WHERE
@@ -490,10 +507,14 @@
               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+              LAG(lt_date,1) OVER(ORDER BY lt_num) prev_date,
+	          LAG(lt_read,1) OVER(ORDER BY lt_num) prev_read,
               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
-              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+              LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
+              LEAD(lt_date,1) OVER(ORDER BY lt_num) next_date,
+	          LEAD(lt_read,1) OVER(ORDER BY lt_num) next_read
                 
              FROM tta 
          	)
@@ -605,7 +626,8 @@
                 lt_sender_id,
                 (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id = SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1))) || '('|| SUBSTR(s.lt_receiver_id,0,DECODE(INSTR(s.lt_receiver_id,','),0,LENGTH(s.lt_receiver_id),INSTR(s.lt_receiver_id,',')-1)) || ')' AS lt_receiver_id,
                 lt_important,
-                lt_delete
+                lt_delete,
+                lt_read
               FROM
                 letter_send s
               WHERE
@@ -622,7 +644,8 @@
                 (SELECT mem_name FROM member m JOIN member_detail d USING(mem_num) WHERE m.mem_id =r.lt_sender_id) || '('|| lt_sender_id || ')' AS lt_sender_id,
                 lt_receiver_id,
                 lt_important,
-                lt_delete
+                lt_delete,
+                lt_read
               FROM
                 letter_receive r
               WHERE
@@ -636,10 +659,14 @@
 	               LAG(lt_title,1) OVER(ORDER BY lt_num) prev_title,
 	               LAG(lt_sender_id,1) OVER(ORDER BY lt_num) prev_send_id,
 	               LAG(lt_receiver_id,1) OVER(ORDER BY lt_num) prev_receiver_id,
+	               LAG(lt_date,1) OVER(ORDER BY lt_num) prev_date,
+	               LAG(lt_read,1) OVER(ORDER BY lt_num) prev_read,
 	               LEAD(lt_num,1) OVER(ORDER BY lt_num) next_num,
 	               LEAD(lt_title,1) OVER(ORDER BY lt_num) next_title,
 	               LEAD(lt_sender_id,1) OVER(ORDER BY lt_num) next_send_id,
-	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id
+	               LEAD(lt_receiver_id,1) OVER(ORDER BY lt_num) next_receiver_id,
+	               LEAD(lt_date,1) OVER(ORDER BY lt_num) next_date,
+	               LEAD(lt_read,1) OVER(ORDER BY lt_num) next_read
                FROM tta 
                )
            WHERE lt_num=#{lt_num}

@@ -4,9 +4,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 내용 시작 -->
 <style>
-#topButton {position: fixed; right: 2%; bottom: 50px; display: none; z-index: 999;}
+#topButton {position: fixed; right: 2%; bottom: 120px; display: none; z-index: 999;}
 figure.image img{
 	max-width:600px;
+}
+figure.image{
+	text-align: center;
 }
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
@@ -18,11 +21,11 @@ figure.image img{
 <div class="page-main">
 	<div class="align-right">
 	<c:if test="${np.prev_num != null }">
-	<button class="material-symbols-outlined" id="prev_btn" onclick="location.href='detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}'">expand_less</button>
+	<button id="prev_btn" onclick="location.href='detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}'">▲</button>
 	</c:if>
 	
 	<c:if test="${np.next_num != null }">
-	<button class="material-symbols-outlined" id="next_btn" onclick="location.href='detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}'">expand_more</button>
+	<button id="next_btn" onclick="location.href='detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}'">▼</button>
 	</c:if>
 	<style>
 		.material-symbols-outlined {
@@ -33,6 +36,7 @@ figure.image img{
 		  'opsz' 48
 		}
 	</style>
+	
 	
 	</div>
 	
@@ -57,10 +61,10 @@ figure.image img{
 	
 	
 	<c:if test="${!empty letter.lt_filename1 || !empty letter.lt_filename2 }">
-	<hr size="1" width="100%">
+	<hr size="1" width="100%" class="hr-line">
 		<ul>
 			<li>
-				첨부파일
+				<b>첨부파일</b>
 			</li>
 			<li>
 				<a href="file.do?lt_num=${letter.lt_num}&file_type=1">${letter.lt_filename1}</a>
@@ -71,7 +75,7 @@ figure.image img{
 		</ul>
 	</c:if>
 	
-	<hr size="1" width="100%">
+	<hr size="1" width="100%" class="hr-line">
 	<c:if test="${fn:endsWith(letter.lt_filename1,'.jpg') ||
 				  fn:endsWith(letter.lt_filename1,'.JPG') ||
 				  fn:endsWith(letter.lt_filename1,'.JPEG') ||
@@ -107,40 +111,142 @@ figure.image img{
 	</p>
 	
 	<div id="topButton">
-		<input type="button" value="맨위로" id="topButtonImg">
+		<input type="button" value="맨위로▲" id="topButtonImg" class="list_button">
 	</div>
 	
-	
+	<div class="npzone">
+	<hr size="1" width="100%" class="hr-line">
 	<c:if test="${param.letter_type==0 || param.letter_type == null || param.letter_type==4}">
-		<c:if test="${np.prev_send_id != user.mem_id }">
-		<div>${np.prev_num } ${np.prev_send_id} <a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}">${np.prev_title }</a></div>
+		<c:if test="${np.prev_num != null }">
+			<c:if test="${np.prev_send_id != user.mem_id }">
+			<div>
+				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_less</span>
+				<c:if test="${np.prev_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.prev_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.prev_send_id} ${np.prev_title } 
+				 <span class="npdate">${np.prev_date}</span></a>
+			 </div>
+			</c:if>
+			<c:if test="${np.prev_send_id == user.mem_id }">
+			<div>
+				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_less</span>
+				<c:if test="${np.prev_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.prev_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.prev_receiver_id} ${np.prev_title } 
+				 <span class="npdate">${np.prev_date}</span></a>
+			</div>
+			</c:if>
 		</c:if>
-		<c:if test="${np.prev_send_id == user.mem_id }">
-		<div>${np.prev_num } ${np.prev_receiver_id} <a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}">${np.prev_title }</a></div>
-		</c:if>
-
-		<c:if test="${np.next_send_id != user.mem_id }">
-		<div>${np.next_num } ${np.next_send_id} <a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}">${np.next_title }</a></div>
-		</c:if>
-		<c:if test="${np.next_send_id == user.mem_id }">
-		<div>${np.next_num } ${np.next_receiver_id} <a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}">${np.next_title }</a></div>
+		
+		<c:if test="${np.next_num != null }">
+			<c:if test="${np.next_send_id != user.mem_id }">
+			<div>
+				<a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_more</span>
+				<c:if test="${np.next_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.next_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.next_send_id} ${np.next_title }
+				<span class="npdate">${np.next_date}</span></a>
+			</div>
+			</c:if>
+			<c:if test="${np.next_send_id == user.mem_id }">
+			<div>
+				<a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_more</span>
+				<c:if test="${np.next_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.next_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.next_receiver_id} ${np.next_title } 
+				 <span class="npdate">${np.next_date}</span></a>
+			</div>
+			</c:if>
 		</c:if>
 	</c:if>
 	
 	
 	<c:if test="${param.letter_type==1 }">
 		<c:if test="${np.prev_num != null }">
-		<div>${np.prev_num } ${np.prev_mem_name }(${np.prev_send_id}) <a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}">${np.prev_title }</a></div>
+		<div>
+			<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+			<span class="material-symbols-outlined">expand_less</span>
+			<c:if test="${np.prev_read==0 }">
+			<span class="material-symbols-outlined">mail</span>
+			</c:if>
+			<c:if test="${np.prev_read==1 }">
+			<span class="material-symbols-outlined">drafts</span>
+			</c:if>
+			 ${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title } 
+			 <span class="npdate">${np.prev_date}</span></a>
+		</div>
 		</c:if>
+		
 		<c:if test="${np.next_num != null }">
-		<div>${np.next_num } ${np.next_mem_name }(${np.next_send_id}) <a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}">${np.next_title }</a></div>
+		<div>
+			<a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+			<span class="material-symbols-outlined">expand_more</span>
+			<c:if test="${np.next_read==0 }">
+			<span class="material-symbols-outlined">mail</span>
+			</c:if>
+			<c:if test="${np.next_read==1 }">
+			<span class="material-symbols-outlined">drafts</span>
+			</c:if>
+			 ${np.next_mem_name }(${np.next_send_id}) ${np.next_title } 
+			 <span class="npdate">${np.next_date}</span></a>
+		</div>
 		</c:if>
 	</c:if>
 
 	<c:if test="${param.letter_type==2 || param.letter_type==3}">
-		<div>${np.prev_num } ${np.prev_receiver_id} <a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}">${np.prev_title }</a></div>
-		<div>${np.next_num } ${np.next_receiver_id} <a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}">${np.next_title }</a></div>
+		<c:if test="${np.prev_num != null }">
+			<div>
+				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_less</span>
+				<c:if test="${np.prev_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.prev_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.prev_receiver_id} ${np.prev_title } 
+				 <span class="npdate">${np.prev_date}</span></a>
+			</div>
+		</c:if>
+		
+		<c:if test="${np.next_num != null }">
+			<div>
+				<a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+				<span class="material-symbols-outlined">expand_more</span>
+				<c:if test="${np.next_read==0 }">
+				<span class="material-symbols-outlined">mail</span>
+				</c:if>
+				<c:if test="${np.next_read==1 }">
+				<span class="material-symbols-outlined">drafts</span>
+				</c:if>
+				 ${np.next_receiver_id} ${np.next_title } 
+				 <span class="npdate">${np.next_date}</span></a>
+			</div>
+		</c:if>
 	</c:if>
+	
+	<hr size="1" width="100%" class="hr-line">
+	</div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

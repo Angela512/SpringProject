@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 내용 시작 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <!-- include libraries(jquery,bootstrap) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -21,25 +22,25 @@
 		<form:hidden path="notice_num"/>
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
-			<li>
+			<li class="notice_form_write">
 				<label for="notice_title">제목</label>
 				<form:input path="notice_title"/>
 				<form:errors path="notice_title" cssClass="error-color"/>
 			</li>
 			
-			<li>
+			<li class="notice_form_write">
 				<label>필독여부</label>
 				<form:radiobutton path="notice_head" value="0" checked="checked"/>공지
 				<form:radiobutton path="notice_head" value="1"/>필독
 			</li>
 			
-			<li>
+			<li class="notice_form_write">
 				<label for="upload1">파일첨부1</label>
 				<input type="file" name="upload1" id="upload1">
 				<c:if test="${!empty noticeVO.notice_filename1}">
 				<div id="file_detail1">
 					(${noticeVO.notice_filename1})파일 등록
-					<input type="button" value="파일삭제" id="file_del1">
+					<input type="button" class="list_button" value="파일삭제" id="file_del1">
 				</div>
 				<script type="text/javascript">
 					$(function(){
@@ -74,13 +75,13 @@
 				</c:if>
 			</li>
 
-			<li>
+			<li class="notice_form_write">
 				<label for="upload2">파일첨부2</label>
 				<input type="file" name="upload2" id="upload2">
 				<c:if test="${!empty noticeVO.notice_filename1}">
 				<div id="file_detail2">
 					(${noticeVO.notice_filename2})파일 등록
-					<input type="button" value="파일삭제" id="file_del2">
+					<input type="button" class="list_button" value="파일삭제" id="file_del2">
 				</div>
 				<script type="text/javascript">
 					$(function(){
@@ -115,7 +116,7 @@
 				</c:if>
 			</li>
 			
-			<li>
+			<li class="notice_form_write">
 				<form:textarea path="notice_content"/>
 				<form:errors path="notice_content" cssClass="error-color"/>
 				<script>
@@ -138,7 +139,7 @@
 			    </script>   
 			</li>
 			
-			<li>
+			<li class="notice_form_write">
 				<label>댓글허용</label>
 				<form:radiobutton path="notice_replyagree" value="0"/>불가
 				<form:radiobutton path="notice_replyagree" value="1"/>허용
@@ -146,8 +147,8 @@
 		</ul>
 		
 		<div class="align-center">
-			<form:button>수정</form:button>
-			<input type="button" value="목록으로" onclick="location.href='list.do'">
+			<form:button class="list_button">수정</form:button>
+			<input type="button" class="list_button" value="목록으로" onclick="location.href='list.do'">
 		</div>
 	</form:form>
 </div>

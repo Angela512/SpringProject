@@ -46,8 +46,8 @@ $(function(){
 					
 					if(param.user_num==item.mem_num){
 						//로그인한 회원번호와 댓글 작성자 회원번호가 일치
-						output += ' <input type="button" data-num="'+item.reply_num+'" value="수정" class="modify-btn">';
-						output += ' <input type="button" data-num="'+item.reply_num+'" value="삭제" class="delete-btn">';
+						output += ' <input type="button" class="list_button" data-num="'+item.reply_num+'" value="수정" class="modify-btn">';
+						output += ' <input type="button" class="list_button" data-num="'+item.reply_num+'" value="삭제" class="delete-btn">';
 					}
 					output+='<hr size="1" noshade>';
 					output+='</div>';
@@ -157,8 +157,8 @@ $(function(){
 		modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mre_content" class="rep-content">'+content+'</textarea>';
 		modifyUI += '<div id="mre_first"><span class="letter-count">300/300</span></div>';
 		modifyUI += '<div id="mre_second" class="align-right">';
-		modifyUI += '<input type="submit" value="수정">';
-		modifyUI += ' <input type="button" value="취소" class="re-reset">';
+		modifyUI += '<input type="submit" class="list_button" value="수정">';
+		modifyUI += ' <input type="button" class="list_button" value="취소" class="re-reset">';
 		modifyUI += '</div>';
 		modifyUI += '<hr size="1" noshade width="96%">';
 		modifyUI += '</form>';
@@ -266,6 +266,20 @@ $(function(){
 			}
 		});
 	});
+	
+	$(window).scroll(function() {
+	    // top button controll
+	    if ($(this).scrollTop() > 50) {
+	        $('#topButton').fadeIn();
+	    } else {
+	        $('#topButton').fadeOut();
+	    }
+	});
+
+	$("#topButtonImg").click(function() {
+		$('html, body').animate({scrollTop:0}, '300');
+	});
+	
 	//초기 데이터(목록) 호출
 	if(replyagree==1)
 		selectList(1);
