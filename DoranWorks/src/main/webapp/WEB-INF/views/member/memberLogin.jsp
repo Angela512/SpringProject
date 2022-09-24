@@ -101,6 +101,11 @@ background-color:#F2F2F2;
 
 
 }
+#send_pw{
+	text-decoration: none;
+	color:#408B6E;
+	font-size: 10pt;
+}
 </style>
 	
 	
@@ -127,8 +132,7 @@ background-color:#F2F2F2;
   <button type="submit" class="btn btn-primary" style="width:16%; border-radius: 20px;">로그인</button>
 
 	</form:form>
-	<input type="button" value="비밀번호찾기"
-            onclick="location.href='sendPassword.do'">
+    <a href="sendPassword.do" id="send_pw">비밀번호찾기</a>
 	</div>
 	
 	<%-- <form:form id="login_form" action="login.do" modelAttribute="memberVO">

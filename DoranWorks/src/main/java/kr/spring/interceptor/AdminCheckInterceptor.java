@@ -24,7 +24,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(user == null || user.getAuth() != 3) { //로그인하지 않았거나 관리자가 아닐 경우
+		if(user == null || user.getAuth() != 2) { //로그인하지 않았거나 관리자가 아닐 경우
 			//권한없음
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/common/notice.jsp");
 			dispatcher.forward(request, response);

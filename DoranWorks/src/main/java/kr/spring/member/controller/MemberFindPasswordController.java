@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class MemberFindPasswordController {
 
 	@RequestMapping(value="/member/sendPassword.do",method=RequestMethod.POST)
 	public String sendEmailAction(@Valid MemberVO memberVO,
-			BindingResult result) throws Exception{
+			BindingResult result,Model model) throws Exception{
 
 		if(logger.isDebugEnabled()){
 			logger.debug("<<비밀번호 찾기>> : " +memberVO);
@@ -75,8 +76,10 @@ public class MemberFindPasswordController {
 			}
 			
 			emailSender.sendEmail(email);
+			model.addAttribute("message","이메일을 발송했습니다!");
+			model.addAttribute("url","main.do");
 
-			return "emailSendSuccess";
+			return "common/resultView";
 		}else {
 			result.reject("invalidIdOrEmail");
 			return form();
