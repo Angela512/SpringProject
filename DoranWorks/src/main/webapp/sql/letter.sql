@@ -26,7 +26,7 @@ create table letter_receive(
 	lt_num number not null,
 	lt_title varchar2(50) not null,
 	lt_sender_num number not null,
-	lt_receiver_num varchar2(20) not null,
+	lt_receiver_num number not null,
 	lt_date date default sysdate not null,
 	lt_content clob not null,
 	lt_read number default 0 not null,
