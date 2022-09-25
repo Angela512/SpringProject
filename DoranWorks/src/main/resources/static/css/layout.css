@@ -378,5 +378,16 @@ ul.detail-info li{
 	padding:10px;
 }
 
-
+/*배지*/
+.rgyBadge {
+	display:inline-block !important;
+	margin-left: 10px !important;
+	padding: 2px 5px !important;
+	border-radius: 7px !important;
+	color: #fff !important;
+	vertical-align: middle !important;
+	font-weight: bold !important;
+	font-size: 12px !important;
+	background: #f00 !important;
+}
 

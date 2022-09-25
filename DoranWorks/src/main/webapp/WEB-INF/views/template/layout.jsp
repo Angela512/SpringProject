@@ -68,7 +68,7 @@
                    $('#alarm_talk').text(param.count+'개의 채팅 알람이 있습니다.')
                 }else if(alarm_kind==2){//쪽지
                    $('#alarm_note').show();
-                   $('#alarm_note').text(param.count+'개의 채팅 알람이 있습니다.')
+                   $('#alarm_note').text(param.count+'개의 쪽지 알람이 있습니다.')
                 }
              }
           },
