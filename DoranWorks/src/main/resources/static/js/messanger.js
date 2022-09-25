@@ -5,7 +5,7 @@ $(function(){
 		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리&선택된 멤버 초기화
 		if($('#searchChatroom').css('display') != 'none'){
 			$('#member_list').empty();
-			$('.checked_div').empty();
+			$('.checked_ul').empty();
 	        $('#searchChatroom').hide();
 	    }else{
 			$('#searchChatroom').show();
@@ -60,6 +60,7 @@ $(function(){
 			cache:false,
 			timeout:30000,
 			success:function(param){
+				let user_name = param.user_name; //세션에 로그인한 사람의 이름 받음
 				
 				$('.chatroomMain').empty();
 				if(param.result == 'logout'){
@@ -68,7 +69,16 @@ $(function(){
 					let chatroomListUI = '<div id="chatroomList">';
 					$(param.list).each(function(index, item){
 						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
-						chatroomListUI += '[' + item.chatroom_name + '] ' + item.count + '명 ';
+						 //내 이름은 빼고 출력
+						let chatNameStr = item.chatroom_name;
+						chatNameStr = chatNameStr.replace(user_name, '').replace(/, , /g, ', ');
+												
+						if(chatNameStr.substr(0,1) == ','){
+							chatNameStr = chatNameStr.replace(', ', '');
+						}
+						chatNameStr = chatNameStr.replace(/, $/, '');
+						
+						chatroomListUI += '[' + chatNameStr + '] ' + item.count + '명 ';
 						//최신 메시지가 오늘이면 시간만, 오늘이 아니면 날짜만 표시
 						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '<br>';
 						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')) + '</b></span>';
@@ -110,6 +120,7 @@ $(function(){
 			timeout:30000,
 			success:function(param){
 				let user_num = param.user_num;
+				let user_name = param.user_name;
 				$('.chat_form').empty();
 				$('.msg_formUI').empty();
 				$('.chatroom').css('background-color','#FFF');
@@ -121,12 +132,19 @@ $(function(){
 				var i = 0;
 				let len = $(param.list).length;
 				$(param.list).each(function(index, item){
+					let chatNameStr = item.chatroom_name;
+					chatNameStr = chatNameStr.replace(user_name, '').replace(/, , /g, ', ');
+											
+					if(chatNameStr.substr(0,1) == ','){
+						chatNameStr = chatNameStr.replace(', ', '');
+					}
+					chatNameStr = chatNameStr.replace(/, $/, '');
+					
 					for(i; i < 1; i++){ //한번만 실행
-						msgUI += '<h3>' + item.chatroom_name + ' | ' + item.chatroom_num + '</h3>';
+						msgUI += '<h3>' + chatNameStr + ' | ' + item.chatroom_num + '</h3>';
 						msgUI += '<span>멤버 : ';
 					}
-				//	msgUI += 'index : ' + index + ', len : ' + len;
-
+						
 					if(item.mem_num != user_num){
 						msgUI += item.mem_name;
 						if(len > 2 && len - 1 != index){
@@ -308,13 +326,17 @@ $(function(){
 					let mem_name = $(this).attr('id');
 					let modifyUI = '';
 					let isChecked = $(this).attr("checked");
+					$('#checked_form').show();
 					
 					if(isChecked){ //이미 체크되어있으면 체크 해제
 						isChecked = $(this).attr("checked", false);
 						//폼에서도 삭제함
 						$('#' + mem_num).remove();
 						$('.' + mem_num).remove();
-						if($('.checked_div *').length == 0){//체크된 멤버가 없으면 폼 숨김
+						$('#li' + mem_num).remove();
+						
+						if($('.checked_ul *').length == 0){//체크된 멤버가 없으면 폼 숨김
+							$('.checked_ul').empty();
 							$('#checked_form').hide();
 						}
 					}else{ //체크 안되어 있으면 체크하기
@@ -322,26 +344,23 @@ $(function(){
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
 						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
-						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '"';
-						modifyUI += '<span class="'+ mem_num + '">' + mem_name + '</span>';
+						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '" class="' + mem_num + '">';
+						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span class="close">X</span></li>';
 						
 						//체크된 멤버 노출
-						$('.checked_div').append(modifyUI);
+						$('.checked_ul').append(modifyUI);
+						
 					}
-					/*submitUI = '';
-					submitUI += '<input type="text" class="chatroom_name" placeholder="채팅방 이름">';
-					submitUI += '<input type="button" value="취소" class="mem_reset">';
-					submitUI += '<input type="submit" value="확인">';
-					
-					$('.align-right').append(submitUI);*/
-					
-					
-					
 				}); //end of document(checkedMember)
+				//이미생성된 경우
 				
-				//취소버튼 클릭 시 멤버 리스트 폼 숨김
+				
+				//취소버튼 클릭 시 멤버 리스트 폼 숨기고 reset
 				$('.mem_reset').click(function(){
 					$('#searchChatroom').hide();
+					$('.checked_ul').empty();
+					$('#checked_form').hide();
+					$('#member_list').empty();
 				});
 				
 			}, //end of success()

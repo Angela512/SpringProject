@@ -37,12 +37,11 @@
 		<!-- 선택된 멤버 리스트 시작 -->
 		<hr size="1" width="100%">
 		<form action="confirm.do" method="post" id="checked_form" style="display:none;">
-		    <input type="hidden" name="members" value="${user.mem_num}">
-			<div class="checked_div"></div>
+		   
+			<div class="checked_div"><ul class="checked_ul"></ul></div>
 		<!-- 선택된 멤버 리스트 끝 -->
 			
-			<div class="align-right">
-				<input type="text" class="chatroom_name" placeholder="채팅방 이름">
+			<div class="checkedListBtn">
 				<input type="button" value="취소" class="mem_reset">
 				<input type="submit" value="확인">
 			</div>

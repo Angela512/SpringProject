@@ -83,6 +83,7 @@ public class MessangerController {
 			logger.debug("<<채팅방 마지막메시지>> : " + list);
 			mapAjax.put("result", "success");
 			mapAjax.put("list", list);
+			mapAjax.put("user_name", user.getMem_name());
 		}
 		
 		return mapAjax;
@@ -125,13 +126,13 @@ public class MessangerController {
 	@RequestMapping("/messanger/confirm.do")
 	@ResponseBody
 	public Map<String,Object> createChatroom(ChatroomVO chatroomVO, HttpSession session) {
-		
-		//채팅방번호, 채팅방이름, 채팅방멤버들 생성
-		messangerService.insertChatroom(chatroomVO); 
-		int chatroom_num = chatroomVO.getChatroom_num();
-		
-		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//채팅방번호, 채팅방멤버들 생성
+		messangerService.insertChatroom(chatroomVO, user.getMem_name()); 
+		int chatroom_num = chatroomVO.getChatroom_num();
+
+		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		
 		if(user != null) {
 			mapAjax.put("user_num", user.getMem_num());
@@ -160,6 +161,7 @@ public class MessangerController {
 		}
 		mapAjax.put("list", list);
 		mapAjax.put("msgList", msgList);
+		mapAjax.put("user_name", user.getMem_name());
 		
 		return mapAjax;
 	}

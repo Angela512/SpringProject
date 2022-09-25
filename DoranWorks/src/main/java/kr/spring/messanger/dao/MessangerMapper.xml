@@ -9,11 +9,11 @@
   	
 	<select id="selectChatmemCount" parameterType="map" resultType="chatmemVO">
 		SELECT 
-		  * 
+		  chatroom_num, chatroom_name, mem_num, count, mem_name 
 		FROM chatroom 
 		JOIN chatmem USING(chatroom_num)
 		JOIN (SELECT chatroom_num, COUNT(*) count FROM chatmem GROUP BY chatroom_num)
-	    USING(chatroom_num) 
+	    USING(chatroom_num) JOIN member_detail USING(mem_num)
 	    WHERE 
 	    mem_num=#{mem_num}
 	    <if test="keyword!=null and keyword!=''">

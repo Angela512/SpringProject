@@ -25,7 +25,7 @@ public interface MessangerMapper {
 	public int selectChatroom_num();
 	
 	//채팅방 생성
-	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_num})")
+	@Insert("INSERT INTO chatroom (chatroom_num, chatroom_name) VALUES (#{chatroom_num}, #{chatroom_name})")
 	public void insertChatroom(ChatroomVO chatroomVO);
 	
 	//채팅멤버 생성

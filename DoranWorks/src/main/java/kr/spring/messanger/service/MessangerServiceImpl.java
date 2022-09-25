@@ -47,17 +47,23 @@ public class MessangerServiceImpl implements MessangerService{
 	}
 	
 	@Override
-	public void insertChatroom(ChatroomVO chatroomVO) {
+	public void insertChatroom(ChatroomVO chatroomVO, String user_name) {
 		//채팅방 이름은 멤버들 이름으로 생성(나중에 변경 가능)
-		/*
-		 * String arr_name = ""; //이름을 쭉 일자로 넣을거임 int len =
-		 * chatroomVO.getMem_names().length; //나 빼고임 int i = 1; for(String mem_name :
-		 * chatroomVO.getMem_names()) { arr_name += mem_name; if(len != i) { arr_name +=
-		 * ", "; } System.out.println("len : " + len); i++; }
-		 */
+		
+		String arr_name = user_name + ", "; //이름을 나 포함 쭉 일자로 넣을거임 
+		int len = chatroomVO.getMem_names().length; //나 빼고임 
+		int i = 1; 
+		for(String mem_name : chatroomVO.getMem_names()) { 
+			arr_name += mem_name; 
+			if(len != i) { 
+				arr_name += ", "; 
+			} 
+		System.out.println("len : " + len); 
+		i++; 
+		}
 		
 		chatroomVO.setChatroom_num(msgMapper.selectChatroom_num());
-		//chatroomVO.setChatroom_name(arr_name);
+		chatroomVO.setChatroom_name(arr_name);
 		msgMapper.insertChatroom(chatroomVO);
 		
 		ChatmemVO chatmemVO = new ChatmemVO();
@@ -106,8 +112,8 @@ public class MessangerServiceImpl implements MessangerService{
 		//루프를 돌면서
 		
 		  for(ChatmemVO chat : list) { //채팅방 별 가장 최신 메시지 가져오기(채팅방 목록에서 보여주기 용)
-		  MessangerVO recentMsg = msgMapper.selectRecentMsg(chat.getChatroom_num());
-		  chat.setMessangerVO(recentMsg);
+			  MessangerVO recentMsg = msgMapper.selectRecentMsg(chat.getChatroom_num());
+			  chat.setMessangerVO(recentMsg);
 		  }
 		 
 		return list;
