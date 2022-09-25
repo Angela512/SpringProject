@@ -93,9 +93,14 @@
   			  			dpt.mem_dpt,
   			  			d.mem_num,
   			  			d.mem_name,
-  			  			d.mem_email
+  			  			d.mem_email,
+  			  			rank.mem_rank,
+                        d.mem_photo,
+                        d.mem_photo_name
   			  		FROM mem_dpt dpt JOIN member_detail d
   			  		ON dpt.mem_dpt_num = d.mem_dpt_num
+  			  		JOIN mem_rank rank
+                    ON d.mem_rank_num = rank.mem_rank_num
 					<where>
 				  		<if test="keyword != null and keyword != ''">
 				  				d.mem_name LIKE '%' || #{keyword} || '%' OR 

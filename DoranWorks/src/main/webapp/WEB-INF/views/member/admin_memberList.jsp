@@ -6,6 +6,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.admin.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
 <!-- 내용 시작 -->
+<style>
+#ck_admin{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
+</style>
 <div class="page-main">
 	<h2>DORANWORKS 관리자 페이지</h2>
 	<form action="admin_list.do" id="search_form" method="get">

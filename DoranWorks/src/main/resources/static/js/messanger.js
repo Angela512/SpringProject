@@ -308,13 +308,17 @@ $(function(){
 				$(param.list).each(function(index, item){
 					if(user_num != item.mem_num){ //로그인한 회원은 제외하고 멤버 리스트 띄움
 						let member_listUI = '';
-						member_listUI += '<tr>';
-						member_listUI += '<td>';
+						member_listUI += '<div class="mem_li">';
 						member_listUI += '<input type="checkbox" name="mem_num" data-num="' + item.mem_num + '" id="' + item.mem_name + '" class="checkedMember">';
-						member_listUI += '</td>';
-						member_listUI += '<td><a href="detail.do?mem_num='+ item.mem_num + '">' + item.mem_name + '</a></td>';
-						member_listUI += '<td>' + item.mem_dpt + '</td>';
-						member_listUI += '</tr>';
+						if(item.mem_photo_name != ''){
+							member_listUI += '<img src="../member/viewProfile.do?mem_num="' + item.mem_num + '" width="30" height="30" class="my-photo">';  
+						} else{
+							member_listUI += '<img src="../images/face.png" width="30" height="30" class="my-photo">';
+						}
+						member_listUI += '<span>' + item.mem_name + '</span><br>';
+						member_listUI += item.mem_dpt + ' | ';
+						member_listUI += item.mem_rank;
+						member_listUI += '</div>';
 						//문서 객체에 추가
 						$('#member_list').append(member_listUI);
 					}

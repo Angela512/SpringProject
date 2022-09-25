@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 내용 시작 -->
+<style>
+#ck_msg{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
+</style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
 <div class="page-main">
@@ -21,7 +27,6 @@
 	</div>
 	<!-- 채팅방 생성 시 멤버 선택 -->
 	<div id="searchChatroom" style="display:none;">
-		<div id="mem_list"></div>
 		<h2>멤버 선택</h2>
 		<form action="createChatroom.do" id="search_form" method="get">
 			<ul class="search">
@@ -30,7 +35,7 @@
 				</li> 
 			</ul>
 			<!-- 멤버리스트 시작 -->
-			<div><table id="member_list"></table></div> 
+			<div id="member_list"></div> 
 			<!-- 멤버리스트 끝 -->
 		</form> 
 		
