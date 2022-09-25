@@ -11,12 +11,17 @@ figure.image img{
 figure.image{
 	text-align: center;
 }
+#ck_notice{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/notice.reply.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
+	<div class="content">
 	<h2>공지사항</h2>
 	<div class="align-right">
 		<input type="button" class="list_button" value="목록" onclick="location.href='list.do'">
@@ -155,6 +160,6 @@ figure.image{
 	
 	</c:if>
 	<!-- 댓글 UI 끝 -->
-	
+	</div>
 </div>
 <!-- 내용 끝 -->

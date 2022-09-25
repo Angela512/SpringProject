@@ -66,6 +66,8 @@ public class LetterController {
 		letterVO.setRids(letterVO.getLt_receiver_id().split(","));
 		letterVO.setRids2(letterVO.getLt_reference_id().split(","));
 		
+		
+		
 		//sendVO.setSend_receiver_num(letterService.selectMem_num(sendVO.getSend_receiver_id()));
 		
 		System.out.println("쓰기 : "+letterVO);
