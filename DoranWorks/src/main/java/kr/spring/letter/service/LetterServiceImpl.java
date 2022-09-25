@@ -1,5 +1,6 @@
 package kr.spring.letter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.alarm.service.AlarmService;
 import kr.spring.letter.dao.LetterMapper;
 import kr.spring.letter.vo.LetterReadVO;
 import kr.spring.letter.vo.LetterVO;
@@ -20,6 +22,8 @@ public class LetterServiceImpl implements LetterService{
 	@Autowired
 	private LetterMapper letterMapper;
 	
+	@Autowired
+	private AlarmService alarmService;
 
 	//회원아이디로 멤버정보 가져오기
 	@Override
@@ -51,13 +55,14 @@ public class LetterServiceImpl implements LetterService{
 		System.out.println("sendVV : "+sendVV);
 		letterMapper.insertSend(sendVV);
 		
-		
+		List<Integer> member_list = new ArrayList<Integer>();
 		for(int i=0;i<rids.length;i++) {
 			MemberVO nn = letterMapper.selectMem_vo(rids[i]);
 			
 			letter.setLt_receiver_num(String.valueOf(nn.getMem_num()));
 			letter.setLt_receiver_id(nn.getMem_id());
 			letter.setSnum(sendNum);
+			member_list.add(nn.getMem_num());
 			
 			letterMapper.insertReceive(letter);
 		}
@@ -69,11 +74,13 @@ public class LetterServiceImpl implements LetterService{
 				letter.setLt_receiver_num(String.valueOf(nn.getMem_num()));
 				letter.setLt_receiver_id(nn.getMem_id());
 				letter.setSnum(sendNum);
+				member_list.add(nn.getMem_num());
 				
 				letterMapper.insertReceive(letter);
 			}
 		}
 		
+		alarmService.insertAlarm(2, member_list);
 	}
 
 	//전체쪽지함 카운트

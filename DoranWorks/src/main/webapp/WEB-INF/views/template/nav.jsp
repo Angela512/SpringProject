@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <ul class="nav_profile">
 	<li>
 		<c:if test="${!empty user && !empty user.mem_photo}">
@@ -28,9 +27,9 @@
 	
 	<ul class="nav_menu">
 	<c:if test="${!empty user}">	
-		<li><a href="${pageContext.request.contextPath}/notice/list.do">공지사항</a></li>
+		<li><a href="${pageContext.request.contextPath}/notice/list.do" id="ck_notice">공지사항</a></li>
 		<li><a href="${pageContext.request.contextPath}/messanger/list.do">메신저</a></li>
-		<li><a href="${pageContext.request.contextPath}/letter/main.do">쪽지</a></li>
+		<li><a href="${pageContext.request.contextPath}/letter/main.do" id="ck_letter">쪽지</a></li>
 		<li><a href="${pageContext.request.contextPath}/workflow/list.do">전자결재</a></li>
 	</c:if>
 	<li>

@@ -11,6 +11,10 @@ figure.image img{
 figure.image{
 	text-align: center;
 }
+#ck_letter{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/letter.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -19,6 +23,7 @@ figure.image{
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/letter.detail.important.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
+	<div class="content">
 	<div class="align-right">
 	<c:if test="${np.prev_num != null }">
 	<button id="prev_btn" onclick="location.href='detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}'">▲</button>
@@ -119,7 +124,7 @@ figure.image{
 	<c:if test="${param.letter_type==0 || param.letter_type == null || param.letter_type==4}">
 		<c:if test="${np.prev_num != null }">
 			<c:if test="${np.prev_send_id != user.mem_id }">
-			<div>
+			<div class="np1">
 				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_less</span>
 				<c:if test="${np.prev_read==0 }">
@@ -128,12 +133,12 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.prev_send_id} ${np.prev_title } 
+				 <span class="npid">${np.prev_send_id} ${np.prev_title } </span>
 				 <span class="npdate">${np.prev_date}</span></a>
 			 </div>
 			</c:if>
 			<c:if test="${np.prev_send_id == user.mem_id }">
-			<div>
+			<div class="np1">
 				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_less</span>
 				<c:if test="${np.prev_read==0 }">
@@ -142,7 +147,7 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.prev_receiver_id} ${np.prev_title } 
+				 <span class="npid">${np.prev_receiver_id} ${np.prev_title } </span>
 				 <span class="npdate">${np.prev_date}</span></a>
 			</div>
 			</c:if>
@@ -150,7 +155,7 @@ figure.image{
 		
 		<c:if test="${np.next_num != null }">
 			<c:if test="${np.next_send_id != user.mem_id }">
-			<div>
+			<div class="np2">
 				<a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_more</span>
 				<c:if test="${np.next_read==0 }">
@@ -159,12 +164,12 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.next_send_id} ${np.next_title }
+				 <span class="npid">${np.next_send_id} ${np.next_title }</span>
 				<span class="npdate">${np.next_date}</span></a>
 			</div>
 			</c:if>
 			<c:if test="${np.next_send_id == user.mem_id }">
-			<div>
+			<div class="np2">
 				<a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_more</span>
 				<c:if test="${np.next_read==0 }">
@@ -173,7 +178,7 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.next_receiver_id} ${np.next_title } 
+				 <span class="npid">${np.next_receiver_id} ${np.next_title } </span>
 				 <span class="npdate">${np.next_date}</span></a>
 			</div>
 			</c:if>
@@ -192,7 +197,7 @@ figure.image{
 			<c:if test="${np.prev_read==1 }">
 			<span class="material-symbols-outlined">drafts</span>
 			</c:if>
-			 ${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title } 
+			 <span class="npid">${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title } </span>
 			 <span class="npdate">${np.prev_date}</span></a>
 		</div>
 		</c:if>
@@ -207,7 +212,7 @@ figure.image{
 			<c:if test="${np.next_read==1 }">
 			<span class="material-symbols-outlined">drafts</span>
 			</c:if>
-			 ${np.next_mem_name }(${np.next_send_id}) ${np.next_title } 
+			<span class="npid"> ${np.next_mem_name }(${np.next_send_id}) ${np.next_title } </span>
 			 <span class="npdate">${np.next_date}</span></a>
 		</div>
 		</c:if>
@@ -224,7 +229,7 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.prev_receiver_id} ${np.prev_title } 
+				 <span class="npid">${np.prev_receiver_id} ${np.prev_title } </span>
 				 <span class="npdate">${np.prev_date}</span></a>
 			</div>
 		</c:if>
@@ -239,7 +244,7 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 ${np.next_receiver_id} ${np.next_title } 
+				<span class="npid"> ${np.next_receiver_id} ${np.next_title }</span>
 				 <span class="npdate">${np.next_date}</span></a>
 			</div>
 		</c:if>
@@ -247,7 +252,7 @@ figure.image{
 	
 	<hr size="1" width="100%" class="hr-line">
 	</div>
-
+	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

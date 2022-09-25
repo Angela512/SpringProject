@@ -12,6 +12,10 @@
 .ck-editor__editable_inline{
 	min-height:250px;
 }
+#ck_notice{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
 </style>
 <!-- include ckedtor js -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ckeditor.js"></script>

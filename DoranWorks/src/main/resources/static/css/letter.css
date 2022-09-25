@@ -1,3 +1,6 @@
+.content{
+	margin-left: 15px;
+}
 /*카테고리 공통 시작*/
 .sub_nav{
 	font-weight: 600;
@@ -133,9 +136,17 @@ td, th {
 	font-weight: bold;
 }
 .npdate{
-	position: absolute;
-	right: 200px;
+	float:right;
 	padding-top: 5px;
+}
+.np1, .np2{
+	height:25px;
+}
+a .material-symbols-outlined{
+	margin-top: 8px;
+}
+.npid{
+	margin-bottom: 5px;
 }
 
 /*쪽지 쓰기*/
