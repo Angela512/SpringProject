@@ -165,6 +165,7 @@ a:hover{
 	color:#FFF;
 	border-radius: 5px;
 	height:30px;
+	cursor : pointer
 }
 .image-space .horizontal-area{
 	margin:2px;

@@ -26,7 +26,7 @@ import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
-import kr.spring.workflow.service.WorkflowMainService;
+import kr.spring.workflow.service.WorkflowService;
 import kr.spring.workflow.vo.WorkflowMainVO;
 import kr.spring.workflow.vo.WorkflowSignVO;
 import kr.spring.workflow.vo.WorkflowVO;
@@ -41,7 +41,7 @@ public class WorkflowController {
 	private int pageCount = 10;
 	
 	@Autowired
-	private WorkflowMainService flowService;
+	private WorkflowService flowService;
 	@Autowired
 	private MemberService memberService;
 	

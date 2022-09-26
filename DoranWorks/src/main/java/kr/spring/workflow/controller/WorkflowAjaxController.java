@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.letter.controller.LetterAjaxController;
 import kr.spring.member.vo.MemberVO;
-import kr.spring.workflow.service.WorkflowMainService;
+import kr.spring.workflow.service.WorkflowService;
 
 @Controller
 public class WorkflowAjaxController {
 	private static final Logger logger = LoggerFactory.getLogger(WorkflowAjaxController.class);
 	
 	@Autowired
-	private WorkflowMainService workFlowMainService;
+	private WorkflowService workFlowMainService;
 	
 	//상세페이지 승인 업데이트
 	@RequestMapping("/workflow/updateii.do")

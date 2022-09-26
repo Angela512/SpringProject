@@ -14,7 +14,7 @@ import kr.spring.workflow.vo.WorkflowVO;
 
 
 @Service
-public interface WorkflowMainService {
+public interface WorkflowService {
 	//부모글
 		public List<WorkflowVO> selectList(Map<String,Object> map);
 	    public int selectRowCount(Map<String,Object> map); 

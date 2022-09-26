@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.member.vo.MemberVO;
-import kr.spring.workflow.dao.WorkflowMainMapper;
+import kr.spring.workflow.dao.WorkflowMapper;
 import kr.spring.workflow.vo.WorkflowMainVO;
 import kr.spring.workflow.vo.WorkflowSignVO;
 import kr.spring.workflow.vo.WorkflowVO;
 
 @Service
 @Transactional
-public class WorkflowMainServiceImpl implements WorkflowMainService{
+public class WorkflowServiceImpl implements WorkflowService{
 
 	@Autowired
-	private WorkflowMainMapper flowMapper;
+	private WorkflowMapper flowMapper;
 	
 	@Override
 	public List<WorkflowVO> selectList(Map<String, Object> map) {

@@ -17,7 +17,7 @@ import kr.spring.workflow.vo.WorkflowVO;
 
 
 @Mapper
-public interface WorkflowMainMapper {
+public interface WorkflowMapper {
 	
 		//부모글
 		public List<WorkflowVO> selectList(Map<String,Object> map);
