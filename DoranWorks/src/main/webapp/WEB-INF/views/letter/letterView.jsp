@@ -119,14 +119,14 @@ figure.image{
 		<input type="button" value="맨위로▲" id="topButtonImg" class="list_button">
 	</div>
 	
-	<div class="npzone" style="margin:0;">
+	<div class="npzone">
 	<hr size="1" width="100%" class="hr-line">
 	<c:if test="${param.letter_type==0 || param.letter_type == null || param.letter_type==4}">
 		<c:if test="${np.prev_num != null }">
 			<c:if test="${np.prev_send_id != user.mem_id }">
 			<div style="max-height:45px;">
 				<div class="npid">
-				<a style="display: flex;align-items: center;" href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}">
+				<a class="view_link" href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_less</span>
 				<c:if test="${np.prev_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -134,15 +134,16 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 <span style="display:inline-block;margin:0;padding:4px 0 0 0;" >${np.prev_send_id} ${np.prev_title } </span></a>
+				 <span class="view_npspan" >${np.prev_send_id} ${np.prev_title } </span></a>
 				 </div>
 				 <div class="npdate align-right"><span>${np.prev_date}</span></div>
 				 <div style="clear:both;"></div>
 			 </div>
 			</c:if>
 			<c:if test="${np.prev_send_id == user.mem_id }">
-			<div>
-				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+			<div style="max-height:45px;">
+			<div class="npid">
+				<a class="view_link" href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_less</span>
 				<c:if test="${np.prev_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -150,10 +151,11 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 <span class="npid">${np.prev_receiver_id} ${np.prev_title } </span></a>
+				 <span class="view_npspan">${np.prev_receiver_id} ${np.prev_title } </span></a>
 			</div>
 			<div class="npdate align-right"><span>${np.prev_date}</span></div>
 			<div style="clear:both;"></div>
+			</div>
 			</c:if>
 		</c:if>
 		
@@ -161,7 +163,7 @@ figure.image{
 			<c:if test="${np.next_send_id != user.mem_id }">
 			<div>
 			    <div class="npid">
-				<a style="display: flex;align-items: center;" href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+				<a class="view_link" href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_more</span>
 				<c:if test="${np.next_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -169,15 +171,16 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 <span style="display:inline-block;margin:0;padding:5px 0 0 0;" class="npid">${np.next_send_id} ${np.next_title }</span></a>
+				 <span class="npid view_nextspan">${np.next_send_id} ${np.next_title }</span></a>
 				 </div>
 				<div class="npdate align-right"><span class="npdate">${np.next_date}</span></div>
-				<div style="clear:both;margin:0;padding:0;height:0px;"></div>
+				<div class="view_nextclear"></div>
 			</div>
 			</c:if>
 			<c:if test="${np.next_send_id == user.mem_id }">
-			<div class="np2">
-				<a href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+			<div>
+				<div class="npid">
+				<a class="view_link" href="detail.do?lt_num=${np.next_num}&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_more</span>
 				<c:if test="${np.next_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -185,10 +188,11 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 <span class="npid">${np.next_receiver_id} ${np.next_title } </span>
-				 <span class="npdate">${np.next_date}</span></a>
+				 <span class="npid view_nextspan">${np.next_receiver_id} ${np.next_title } </span></a>
+				 </div>
+				 <div class="npdate align-right"><span class="npdate">${np.next_date}</span></div>
+				 <div class="view_nextclear"></div>
 			</div>
-			<div style="clear:both;"></div>
 			</c:if>
 		</c:if>
 	</c:if>
@@ -196,8 +200,9 @@ figure.image{
 	
 	<c:if test="${param.letter_type==1 }">
 		<c:if test="${np.prev_num != null }">
-		<div>
-			<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+		<div style="max-height:45px;">
+			<div class="npid">
+			<a class="view_link" href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 			<span class="material-symbols-outlined">expand_less</span>
 			<c:if test="${np.prev_read==0 }">
 			<span class="material-symbols-outlined">mail</span>
@@ -205,14 +210,17 @@ figure.image{
 			<c:if test="${np.prev_read==1 }">
 			<span class="material-symbols-outlined">drafts</span>
 			</c:if>
-			 <span class="npid">${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title } </span>
-			 <span class="npdate">${np.prev_date}</span></a>
+			 <span class="view_npspan">${np.prev_mem_name }(${np.prev_send_id}) ${np.prev_title } </span></a>
+			 </div>
+			 <div class="npdate align-right"><span>${np.prev_date}</span></div>
+			  <div style="clear:both;"></div>
 		</div>
 		</c:if>
 		
 		<c:if test="${np.next_num != null }">
 		<div>
-			<a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+			<div class="npid">
+			<a class="view_link" href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 			<span class="material-symbols-outlined">expand_more</span>
 			<c:if test="${np.next_read==0 }">
 			<span class="material-symbols-outlined">mail</span>
@@ -220,16 +228,20 @@ figure.image{
 			<c:if test="${np.next_read==1 }">
 			<span class="material-symbols-outlined">drafts</span>
 			</c:if>
-			<span class="npid"> ${np.next_mem_name }(${np.next_send_id}) ${np.next_title } </span>
-			 <span class="npdate">${np.next_date}</span></a>
+			<span class="npid view_nextspan"> ${np.next_mem_name }(${np.next_send_id}) ${np.next_title } </span></a>
+			</div>
+			 <div class="npdate align-right"><span class="npdate">${np.next_date}</span></div>
+			 <div class="view_nextclear"></div>
 		</div>
 		</c:if>
 	</c:if>
 
+
 	<c:if test="${param.letter_type==2 || param.letter_type==3}">
 		<c:if test="${np.prev_num != null }">
-			<div>
-				<a href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
+			<div style="max-height:45px;">
+				<div class="npid">
+				<a class="view_link" href="detail.do?lt_num=${np.prev_num }&letter_type=${param.letter_type}" <c:if test="${np.prev_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_less</span>
 				<c:if test="${np.prev_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -237,14 +249,17 @@ figure.image{
 				<c:if test="${np.prev_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				 <span class="npid">${np.prev_receiver_id} ${np.prev_title } </span>
-				 <span class="npdate">${np.prev_date}</span></a>
+				 <span class="view_npspan">${np.prev_receiver_id} ${np.prev_title } </span></a>
+				 </div>
+				<div class="npdate align-right"><span>${np.prev_date}</span></div>
+				<div style="clear:both;"></div>
 			</div>
 		</c:if>
 		
 		<c:if test="${np.next_num != null }">
 			<div>
-				<a href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
+				<div class="npid">
+				<a class="view_link" href="detail.do?lt_num=${np.next_num }&letter_type=${param.letter_type}" <c:if test="${np.next_read==0}">style="color:blue;"</c:if>>
 				<span class="material-symbols-outlined">expand_more</span>
 				<c:if test="${np.next_read==0 }">
 				<span class="material-symbols-outlined">mail</span>
@@ -252,11 +267,14 @@ figure.image{
 				<c:if test="${np.next_read==1 }">
 				<span class="material-symbols-outlined">drafts</span>
 				</c:if>
-				<span class="npid"> ${np.next_receiver_id} ${np.next_title }</span>
-				 <span class="npdate">${np.next_date}</span></a>
+				<span class="npid view_nextspan"> ${np.next_receiver_id} ${np.next_title }</span></a>
+				</div>
+				<div class="npdate align-right"><span class="npdate">${np.next_date}</span></div>
+				<div class="view_nextclear"></div>
 			</div>
 		</c:if>
 	</c:if>
+	
 	
 	<hr size="1" width="100%" class="hr-line">
 	</div>

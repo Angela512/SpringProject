@@ -134,6 +134,7 @@ td, th {
 }
 .npzone{
 	font-weight: bold;
+	margin: 0;
 }
 .npdate{
 	float:right;
@@ -147,6 +148,26 @@ a .material-symbols-outlined{
 	float:left;
 	margin-bottom: 5px;
 	width:48%;
+}
+.view_link{
+	display:flex;
+	align-items: center;
+}
+.view_npspan{
+	display: inline-block;
+	margin: 0;
+	padding: 4px 0 0 0;
+}
+.view_nextspan{
+	display:inline-block;
+	margin:0;
+	padding: 5pxx 0 0 0;
+}
+.view_nextclear{
+	clear:both;
+	margin:0;
+	padding:0;
+	height:0px;
 }
 
 /*쪽지 쓰기*/
