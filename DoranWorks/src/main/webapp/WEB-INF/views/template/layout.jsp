@@ -43,9 +43,9 @@
          	}
          }
          if($('#message_detail').length==1){
-        	 list();
     		 if(data.substring(0,4) == 'msg:'){
     			console.log(data.substring(4));
+           	    list();
     			createChat(data.substring(4));
     		}
          }
