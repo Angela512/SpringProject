@@ -35,7 +35,12 @@
   	</select>
   	<select id="countSign" parameterType="map"
   	                    resultType="integer">
-  	select COUNT(*) FROM workflow_main where flow_state='결재 승인'
+  	select COUNT(*) FROM 
+	workflow_main b JOIN member m
+		ON b.mem_num = m.mem_num
+        JOIN workflow_sign c 
+        ON b.flow_num = c.flow_num
+		where b.flow_state='결재 승인'  AND (c.sign_name like '%' || #{sign} || '%'  OR b.mem_num=#{mem_num})
   	</select>
   	
   	<select id="selectBefore" parameterType="map"
