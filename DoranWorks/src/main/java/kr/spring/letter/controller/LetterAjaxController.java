@@ -232,4 +232,12 @@ public class LetterAjaxController {
 		
 		return mapJson;
 	}
+	//쪽지 등록 성공 메시지 처리
+	@RequestMapping("/letter/getLetterData.do")
+	@ResponseBody
+	public Map<String, Object> getLetterData(){
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("result", "success");
+		return mapJson;
+	}
 }

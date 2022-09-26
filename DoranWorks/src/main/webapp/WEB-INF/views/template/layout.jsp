@@ -18,6 +18,9 @@
 <div id="alarm_talk" style="display:none;">
    채팅 알람이 있습니다.
 </div>
+<div id="alarm_talk2" style="display:none;">
+   쪽지 알람이 있습니다.
+</div>
 <script type="text/javascript">
    let user = '${user.mem_num}';
    let alarm_socket;
@@ -67,6 +70,8 @@
                    $('#alarm_badge').show();
                    $('#alarm_badge').text(param.count);
                 }else if(alarm_kind==2){//쪽지
+               	   $('#alarm_talk2').show();
+                   $('#alarm_talk2').text(param.count+'개의 쪽지 알람이 있습니다.')
                    $('#letter_bz').show();
                    $('#letter_bz').text(param.count);
                 }
@@ -96,6 +101,7 @@
                         $('#alarm_badge').hide();
                      }
             	}else if(alarm_kind==2){//쪽지
+            			$('#alarm_talk2').hide();
                         $('#letter_bz').hide();
             	}
              }
@@ -108,6 +114,11 @@
    
    $(function(){
 	   $('#alarm_talk').click(function(){
+	      //채팅,페이지 이동시는 1 지정, 숨김 처리 0
+	      deleteAlarm(1,1);
+	   });
+
+	   $('#alarm_talk2').click(function(){
 	      //채팅,페이지 이동시는 1 지정, 숨김 처리 0
 	      deleteAlarm(1,1);
 	   });

@@ -305,6 +305,20 @@ textarea{
 	line-height:92px;
 	background-color:lightyellow;
 }
+#alarm_talk2{ /* 알림창 */
+	cursor:pointer;
+	width:260px;
+	height:50px;
+	position:absolute;
+	left:420px;
+	top:50px;
+	border:1px solid grey;
+	border-radius:10px;
+	text-align:center;
+	line-height:51px;
+	background-color:lightyellow;
+	font-size: 10pt;
+}
 #alarm_badge{ /* 알림 배지 */
 	
 	text-align:center;
