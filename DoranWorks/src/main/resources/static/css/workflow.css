@@ -345,6 +345,10 @@ ul.detail-info li{
 .page-main form#register_form, .page-main form#update_form{
 	width:700px;
 }
+.page-main form#register .page-main form#update{
+	width:700px;
+	
+}
 .page-main ul{
 	list-style:none;
 }

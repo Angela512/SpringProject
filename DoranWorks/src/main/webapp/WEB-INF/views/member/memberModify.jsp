@@ -2,46 +2,65 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 내용 시작 -->
+<style>
+#ck_mypage{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
+.underline{
+	border-top-width: 0;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	width:450px !important;
+}
+li{
+	padding-top:20px;
+}
+
+
+</style>
 <div class="page-main">
 	<h2>회원정보수정</h2>
-	<form:form id="modify_form" action="update.do" modelAttribute="memberVO">
+	<form:form  action="update.do" modelAttribute="memberVO"
+	style="margin: 100px 0 0 100px; border:none">
 	<form:errors element="div" cssClass="error-color"/>
 	<ul>
 		<li>
 			<label for="mem_name">이름</label>
-			<form:input path="mem_name"/>
+			<form:input path="mem_name"  
+				 class="underline"/>
 			<form:errors path="mem_name" cssClass="error-color"/>  
 		</li>
 		<li>
 			<label for="mem_phone">전화번호</label>
-			<form:input path="mem_phone"/>
+			<form:input path="mem_phone" class="underline"/>
 			<form:errors path="mem_phone" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_email">이메일</label>
-			<form:input path="mem_email"/>
+			<form:input path="mem_email" class="underline"/>
 			<form:errors path="mem_email" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_zipcode">우편번호</label>
-			<form:input path="mem_zipcode" id="zipcode"/>
-			<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+			<form:input path="mem_zipcode" id="zipcode" class="underline" style="width:310px !important"/>
+			<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" id="write_button">
 			<form:errors path="mem_zipcode" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_addr1">주소</label>
-			<form:input path="mem_addr1" id="address1"/>
+			<form:input path="mem_addr1" id="address1" class="underline"/>
 			<form:errors path="mem_addr1" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_addr2">상세주소</label>
-			<form:input path="mem_addr2"/>
+			<form:input path="mem_addr2" class="underline"/>
 			<form:errors path="mem_addr2" cssClass="error-color"/>
 		</li>
 	</ul>
-	<div class="align-center">
-		<form:button>변경하기</form:button>
-		<input type="button" value="취소" onclick="location.href='myPage.do'">
+	<div class="align-center" style="padding-top:50px;">
+		<input type="submit" id="write_button" value="변경하기" />
+		<input type="button" id="write_button" value="취소" onclick="location.href='myPage.do'">
 	</div> 
 	</form:form>
 </div>

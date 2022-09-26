@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Cinzel+Decorative&family=Shrikhand&display=swap" rel="stylesheet">
 	
 	<style>
-    /*Don't forget to add Font Awesome CSS : "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"*/
 input[type="text"] {
   width: 16%;
   border: 2px solid #aaa;
@@ -108,10 +107,10 @@ background-color:#F2F2F2;
 }
 </style>
 	
-	
+	<title>도란웍스 : 로그인</title>
 <div class="center">	
 <span style="font-size:70px;  font-family: 'Shrikhand', cursive;">Doran Works </span>
-<h4>로그인</h4>
+<h4><b>로그인</b></h4>
 <br>
 	<form:form id="login_form" action="login.do" modelAttribute="memberVO">
 	<form:errors element="div" cssClass="error-color"/>

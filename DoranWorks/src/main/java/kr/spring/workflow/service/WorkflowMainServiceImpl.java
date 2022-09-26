@@ -29,8 +29,11 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 	public int selectRowCount(Map<String, Object> map) { 
 		return flowMapper.selectRowCount(map); 
 	}
-	 
-	
+	 //결재 승인된 문서 카운트
+	@Override
+	public int countSign(Map<String, Object> map) {
+		return flowMapper.countSign(map); 
+	}
 	
 	 
 	
@@ -64,6 +67,8 @@ public class WorkflowMainServiceImpl implements WorkflowMainService{
 		flowMapper.updateSignOk(flowVO);
 		
 	}
+
+	
 
 
 	
