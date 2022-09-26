@@ -29,11 +29,17 @@
 	<div id="searchChatroom" style="display:none;">
 		<h2>멤버 선택</h2>
 		<form action="createChatroom.do" id="search_form" method="get">
-			<ul class="search">
+			<ul class="mem_search">
 				<li>												<!-- 검색하는 내용 보여져야되니까 -->
 					<input type="search" name="keyword" id="mem_keyword" value="${param.keyword}" placeholder="이름, 부서, 이메일 검색">
 				</li> 
 			</ul>
+			<!-- 전체,팀별,직급별 보기 -->
+			<!-- <ul class="mem_view">
+				<li>전체</li>
+				<li>팀별</li>
+				<li>직급별</li>
+			</ul> -->
 			<!-- 멤버리스트 시작 -->
 			<div id="member_list"></div> 
 			<!-- 멤버리스트 끝 -->
@@ -42,8 +48,9 @@
 		<!-- 선택된 멤버 리스트 시작 -->
 		<hr size="1" width="100%">
 		<form action="confirm.do" method="post" id="checked_form" style="display:none;">
-		   
-			<div class="checked_div"><ul class="checked_ul"></ul></div>
+		   <input type="hidden" name="members" value="${user.mem_num}" id="${user.mem_num}jsp">
+			<div class="checked_div"><ul class="checked_ul">
+			</ul></div>
 		<!-- 선택된 멤버 리스트 끝 -->
 			
 			<div class="checkedListBtn">

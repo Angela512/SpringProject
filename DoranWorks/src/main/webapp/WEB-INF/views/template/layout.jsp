@@ -15,7 +15,7 @@
 <body> 
 <c:if test="${!empty user}">
 <!-- 메신저 알림 UI -->
-<div id="alarm_talk" style="cursor:pointer;display:none;width:100px;height:100px;position:absolute;left:1300px;top:5px;border:1px solid black">
+<div id="alarm_talk" style="display:none;">
    채팅 알람이 있습니다.
 </div>
 <script type="text/javascript">
@@ -57,6 +57,8 @@
                 if(alarm_kind==1){//채팅
                    $('#alarm_talk').show();
                    $('#alarm_talk').text(param.count+'개의 채팅 알람이 있습니다.')
+                   $('#alarm_badge').show();
+                   $('#alarm_badge').text(param.count);
                 }else if(alarm_kind==2){//쪽지
                    $('#letter_bz').show();
                    $('#letter_bz').text(param.count);
@@ -84,6 +86,7 @@
                         location.href='${pageContext.request.contextPath}/messanger/list.do';
                      }else{
                         $('#alarm_talk').hide();
+                        $('#alarm_badge').hide();
                      }
             	}else if(alarm_kind==2){//쪽지
                         $('#letter_bz').hide();

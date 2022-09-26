@@ -28,7 +28,7 @@
 	<ul class="nav_menu">
 	<c:if test="${!empty user}">	
 		<li><a href="${pageContext.request.contextPath}/notice/list.do" id="ck_notice">공지사항</a></li>
-		<li><a href="${pageContext.request.contextPath}/messanger/list.do" id="ck_msg">메신저</a></li>
+		<li><a href="${pageContext.request.contextPath}/messanger/list.do" id="ck_msg">메신저<span class="alarm_badge" style="display:none;"></span></a></li>
 		<li><a href="${pageContext.request.contextPath}/letter/main.do" id="ck_letter">쪽지<span class="rgyBadge" id="letter_bz"></span></a></li>
 		<li><a href="${pageContext.request.contextPath}/workflow/list.do" id="ck_workflow">전자결재</a></li>
 	</c:if>
