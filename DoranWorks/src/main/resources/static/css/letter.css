@@ -138,15 +138,15 @@ td, th {
 .npdate{
 	float:right;
 	padding-top: 5px;
-}
-.np1, .np2{
-	height:25px;
+	width:48%;
 }
 a .material-symbols-outlined{
 	margin-top: 8px;
 }
 .npid{
+	float:left;
 	margin-bottom: 5px;
+	width:48%;
 }
 
 /*쪽지 쓰기*/
