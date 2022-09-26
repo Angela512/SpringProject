@@ -11,7 +11,7 @@
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messanger.js"></script>
-<div class="page-main">
+<div id="message_detail" class="page-main">
 	<!-- 채팅방 검색 및 채팅방 생성 -->
 	<h2 id="msg_title">메신저</h2>
 	<div class="main_list">
@@ -48,7 +48,7 @@
 		<!-- 선택된 멤버 리스트 시작 -->
 		<hr size="1" width="100%">
 		<form action="confirm.do" method="post" id="checked_form" style="display:none;">
-		   <input type="hidden" name="members" value="${user.mem_num}" id="${user.mem_num}jsp">
+		   <input type="hidden" name="members" value="${user.mem_num}">
 			<div class="checked_div"><ul class="checked_ul">
 			</ul></div>
 		<!-- 선택된 멤버 리스트 끝 -->

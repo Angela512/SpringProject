@@ -1,6 +1,4 @@
 $(function(){
-	let wsocket;
-	
 	$(document).on('click', '#createroom_btn', function(){
 		//멤버리스트가 이미 show되어져있는데 버튼을 또 클릭하면 안보이게 처리&선택된 멤버 초기화
 		if($('#searchChatroom').css('display') != 'none'){
@@ -220,8 +218,8 @@ $(function(){
 				$('.msg_formUI').append(chatUI);
 			},
 			error:function(){
-				wsocket.close();
-				alert('gotochat.do 네트워크 오류 발생');
+				console.log('gotochat.do 네트워크 오류 발생');
+				alarm_socket.close();
 			}
 		});
 	}
@@ -245,24 +243,24 @@ $(function(){
 			processData:false,
 			success:function(param){
 				if(param.result == 'logout'){
-					wsocket.close();
+					alarm_socket.close();
 					alert('로그인 후 사용 가능');
 				}else if(param.result == 'success'){
 					
 					let chatroom_num = param.chatroom_num;
-					$('.chatroomMain').empty();
+				//	$('.chatroomMain').empty();
 				//	$('#chatroomList').empty();
-				    wsocket.send('msg:'+chatroom_num);
+				    alarm_socket.send('msg:'+chatroom_num);
 
 				//=================알림 처리===================
-                  aalarm_socket.send('msg:1');
+                  alarm_socket.send('msg:1');
 
 					list();
 					createChat(chatroom_num);
 				}
 			},
 			error:function(){
-				wsocket.close();
+				alarm_socket.close();
 				alert('네트워크 오류 발생');
 			}
 		});
@@ -356,9 +354,9 @@ $(function(){
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
 						$('#li_' + mem_num).css('background-color','#D6FFFF');
-						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
-						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '" class="' + mem_num + '">';
-						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span close-num="' + mem_num + '" close-name="' + mem_name + '" class="close">X</span></li>';
+						modifyUI += '<li class="name_li" id="li'+ mem_num + '"><input type="hidden" name="members" value="'+ mem_num +'">';
+						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '">';
+						modifyUI += mem_name + '<span data-num="' + mem_num + '" data-name="' + mem_name + '" class="close">X</span></li>';
 						
 						//체크된 멤버 노출
 						$('.checked_ul').append(modifyUI);
@@ -368,16 +366,12 @@ $(function(){
 				
 				//X버튼 누르면 삭제
 				$(document).on('click', '.close', function(){
-					let mem_num = $(this).attr('close-num');
-					let mem_name = $(this).attr('close-name');
+					let mem_num = $(this).attr('data-num');
+					let mem_name = $(this).attr('data-name');
+					$('#'+mem_name).prop('checked',false);
 					
-					$('#'+mem_name).removeAttr('checked');
-					$('#'+mem_name).empty();
 					//폼에서도 삭제함
-					$('#' + mem_num).remove();
-					$('.' + mem_num).remove();
 					$('#li' + mem_num).remove();
-					$('#' + mem_num + 'jsp').remove();
 					$('#li_' + mem_num).css('background-color','#FFF');
 				});
 				
@@ -432,34 +426,6 @@ $(function(){
 	
 	//초기 데이터 호출
 	list();
-	
-	function connect() {
-         wsocket = new WebSocket("ws://localhost:8080/chat-ws.do");
-         wsocket.onopen = function(evt) {
-            wsocket.send("msg");
-         };
-         //서버로부터 메시지를 받으면 호출되는 함수 지정
-         wsocket.onmessage = function(evt) {
-            let data = evt.data;
-			list();
-			if(data.substring(0,4) == 'msg:'){
-				console.log(data.substring(4));
-				createChat(data.substring(4));
-			}
-            
-            //setTimeout(() => {
-               
-            //}, 10);
-         };
-         wsocket.onclose = function(evt) {
-            //소켓이 종료된 후 부과적인 작업이 있을 경우 명시
-            console.log('chat close');
-            alert('채팅이 종료되었습니다!');
-         };         
-      }
-      connect();
-	
-	
 });
 
 

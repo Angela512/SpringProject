@@ -40,6 +40,13 @@
          		getAlarm(2);
          	}
          }
+         if($('#message_detail').length==1){
+        	 list();
+    		 if(data.substring(0,4) == 'msg:'){
+    			console.log(data.substring(4));
+    			createChat(data.substring(4));
+    		}
+         }
       };
       alarm_socket.onclose = function(evt) {
          //소켓이 종료된 후 부과적인 작업이 있을 경우 명시
