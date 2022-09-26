@@ -9,13 +9,16 @@
 		  COUNT(*)
 		FROM workflow_main b JOIN member m
 		ON b.mem_num = m.mem_num
-		JOIN workflow_test c 
+		JOIN workflow_sign c 
         ON b.flow_num = c.flow_num
 		WHERE (b.mem_num = #{mem_num} OR sign_name LIKE '%' || #{sign} || '%') 		
 			<if test="keyword != null and keyword != ''">
 				
 				<if test="keyfield == 1">
 					AND b.flow_title LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 2">
+					AND b.flow_content LIKE '%' || #{keyword} || '%'
 				</if>
 				<!-- <if test="keyfield == 2">
 					AND m.id LIKE '%' || #{keyword} || '%' OR
@@ -30,6 +33,16 @@
 				</if> -->
 			</if>  	
   	</select>
+  	<select id="countSign" parameterType="map"
+  	                    resultType="integer">
+  	select COUNT(*) FROM workflow_main where flow_state='결재 승인'
+  	</select>
+  	
+  	<select id="selectBefore" parameterType="map"
+  	                         resultType="workflowVO">
+       select * FROM workflow_main where flow_state='결재 진행중'
+  	</select>
+  	
   	<select id="selectList" parameterType="map"
   	                         resultType="workflowVO">
   		 SELECT
@@ -64,12 +77,15 @@
                     join mem_dpt d
 					ON m.mem_dpt_num = d.mem_dpt_num 
 					
-					left join workflow_test t
+					left join workflow_sign t
 					ON t.flow_num = b.flow_num 
 					WHERE (b.mem_num = #{mem_num} OR sign_name LIKE '%' || #{sign} || '%') 
 						<if test="keyword != null and keyword != ''">
 							<if test="keyfield == 1">
 								AND b.flow_title LIKE '%' || #{keyword} || '%'
+							</if>
+							<if test="keyfield == 2">
+								AND b.flow_content LIKE '%' || #{keyword} || '%'
 							</if>
 							<!-- <if test="keyfield == 2">
 								AND m.id LIKE '%' || #{keyword} || '%' OR
@@ -110,7 +126,7 @@
   	</update>
   	
   	<update id="updateSign" parameterType="workflowVO">
-  		 UPDATE workflow_test SET			
+  		 UPDATE workflow_sign SET			
   			 
   			 sign_name=#{sign_name} 
   

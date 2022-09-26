@@ -6,14 +6,26 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.js"></script>
+<style>
+#ck_mypage{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
+#change_form li{
+	font-size:15px;
+	font-weight:bold;
+}
+</style>
+
 <div class="page-main">
+
 	<h2>비밀번호변경</h2>
 	<br>
-	<form:form modelAttribute="memberVO" 
+	<form:form modelAttribute="memberVO" style="border:none; padding-top:50px; "
 	  action="changePassword.do" id="change_form">
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
-			<li>
+			<li style="padding-bottom:30px">
 				<label for="now_passwd">현재 비밀번호</label>
 				<form:password path="now_passwd"/>
 				<form:errors path="now_passwd" cssClass="error-color"/>

@@ -37,7 +37,7 @@ public class WorkflowController {
 		         LoggerFactory.getLogger(
 				          WorkflowController.class);
 	
-	private int rowCount = 4;
+	private int rowCount = 6;
 	private int pageCount = 10;
 	
 	@Autowired
@@ -69,7 +69,7 @@ public class WorkflowController {
 		String keyfield,
 		@RequestParam(value="keyword",defaultValue="")
 		String keyword,
-		HttpSession session) {
+		HttpSession session, WorkflowVO flowVO) {
 	
     MemberVO user = (MemberVO)session.getAttribute("user");
     
@@ -82,7 +82,9 @@ public class WorkflowController {
 	map.put("mem_num", user.getMem_num());
 	
 	//글의 총개수(검색된 글의 개수)
+	
 	int count = flowService.selectRowCount(map);
+	int countSign = flowService.countSign(map);
 	logger.debug("<<count>> : " + count);
 	
 	//페이지 처리
@@ -106,6 +108,8 @@ public class WorkflowController {
 	ModelAndView mav = new ModelAndView();
 	mav.setViewName("boardList"); //////////////////////////////////
 	mav.addObject("count", count);
+	mav.addObject("countSign", countSign);
+	mav.addObject("flowVO", flowVO);
 	mav.addObject("list", list);
 	mav.addObject("list2", list2);
 	mav.addObject("page", page.getPage());
@@ -229,13 +233,17 @@ public class WorkflowController {
 
 	
 	@RequestMapping("/workflow/signList.do")
-	public ModelAndView line() {
+	public ModelAndView line(HttpSession session) {
 	
 	List<MemberVO> list = memberService.selectSignList();
+	
+	MemberVO user = 
+			(MemberVO)session.getAttribute("user");
 	
 	ModelAndView mav = new ModelAndView();
 	mav.setViewName("signList"); 
 	mav.addObject("list", list);
+	mav.addObject("user_name", user.getMem_name());
 	
 	return mav;
 	}

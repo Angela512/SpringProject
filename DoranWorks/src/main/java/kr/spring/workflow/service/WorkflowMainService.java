@@ -18,6 +18,7 @@ public interface WorkflowMainService {
 	//부모글
 		public List<WorkflowVO> selectList(Map<String,Object> map);
 	    public int selectRowCount(Map<String,Object> map); 
+	    public int countSign(Map<String, Object> map);
 //	    public void insertBoard(WorkflowMainVO flow);
 	    //결재 리스트
 //	    public boolean insertSign(WorkflowSignVO sign);
@@ -28,6 +29,7 @@ public interface WorkflowMainService {
 		public void updateBoard(WorkflowVO work);
 		public void updateSign(WorkflowVO work);
 		public void updateSignOk(WorkflowVO flowVO);
+		
 		
 		
 		

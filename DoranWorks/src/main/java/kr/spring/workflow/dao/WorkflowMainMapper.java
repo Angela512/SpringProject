@@ -51,7 +51,7 @@ public interface WorkflowMainMapper {
                 +" ON m.mem_rank_num = c.mem_rank_num "
                 +" join mem_dpt d "
 	          	+" ON m.mem_dpt_num = d.mem_dpt_num "
-		        +" left join workflow_test t "
+		        +" left join workflow_sign t "
 		        +" ON t.flow_num = b.flow_num WHERE b.flow_num=#{flow_num}")
 		public WorkflowVO selectBoard(Integer flow_num);
 		
@@ -66,7 +66,7 @@ public interface WorkflowMainMapper {
 		public void insertTable_Main(WorkflowVO work);
 		
 		
-		@Insert("insert into workflow_test (flow_num, sign_name, mem_num) " 
+		@Insert("insert into workflow_sign (flow_num, sign_name, mem_num) " 
 				+"values(#{flow_num}, #{sign_name}, #{mem_num})")
 		public void insertTable_Test(WorkflowVO work);
 		public void updateBoard(WorkflowVO work);
@@ -76,6 +76,7 @@ public interface WorkflowMainMapper {
 		public void updateIi(int flow_num);
 		
 		public void updateSignOk(WorkflowVO flowVO);
+		public int countSign(Map<String, Object> map);
 		
 //		@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 //		public void updateHit(Integer board_num);

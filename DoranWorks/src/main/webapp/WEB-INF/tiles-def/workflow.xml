@@ -6,12 +6,12 @@
 
 <tiles-definitions>
     <definition name="boardList" extends="main">
-    	<put-attribute name="title" value="게시판목록"/>
+    	<put-attribute name="title" value="결재 진행 현황"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/boardList.jsp"/>                   
     </definition>
     <definition name="boardWrite" extends="main">
-    	<put-attribute name="title" value="글쓰기"/>
+    	<put-attribute name="title" value="문서 작성"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/boardWrite.jsp"/>                   
     </definition>
@@ -30,7 +30,7 @@
     </definition>
     
     <definition name="boardModify" extends="main">
-    	<put-attribute name="title" value="글수정"/>
+    	<put-attribute name="title" value="문서 수정"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/workflow/boardModify.jsp"/>                   
     </definition>

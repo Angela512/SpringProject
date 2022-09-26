@@ -30,11 +30,11 @@
 		<li><a href="${pageContext.request.contextPath}/notice/list.do" id="ck_notice">공지사항</a></li>
 		<li><a href="${pageContext.request.contextPath}/messanger/list.do" id="ck_msg">메신저</a></li>
 		<li><a href="${pageContext.request.contextPath}/letter/main.do" id="ck_letter">쪽지<span class="rgyBadge">HOT</span></a></li>
-		<li><a href="${pageContext.request.contextPath}/workflow/list.do">전자결재</a></li>
+		<li><a href="${pageContext.request.contextPath}/workflow/list.do" id="ck_workflow">전자결재</a></li>
 	</c:if>
 	<li>
 		<c:if test="${!empty user && user.auth == 1}">
-			<a href="${pageContext.request.contextPath}/member/myPage.do">MY페이지</a>
+			<a href="${pageContext.request.contextPath}/member/myPage.do" id="ck_mypage">MY페이지</a>
 		</c:if>
 	</li>
 	<li>
