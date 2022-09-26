@@ -68,7 +68,7 @@ $(function(){
 				}else if(param.result == 'success'){
 					let chatroomListUI = '<div id="chatroomList">';
 					$(param.list).each(function(index, item){
-						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom" data-num="' + item.mem_num + '">';
+						chatroomListUI += '<div id="' + item.chatroom_num + '" class="chatroom">';
 						 //내 이름은 빼고 출력
 						let chatNameStr = item.chatroom_name;
 						chatNameStr = chatNameStr.replace(user_name, '').replace(/, , /g, ', ');
@@ -78,10 +78,10 @@ $(function(){
 						}
 						chatNameStr = chatNameStr.replace(/, $/, '');
 						
-						chatroomListUI += '[' + chatNameStr + '] ' + item.count + '명 ';
+						chatroomListUI += '<span class="chatName">[' + chatNameStr + ']</span> <span class="chatCnt">(' + item.count + ') </span><span class="chatTime">';
 						//최신 메시지가 오늘이면 시간만, 오늘이 아니면 날짜만 표시
-						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '<br>';
-						chatroomListUI += '<span><b>' + (item.messangerVO == null ? '' : item.messangerVO.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')) + '</b></span>';
+						chatroomListUI += (item.messangerVO == null ? '' : (item.messangerVO.msg_sendtime).substr(0,10) == strDate ? (item.messangerVO.msg_sendtime).substr(11,5) : (item.messangerVO.msg_sendtime).substr(0,10)) + '</span><br>';
+						chatroomListUI += '<span class="chatDate">' + (item.messangerVO == null ? '' : item.messangerVO.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')) + '</span>';
 						chatroomListUI += '</div>';
 						chatroomListUI += '';
 						chatroomListUI += '';
@@ -131,6 +131,7 @@ $(function(){
 				let msgUI = '<div class="chat_head">';
 				var i = 0;
 				let len = $(param.list).length;
+				let memNameStr = '';
 				$(param.list).each(function(index, item){
 					let chatNameStr = item.chatroom_name;
 					chatNameStr = chatNameStr.replace(user_name, '').replace(/, , /g, ', ');
@@ -144,18 +145,16 @@ $(function(){
 						msgUI += '<h3>' + chatNameStr + ' | ' + item.chatroom_num + '</h3>';
 						msgUI += '<span>멤버 : ';
 					}
-						
-					if(item.mem_num != user_num){
-						msgUI += item.mem_name;
-						if(len > 2 && len - 1 != index){
-							msgUI += ', ';
-							
-						}
-						
-					}
 					
+					memNameStr += item.mem_name + ', ';
 				});
-				
+				//========채팅방 메시지 찍기========
+				memNameStr = memNameStr.replace(user_name, '').replace(/, , /g, ', ');
+				if(memNameStr.substr(0,1) == ','){
+					memNameStr = memNameStr.replace(', ', '');
+				}
+				memNameStr = memNameStr.replace(/, $/, '');
+				msgUI += memNameStr;
 				msgUI += '</span></div>';
 				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
@@ -170,26 +169,35 @@ $(function(){
 					//오늘이면 날짜 표시(오늘 날짜를 한번도 안띄웠을 경우에만)
 					if(msg_time != sendtime){ //날짜가 달라질때만 날짜 띄움
 						msg_time = sendtime;
-						msgUI += '<div id="' + sendtime + '" class="msg_sendtime">' + sendtime + '</div>';
+						msgUI += '<div id="' + sendtime + '" class="msg_sendtime"><span class="sendtime_span">' + sendtime + '</span></div>';
 					}
 					
 					//채팅 말풍선 시작
 					msgUI += '<div class=';
 					if(item.mem_num != user_num){
 						msgUI += '"your_chat">'; 
+						if(item.mem_photo_name != null){//사진이 있으면 띄움
+							msgUI += '<img src="../member/viewProfile.do?mem_num=' + item.mem_num + '" width="50" height="50" class="you_photo">';
+						}else{
+							msgUI += '<img src="../images/face.png" width="50" height="50" class="you_photo">';
+						}
 						msgUI += '<div class="you_name">' + item.mem_name + '</div>';
 						msgUI += '<div class="you_bubble">';
 						
 					}else{
 						msgUI += '"my_chat">';
+						msgUI += '<div class="my_name">' + '&nbsp;' + '</div>';
 						msgUI += '<div class="me_bubble">';
 					}
 					msgUI += item.msg_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g, '<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>');
 					msgUI += '</div>';
-					msgUI += '<div class="time_count">';
-					msgUI += item.total_cnt + '<br>';
-					msgUI += (item.msg_sendtime).substr(11,5);
-					msgUI += '</div>';
+					msgUI += '<span class="time_count">';
+					if(item.total_cnt != 0){
+						msgUI += item.total_cnt;
+					}
+					
+					msgUI += '<br>' + (item.msg_sendtime).substr(11,5);
+					msgUI += '</span>';
 					msgUI += '</div>';
 					msgUI += '';
 					msgUI += '';
@@ -241,15 +249,13 @@ $(function(){
 					alert('로그인 후 사용 가능');
 				}else if(param.result == 'success'){
 					
-					
-					
 					let chatroom_num = param.chatroom_num;
 					$('.chatroomMain').empty();
 				//	$('#chatroomList').empty();
 				    wsocket.send('msg:'+chatroom_num);
 
 				//=================알림 처리===================
-                  alarm_socket.send('msg:1');
+                  aalarm_socket.send('msg:1');
 
 					list();
 					createChat(chatroom_num);
@@ -308,16 +314,16 @@ $(function(){
 				$(param.list).each(function(index, item){
 					if(user_num != item.mem_num){ //로그인한 회원은 제외하고 멤버 리스트 띄움
 						let member_listUI = '';
-						member_listUI += '<div class="mem_li">';
+						member_listUI += '<div id="li_' + item.mem_num + '" class="mem_li">';
 						member_listUI += '<input type="checkbox" name="mem_num" data-num="' + item.mem_num + '" id="' + item.mem_name + '" class="checkedMember">';
-						if(item.mem_photo_name != ''){
-							member_listUI += '<img src="../member/viewProfile.do?mem_num="' + item.mem_num + '" width="30" height="30" class="my-photo">';  
+						if(item.mem_photo_name != null){ //사진이 있으면 사진 출력
+							member_listUI += '<img src="../member/viewProfile.do?mem_num=' + item.mem_num + '" width="50" height="50" class="my-photo">';  
 						} else{
-							member_listUI += '<img src="../images/face.png" width="30" height="30" class="my-photo">';
+							member_listUI += '<img src="../images/face.png" width="50" height="50" class="my-photo">';
 						}
-						member_listUI += '<span>' + item.mem_name + '</span><br>';
+						member_listUI += '<div class="divdiv"><span class="div_span">' + item.mem_name + '</span><br>';
 						member_listUI += item.mem_dpt + ' | ';
-						member_listUI += item.mem_rank;
+						member_listUI += item.mem_rank + '</div>';
 						member_listUI += '</div>';
 						//문서 객체에 추가
 						$('#member_list').append(member_listUI);
@@ -329,15 +335,17 @@ $(function(){
 					let mem_num = $(this).attr('data-num');
 					let mem_name = $(this).attr('id');
 					let modifyUI = '';
-					let isChecked = $(this).attr("checked");
+					let isChecked = $(this).attr('checked');
 					$('#checked_form').show();
 					
 					if(isChecked){ //이미 체크되어있으면 체크 해제
-						isChecked = $(this).attr("checked", false);
+						isChecked = $(this).attr('checked', false);
 						//폼에서도 삭제함
 						$('#' + mem_num).remove();
 						$('.' + mem_num).remove();
 						$('#li' + mem_num).remove();
+						$('#' + mem_num + 'jsp').remove();
+						$('#li_' + mem_num).css('background-color','#FFF');
 						
 						if($('.checked_ul *').length == 0){//체크된 멤버가 없으면 폼 숨김
 							$('.checked_ul').empty();
@@ -347,16 +355,31 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
+						$('#li_' + mem_num).css('background-color','#D6FFFF');
 						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
 						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '" class="' + mem_num + '">';
-						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span class="close">X</span></li>';
+						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span close-num="' + mem_num + '" close-name="' + mem_name + '" class="close">X</span></li>';
 						
 						//체크된 멤버 노출
 						$('.checked_ul').append(modifyUI);
 						
 					}
 				}); //end of document(checkedMember)
-				//이미생성된 경우
+				
+				//X버튼 누르면 삭제
+				$(document).on('click', '.close', function(){
+					let mem_num = $(this).attr('close-num');
+					let mem_name = $(this).attr('close-name');
+					
+					$('#'+mem_name).removeAttr('checked');
+					$('#'+mem_name).empty();
+					//폼에서도 삭제함
+					$('#' + mem_num).remove();
+					$('.' + mem_num).remove();
+					$('#li' + mem_num).remove();
+					$('#' + mem_num + 'jsp').remove();
+					$('#li_' + mem_num).css('background-color','#FFF');
+				});
 				
 				
 				//취소버튼 클릭 시 멤버 리스트 폼 숨기고 reset

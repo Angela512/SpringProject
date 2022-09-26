@@ -33,7 +33,7 @@ public interface MessangerMapper {
 	public void insertChatmem(ChatmemVO chatmemVO);
 	
 	//해당 채팅방의 멤버들 정보 가져오기
-	@Select("SELECT chatroom_num, mem_num, chatroom_name, mem_name, mem_photo_name, mem_dpt, mem_rank "
+	@Select("SELECT chatroom_num, mem_num, chatroom_name, mem_name, mem_photo, mem_photo_name, mem_dpt, mem_rank "
 			+ "FROM chatmem JOIN chatroom USING(chatroom_num) JOIN member_detail USING(mem_num) "
 			+ "JOIN mem_dpt USING(mem_dpt_num) JOIN mem_rank USING(mem_rank_num) WHERE chatroom_num=#{chatroom_num}")
 	public List<ChatmemVO> selectChatmem(Integer chatroom_num);
@@ -58,7 +58,7 @@ public interface MessangerMapper {
 	
 //====================메시지========================  
 	//대화방에서 메시지 목록들 가져오기
-	@Select("SELECT msg_num, mem_num, mem_name, msg_content, chatroom_num, msg_sendtime, total_cnt "
+	@Select("SELECT msg_num, mem_num, mem_photo, mem_photo_name, mem_name, msg_content, chatroom_num, msg_sendtime, total_cnt "
 			+ "FROM message m LEFT OUTER JOIN (SELECT msg_num, count(*) total_cnt FROM chatread  GROUP BY msg_num)r "
 			+ "USING(msg_num) JOIN member_detail USING(mem_num) WHERE chatroom_num=#{chatroom_num} ORDER BY msg_num ASC")
 	public List<MessangerVO> selectMsgList(Integer chatroom_num);

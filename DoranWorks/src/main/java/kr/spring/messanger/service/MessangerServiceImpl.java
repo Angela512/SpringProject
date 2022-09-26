@@ -61,7 +61,7 @@ public class MessangerServiceImpl implements MessangerService{
 		System.out.println("len : " + len); 
 		i++; 
 		}
-		
+		System.out.println("arr_name : " + arr_name); 
 		chatroomVO.setChatroom_num(msgMapper.selectChatroom_num());
 		chatroomVO.setChatroom_name(arr_name);
 		msgMapper.insertChatroom(chatroomVO);
@@ -71,7 +71,7 @@ public class MessangerServiceImpl implements MessangerService{
 		for(int mem_num : chatroomVO.getMembers()) {
 			chatmemVO.setChatroom_num(chatroomVO.getChatroom_num());
 			chatmemVO.setMem_num(mem_num);
-			
+			System.out.println("mem_num : " + mem_num); 
 			msgMapper.insertChatmem(chatmemVO);
 		}
 	}

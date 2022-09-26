@@ -3,13 +3,13 @@
 /* 메신저 css 시작 */
 #msg_title{
 	margin-top:0;
-	padding-left:1%;
+	padding-left:3.5%;
 }
 .main_list{
 	float:left;
 	width:40%;
 	height:450px;
-	padding-left:1%;
+	padding-left:3.5%;
 }
 .page-main ul.chat_search{
 	margin:0 0 9px 0;
@@ -42,14 +42,43 @@
 	height:400px;
 }
 div.chatroom{
-	height:50px;
+	height:60px;
 	width:100%;
+}
+.chatName{
+	font-weight:bold;
+	font-size:12pt;
+}
+.chatCnt{
+	font-size:10pt;
+	color:darkslategrey;
+}
+.chatTime{
+	float:right;
+	margin: 5px 5px 0 0;
+	color:gray;
+}
+.chatDate{
+	font-size:10pt;
 }
 
 /* 채팅방 생성 멤버 리스트 */
+h2{
+	margin-top:0;
+}
 #searchChatroom{
 	width:60%;
 	float:left;
+}
+form#search_form{
+	margin:0;
+	padding:0;
+	width:100%;
+}
+.mem_search{
+	width:100%;
+	margin:0;
+	padding:0;
 }
 #mem_keyword{ /* 검색창 */
 	width:100%;
@@ -59,16 +88,55 @@ div.chatroom{
     background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
 	
 }
+.mem_view{
+	margin-left:0;
+}
+.mem_view li{
+	float:left;
+	margin: 1% 2% 1% 1%;
+	font-size:12pt;
+}
+
 #member_list{
 	padding-left:0;
 	margin:0;
 	height:300px;
 	overflow:auto;
+	width:100%;
 }
 .mem_li{
 	font-size:13px;
-	height:50px;
+	height:70px;
 	
+}
+/* 선택된 멤버 리스트 */
+#checked_form{
+	margin:0;
+	border:none;
+	padding:0;
+	width:100%;
+}
+input[class="checkedMember"]{
+	position:relative;
+	top:-20px;
+}
+.my-photo{
+	margin-top:10px;
+	margin-left:5px;
+}
+.ck_div{
+	float:left;
+}
+.img_div{
+	float:left;
+}
+.divdiv{
+	float:right;
+	margin-right:320px;
+	margin-top:15px;
+}
+.div_span{
+	font-size: 15px;
 }
 .checked_ul{
 	padding-left:0;
@@ -103,33 +171,66 @@ div.chatroom{
 }
 .chat_head{ /* 채팅방 헤더 */
 	background-color:white;
-	width:484px;
+	width:100%;
 	padding-bottom:5px;
+	border:1px solid grey;
 }
 .chat_body{
 	overflow:auto;
 	height:270px;
 }
+h3{
+	margin-top:0;
+}
 .msg_sendtime{ /* 메시지 날짜(한번만 띄움) */
 	text-align:center;
 	clear:both;
+	padding-top:2%;
+}
+.sendtime_span{
+	border-radius:10px;
+	border:1px solid lightgrey;
+	display:inline-block;
+	width:130px;
+	vertical-align:middle;
+	background-color:lightgrey;
+	color:darkslategrey;
 }
 .your_chat{
 	clear:both;
 }
 .you_name{
 	text-align:left;
+	margin-right:20px;
+	margin-left:60px;
+}
+.my_name{
+	text-align:right;
+}
+.mem_photo_div{
+	width:100px;
+}
+.you_photo{
+	float:left;
+	margin-top:10px;
+	margin-left:5px;
+	object-fit: cover;
+    object-position: top; /*정사각형이 아니라 직사각형일 경우 원 안에 보여지게 할 중심 이미지의 위치를 지정*/
+    border-radius: 50%;
 }
 .you_bubble{
 	width: 150px;
-	height: 50px;
+	height: 60px;
 	padding: 1%;
+	padding-left:2%;
 	margin: 1%;
-	background: skyblue;
+	margin-top:10px;
+	background-color: darkgrey;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-	float:left;
+	float:left; 
+	color:white;
 }
 .my_chat{
 	clear:both;
@@ -138,7 +239,7 @@ div.chatroom{
 	width: 150px; 
 	height: 50px;
 	padding: 1%;
-	margin:2%;
+	margin: 1%;
 	background: skyblue;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -146,26 +247,24 @@ div.chatroom{
 	float:right;
 }
 .my_chat .time_count{
-	width: 290px; 
+	width: 300px; 
 	height:50px;
 	padding: 1%;
-	margin:2%;
-	margin:0 0 0 auto;
+	margin:16px 0 0 87px;
 	float:left;
 	text-align:right;
-	margin-left:90px;
-	margin-top:22px;
+	
 }
 .your_chat .time_count{
-	width: 300px; 
+	width: 200px; 
 	height:50px;
 	padding: 1%;
 	margin:2%;
 	margin:0 0 0 auto;
 	float:right;
 	text-align:left;
-	margin-right:90px;
-	margin-top:16px;
+	margin-right:136px;
+	margin-top:28px;
 }
 .msg_formUI{
 	width:100%;
@@ -188,8 +287,34 @@ textarea{
 	height: 18px;
 	
 } 
-
-
+/* 채팅 알림 css */
+#alarm_talk{ /* 알림창 */
+	cursor:pointer;
+	width:250px;
+	height:100px;
+	position:absolute;
+	left:900px;
+	top:620px;
+	border:1px solid grey;
+	border-radius:10px;
+	text-align:center;
+	vertical-align:middle;
+	line-height:92px;
+	background-color:lightyellow;
+}
+#alarm_badge{ /* 알림 배지 */
+	
+	text-align:center;
+	background-color:red;
+	color:#FFF;
+	border-radius: 100px;
+	padding: 0 5px 0 5px;
+	margin-left: 3px;
+	font-size:12pt;
+	display:inline-block;
+	width:20px;
+	height:20px;
+}
 
 
 
