@@ -11,6 +11,8 @@
 		ON b.mem_num = m.mem_num
 		JOIN workflow_sign c 
         ON b.flow_num = c.flow_num
+        JOIN member_detail i
+        ON m.mem_num = i.mem_num
 		WHERE (b.mem_num = #{mem_num} OR sign_name LIKE '%' || #{sign} || '%') 		
 			<if test="keyword != null and keyword != ''">
 				
@@ -19,6 +21,9 @@
 				</if>
 				<if test="keyfield == 2">
 					AND b.flow_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 3">
+					AND i.mem_name LIKE '%' || #{keyword} || '%'
 				</if>
 				<!-- <if test="keyfield == 2">
 					AND m.id LIKE '%' || #{keyword} || '%' OR
@@ -40,7 +45,20 @@
 		ON b.mem_num = m.mem_num
         JOIN workflow_sign c 
         ON b.flow_num = c.flow_num
+        JOIN member_detail i
+        ON m.mem_num = i.mem_num
 		where b.flow_state='결재 승인'  AND (c.sign_name like '%' || #{sign} || '%'  OR b.mem_num=#{mem_num})
+		<if test="keyword != null and keyword != ''">
+				<if test="keyfield == 1">
+					AND b.flow_title LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 2">
+					AND b.flow_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 3">
+					AND i.mem_name LIKE '%' || #{keyword} || '%'
+				</if>
+		</if>
   	</select>
   	
   	<select id="selectBefore" parameterType="map"
@@ -91,6 +109,9 @@
 							</if>
 							<if test="keyfield == 2">
 								AND b.flow_content LIKE '%' || #{keyword} || '%'
+							</if>
+							<if test="keyfield == 3">
+								AND m.mem_name LIKE '%' || #{keyword} || '%'
 							</if>
 							<!-- <if test="keyfield == 2">
 								AND m.id LIKE '%' || #{keyword} || '%' OR

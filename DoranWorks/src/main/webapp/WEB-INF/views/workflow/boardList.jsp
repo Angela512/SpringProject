@@ -61,8 +61,8 @@ transform:translateY(2px)
 				<select name="keyfield" id="keyfield" style="height:26px">
 					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>제목</option>
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>내용</option>
-				<%-- 
-					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>내용</option>
+					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>작성자</option>
+					<%--
 					<option value="4" <c:if test="${param.keyfield == 4}">selected</c:if>>제목+내용</option>
 					 --%>
 				</select>
@@ -74,8 +74,9 @@ transform:translateY(2px)
 			<li>
 				<input id="write_button" type="submit" value="찾기" >
 				<input id="write_button" type="button" value="목록" onclick="location.href='list.do'">
-
+				
 			</li>
+			<br>
 		</ul>
 	</form>
 	<c:if test="${!empty user && count == 0}">
