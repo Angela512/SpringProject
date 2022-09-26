@@ -18,4 +18,18 @@ $(function(){
 			return false;
 		}
 	});
+	
+	function reqList() {
+		alert('hi');
+		
+		$.ajax({
+			success:function(data){
+				alert('요청성공');
+				console.log(data);
+			},
+			error:function(){
+				alert('쪽지보내기 실패!');
+			}
+		});
+	}
 });

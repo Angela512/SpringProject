@@ -34,6 +34,12 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/letter/letterForward.jsp"/>                   
     </definition>
+
+    <definition name="letterAlarm" extends="main">
+    	<put-attribute name="title" value="쪽지보내기성공"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/common/letterAlarm.jsp"/>                   
+    </definition>
 </tiles-definitions>
 
 

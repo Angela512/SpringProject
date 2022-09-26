@@ -40,6 +40,7 @@
       alarm_socket.onopen = function(evt) {
          if(user!=''){
             getAlarm(1);
+            getAlarm(2);
          }
       };
       //서버로부터 메시지를 받으면 호출되는 함수 지정
@@ -48,6 +49,7 @@
     		//talk 알림
     	  if(user!=''){
               getAlarm(1);
+              getAlarm(2);
            }
       };
       alarm_socket.onclose = function(evt) {
@@ -67,8 +69,8 @@
                    $('#alarm_talk').show();
                    $('#alarm_talk').text(param.count+'개의 채팅 알람이 있습니다.')
                 }else if(alarm_kind==2){//쪽지
-                   $('#alarm_note').show();
-                   $('#alarm_note').text(param.count+'개의 쪽지 알람이 있습니다.')
+                   $('#letter_bz').show();
+                   $('#letter_bz').text(param.count);
                 }
              }
           },
@@ -90,8 +92,11 @@
              }else if(param.result=='success'){
                 if(redirect==1){
                    location.href='${pageContext.request.contextPath}/messanger/list.do';
-                }else{
+                }else if(redirect==2){
+                	
+            	 }else{
                    $('#alarm_talk').hide();
+                   $('#letter_bz').hide();
                 }
              }
           },
@@ -104,6 +109,11 @@
    $('#alarm_talk').click(function(){
       //채팅,페이지 이동시는 1 지정
       deleteAlarm(1,1);
+   });
+
+   $('#ck_letter').click(function(){
+      //채팅,페이지 이동시는 1 지정
+      deleteAlarm(2,2);
    });
 </script>
 </body>
