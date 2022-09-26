@@ -249,7 +249,7 @@ $(function(){
 				    wsocket.send('msg:'+chatroom_num);
 
 				//=================알림 처리===================
-                  alarm_socket.send("msg");
+                  alarm_socket.send('msg:1');
 
 					list();
 					createChat(chatroom_num);

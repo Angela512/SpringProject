@@ -77,7 +77,8 @@ public class LetterController {
 		//View에서 표시할 메시지
 		model.addAttribute("message","쪽지를 성공적으로 보냈습니다.");
 		model.addAttribute("url",request.getContextPath()+"/letter/main.do");
-		return "common/resultView";
+		
+		return "letterWriteSubmit";
 	}
 	
 	//======================쪽지 목록====================//

@@ -35,10 +35,10 @@
     	  value="/WEB-INF/views/letter/letterForward.jsp"/>                   
     </definition>
 
-    <definition name="letterAlarm" extends="main">
+    <definition name="letterWriteSubmit" extends="main">
     	<put-attribute name="title" value="쪽지보내기성공"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/common/letterAlarm.jsp"/>                   
+    	  value="/WEB-INF/views/letter/letterWriteSubmit.jsp"/>                   
     </definition>
 </tiles-definitions>
 

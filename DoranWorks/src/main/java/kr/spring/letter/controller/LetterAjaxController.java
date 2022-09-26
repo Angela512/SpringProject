@@ -232,5 +232,4 @@ public class LetterAjaxController {
 		
 		return mapJson;
 	}
-	
 }
