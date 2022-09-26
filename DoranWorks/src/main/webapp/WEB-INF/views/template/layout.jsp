@@ -29,13 +29,12 @@
       alarm_socket.onopen = function(evt) {
             getAlarm(1);
             getAlarm(2);
-
       };
       //서버로부터 메시지를 받으면 호출되는 함수 지정
       alarm_socket.onmessage = function(evt) {
          //talk 알림
          let data = evt.data;
-         if (data.substring(0, 4) == "msg:") {
+         if (data.substring(0, 4) == "usg:") {
          	let alarm_kind = data.substring(4,5);
          	if(alarm_kind==1){
          		getAlarm(1);

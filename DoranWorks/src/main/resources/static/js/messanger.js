@@ -253,7 +253,7 @@ $(function(){
 				    alarm_socket.send('msg:'+chatroom_num);
 
 				//=================알림 처리===================
-                  alarm_socket.send('msg:1');
+                  alarm_socket.send('usg:1');
 
 					list();
 					createChat(chatroom_num);
@@ -354,9 +354,9 @@ $(function(){
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
 						$('#li_' + mem_num).css('background-color','#D6FFFF');
-						modifyUI += '<li class="name_li" id="li'+ mem_num + '"><input type="hidden" name="members" value="'+ mem_num +'">';
-						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '">';
-						modifyUI += mem_name + '<span data-num="' + mem_num + '" data-name="' + mem_name + '" class="close">X</span></li>';
+						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
+						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '" class="' + mem_num + '">';
+						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span data-snum="' + mem_num + '" data-sname="' + mem_name + '" class="close">X</span></li>';
 						
 						//체크된 멤버 노출
 						$('.checked_ul').append(modifyUI);
@@ -366,13 +366,16 @@ $(function(){
 				
 				//X버튼 누르면 삭제
 				$(document).on('click', '.close', function(){
-					let mem_num = $(this).attr('data-num');
-					let mem_name = $(this).attr('data-name');
+					let mem_num = $(this).attr('data-snum');
+					let mem_name = $(this).attr('data-sname');
 					$('#'+mem_name).prop('checked',false);
 					
 					//폼에서도 삭제함
-					$('#li' + mem_num).remove();
-					$('#li_' + mem_num).css('background-color','#FFF');
+					$('#' + mem_num).remove(); //js members
+					$('.' + mem_num).remove(); //js mem_names
+					$('#li' + mem_num).remove(); //선택된 멤버 리스트에서 삭제
+					//$('#' + mem_num + 'jsp').remove(); //list.jsp에서 내 mem_num도 삭제?
+					$('#li_' + mem_num).css('background-color','#FFF'); //전체 멤버리스트의 선택된 멤버 배경 흰색으로 변경
 				});
 				
 				
