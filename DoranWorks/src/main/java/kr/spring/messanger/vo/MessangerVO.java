@@ -17,6 +17,8 @@ public class MessangerVO {
 	
 	private String mem_name;
 	private int total_cnt;
+	private byte[] mem_photo;
+	private String mem_photo_name;
 	
 	//이미지 BLOB 처리
 	//(주의)폼에서 파일 업로드 파라미터네임은 반드시 upload로 지정해야 함
@@ -27,6 +29,22 @@ public class MessangerVO {
 		setMsg_filename(upload.getOriginalFilename());
 	}
 	
+	public byte[] getMem_photo() {
+		return mem_photo;
+	}
+
+	public void setMem_photo(byte[] mem_photo) {
+		this.mem_photo = mem_photo;
+	}
+
+	public String getMem_photo_name() {
+		return mem_photo_name;
+	}
+
+	public void setMem_photo_name(String mem_photo_name) {
+		this.mem_photo_name = mem_photo_name;
+	}
+
 	public String getMem_name() {
 		return mem_name;
 	}

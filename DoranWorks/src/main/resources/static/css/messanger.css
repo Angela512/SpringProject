@@ -135,7 +135,7 @@ input[class="checkedMember"]{
 }
 .divdiv{
 	float:right;
-	margin-right:320px;
+	margin-right:380px;
 	margin-top:15px;
 }
 .div_span{
@@ -146,7 +146,7 @@ input[class="checkedMember"]{
 	margin:0;
 }
 .name_li{
-	background-color:skyblue;
+	background-color: lightskyblue;
 	float:left;
 	font-size:15px;
 	padding:2%;
@@ -163,6 +163,31 @@ input[class="checkedMember"]{
 	transform: translate(0%, -50%);
 	font-weight:bold;
 }
+#send_chat{
+	background-color:#5AAEFF;
+	border:none;
+	color:#FFF;
+	border-radius:5px;
+	height:30px;
+}
+.mem_reset{
+	cursor:pointer;
+	background-color: lightgray;
+    border: none;
+    color: #000;
+    border-radius: 5px;
+    height: 30px;
+    width:50px;
+}
+.mem_confirm{
+	cursor:pointer;
+	background-color: #5AAEFF;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    height: 30px;
+    width:50px;
+}
 /* 채팅 */
 #chatting_main{
 	width:60%;
@@ -173,17 +198,18 @@ input[class="checkedMember"]{
 	height:350px;
 }
 .chat_head{ /* 채팅방 헤더 */
-	background-color:white;
+	background-color:lightgrey;
 	width:100%;
 	padding-bottom:5px;
-	border:1px solid grey;
+	border:1px solid lightgrey;
+	padding-left:5px;
 }
 .chat_body{
 	overflow:auto;
 	height:270px;
 }
 h3{
-	margin-top:0;
+	margin-top:5px;
 }
 .msg_sendtime{ /* 메시지 날짜(한번만 띄움) */
 	text-align:center;
@@ -293,17 +319,18 @@ textarea{
 /* 채팅 알림 css */
 #alarm_talk{ /* 알림창 */
 	cursor:pointer;
-	width:250px;
-	height:100px;
+	width:260px;
+	height:50px;
 	position:absolute;
-	left:900px;
-	top:620px;
+	left:420px;
+	top:50px;
 	border:1px solid grey;
 	border-radius:10px;
 	text-align:center;
 	vertical-align:middle;
-	line-height:92px;
+	line-height:51px;
 	background-color:lightyellow;
+	font-size: 10pt;
 }
 #alarm_talk2{ /* 알림창 */
 	cursor:pointer;

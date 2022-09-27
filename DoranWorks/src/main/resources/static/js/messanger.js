@@ -222,7 +222,7 @@ $(function(){
 				let user_num = param.user_num;
 				
 				$(param.list).each(function(index, item){
-					if(user_num != item.mem_num){ //로그인한 회원은 제외하고 멤버 리스트 띄움
+					if(user_num != item.mem_num && item.mem_dpt != null){ //로그인한 회원은 제외하고 멤버 리스트 띄움
 						let member_listUI = '';
 						member_listUI += '<div id="li_' + item.mem_num + '" class="mem_li">';
 						member_listUI += '<input type="checkbox" name="mem_num" data-num="' + item.mem_num + '" id="' + item.mem_name + '" class="checkedMember">';
@@ -265,7 +265,7 @@ $(function(){
 						isChecked = $(this).attr("checked", true);
 						//한명이라도 체크되면 div폼 노출
 						$('#checked_form').show();
-						$('#li_' + mem_num).css('background-color','#D6FFFF');
+						$('#li_' + mem_num).css('background-color','lightskyblue');
 						modifyUI += '<input type="hidden" name="members" value="'+ mem_num +'" id="'+ mem_num + '">';
 						modifyUI += '<input type="hidden" name="mem_names" value="'+ mem_name + '" class="' + mem_num + '">';
 						modifyUI += '<li class="name_li" id="li'+ mem_num + '">' + mem_name + '<span data-snum="' + mem_num + '" data-sname="' + mem_name + '" class="close">X</span></li>';
@@ -329,6 +329,7 @@ $(function(){
 				var i = 0;
 				let len = $(param.list).length;
 				let memNameStr = '';
+				let memcnt  = 0;
 				$(param.list).each(function(index, item){
 					let chatNameStr = item.chatroom_name;
 					chatNameStr = chatNameStr.replace(user_name, '').replace(/, , /g, ', ');
@@ -339,19 +340,20 @@ $(function(){
 					chatNameStr = chatNameStr.replace(/, $/, '');
 					
 					for(i; i < 1; i++){ //한번만 실행
-						msgUI += '<h3>' + chatNameStr + ' | ' + item.chatroom_num + '</h3>';
+						msgUI += '<h3>' + chatNameStr + '</h3>';
 						msgUI += '<span>멤버 : ';
 					}
-					
-					memNameStr += item.mem_name + ', ';
+					memcnt++;
+					memNameStr += item.mem_name + ', ';//
 				});
 				//========채팅방 메시지 찍기========
-				memNameStr = memNameStr.replace(user_name, '').replace(/, , /g, ', ');
+				/*memNameStr = memNameStr.replace(user_name, '').replace(/, , /g, ', ');
 				if(memNameStr.substr(0,1) == ','){
 					memNameStr = memNameStr.replace(', ', '');
 				}
-				memNameStr = memNameStr.replace(/, $/, '');
-				msgUI += memNameStr;
+				memNameStr = memNameStr.replace(/, $/, '');*/
+				//msgUI += memNameStr;
+				msgUI += memcnt;
 				msgUI += '</span></div>';
 				$('.chat_form').append(msgUI);
 				//채팅방 대화목록
@@ -411,7 +413,7 @@ $(function(){
 				chatUI += '<textarea rows="8" cols="60" name="msg_content" id="msg_content" class="msgContent"></textarea>';
 				chatUI += '<div id="msg_first"><span class="letter-count"></span></div>';
 				chatUI += '<input type="file" name="upload">';
-				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송"></div>';
+				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송" id="send_chat"></div>';
 				chatUI += '</form>';
 				
 				$('.msg_formUI').append(chatUI);

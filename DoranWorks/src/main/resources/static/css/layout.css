@@ -73,14 +73,82 @@ ul.nav_menu li{
 
 /* 관리자 페이지 시작 */
 .admin_table {
-	border: 1px #a39485 solid;
-	font-size: 16px;
-	width: 100%;
-	border-collapse: collapse;
-	border-radius: 5px;
-	overflow: hidden;
+	text-align:center;
+	border: 1px #a39485 solid !important;
+    font-size: 16px !important;
+    width: 100%;
+    border-collapse: collapse !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+    margin: 15px auto !important;
+}
+.admin_table td, th{vertical-align: middle !important;
+    border: none !important;
+    padding: 0 !important;
+    border-left: 1px solid rgba(0,0,0,.1) !important;
+    border-bottom: 1px solid #a39485 !important;
+    background: #fff !important;
+    text-align: center;
+}
+.admin_table td{
+	height:30px;
+}
+.registerBtn{
+	cursor: pointer;
+    background-color: #5AAEFF;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    height: 30px;
+    width: 80px;
+}
+.board_page{
+	text-align:center;
+	font-size: 11pt;
 }
 /* 관리자 페이지 끝 */
+/* 회원등록 시작 */
+.underline{
+	border-top: black;
+	border-right: black;
+	border-left: black;
+}
+.reg_form{
+	width: 600px !important;
+	margin: 0 auto !important;
+	padding: 10px 10px 10px 30px !important;
+}
+.reg_form label{
+    text-align: center;
+}
+#confirmBtn{
+	cursor: pointer;
+    background-color: #5AAEFF;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    height: 30px;
+    width: 70px;
+}
+#confirmId{
+	cursor: pointer;
+    background-color: #5AAEFF;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    font-size:13px;
+}
+.homeBtn{
+	cursor: pointer;
+    background-color: lightgray;
+    border: none;
+    color: #000;
+    border-radius: 5px;
+    height: 30px;
+    width: 70px;
+}
+
+/* 회원등록 끝 */
 div#main{
 	width:1024px;
 	margin:0 auto;

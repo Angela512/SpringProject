@@ -2,60 +2,66 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 내용 시작 -->
+<style>
+#ck_admin{
+	text-decoration: underline !important;
+	font-weight: bold;
+}
+</style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
 <div class="page-main">
 	<h2>DORANWORKS 관리자 페이지</h2>
 	<h3 class="align-center">회원 등록</h3>
-	<form:form id="register_form" action="registerUser.do" modelAttribute="memberVO">
+	<form:form id="register_form" action="registerUser.do" modelAttribute="memberVO" class="reg_form">
 	<form:errors element="div" cssClass="error-color"/>
 	<ul>
 		<li>
 			<label for="mem_id">아이디</label>
-			<form:input path="mem_id" placeholder="영문,숫자(4자~12자)만 허용" autocomplete="off"/>
+			<form:input path="mem_id" class="underline" placeholder="영문,숫자(4자~12자)만 허용" autocomplete="off"/>
 			<input type="button" id="confirmId" value="ID중복체크">
 			<span id="message_id"></span>
 			<form:errors path="mem_id" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_name">이름</label>
-			<form:input path="mem_name"/>
+			<form:input path="mem_name" class="underline"/>
 			<form:errors path="mem_name" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_pw">비밀번호</label>
-			<form:password path="mem_pw" placeholder="영문,숫자(4자~12자)만 허용"/>
+			<form:password path="mem_pw" class="underline" placeholder="영문,숫자(4자~12자)만 허용"/>
 			<form:errors path="mem_pw" cssClass="error-color"/>
 		</li>
 		<li>
 			<label for="mem_phone">전화번호</label>
-			<form:input path="mem_phone" placeholder="010-1234-5678"/>
+			<form:input path="mem_phone" class="underline" placeholder="010-1234-5678"/>
 			<form:errors path="mem_phone" cssClass="error-color"/>
 		</li>
 		<li>
 			<label for="mem_email">이메일</label>
-			<form:input path="mem_email"/>
+			<form:input path="mem_email" class="underline" placeholder="이메일 형식으로 입력"/>
 			<form:errors path="mem_email" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_zipcode">우편번호</label>
-			<form:input path="mem_zipcode" id="zipcode"/>
+			<form:input path="mem_zipcode" class="underline" id="zipcode"/>
 			<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
 			<form:errors path="mem_zipcode" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_addr1">주소</label>
-			<form:input path="mem_addr1" id="address1"/>
+			<form:input path="mem_addr1" class="underline" id="address1" placeholder="주소"/>
 			<form:errors path="mem_addr1" cssClass="error-color"/>
 		</li>
 		<li>
 			<label for="mem_addr2">상세주소</label>
-			<form:input path="mem_addr2"/>
+			<form:input path="mem_addr2" class="underline" placeholder="상세주소"/>
 			<form:errors path="mem_addr2" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_birthdate">생년월일</label>
-			<form:input path="mem_birthdate" placeholder="yyyy-MM-dd"/>
+			<form:input path="mem_birthdate" class="underline" placeholder="yyyy-MM-dd"/>
 			<form:errors path="mem_birthdate" cssClass="error-color"/>
 		</li>
 		<li>
@@ -85,14 +91,14 @@
 		</li>
 		<li>
 			<label for="mem_type">고용형태</label>
-			<form:input path="mem_type"/>
+			<form:input path="mem_type" class="underline"/>
 			<form:errors path="mem_type" cssClass="error-color"/>
 		</li>
 		
 	</ul>
 	<div class="align-center">
-		<form:button>등록하기</form:button>
-		<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+		<form:button id="confirmBtn">등록하기</form:button>
+		<input type="button" class="homeBtn" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/member/admin_list.do'">
 	</div>
 	</form:form>
 </div>

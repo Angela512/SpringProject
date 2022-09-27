@@ -55,7 +55,7 @@
 			
 			<div class="checkedListBtn">
 				<input type="button" value="취소" class="mem_reset">
-				<input type="submit" value="확인">
+				<input type="submit" value="확인" class="mem_confirm">
 			</div>
 		</form>
 	</div>

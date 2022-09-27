@@ -35,7 +35,7 @@
 	</form>
 	<c:if test="${!empty user}">
 	<div class="align-right">
-		<input type="button" value="회원등록" onclick="location.href='registerUser.do'">
+		<input type="button" value="회원등록" class="registerBtn" onclick="location.href='registerUser.do'">
 	</div>
 	</c:if>
 	<c:if test="${count == 0}">
