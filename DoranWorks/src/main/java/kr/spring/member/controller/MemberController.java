@@ -296,7 +296,7 @@ public class MemberController {
 						                     db_member.getMem_id())) {
 					//비밀번호 일치 여부 체크
 					check = db_member.isCheckedPasswd(
-							              memberVO.getMem_pw());
+							cipherAES.encrypt(memberVO.getMem_pw()));
 				}
 				if(check) {
 					//인증성공, 회원정보 삭제
