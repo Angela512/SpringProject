@@ -331,6 +331,7 @@ textarea{
 	line-height:51px;
 	background-color:lightyellow;
 	font-size: 10pt;
+	z-index: 10;
 }
 #alarm_talk2{ /* 알림창 */
 	cursor:pointer;

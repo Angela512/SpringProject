@@ -16,10 +16,10 @@
 <c:if test="${!empty user}">
 <!-- 메신저 알림 UI -->
 <div id="alarm_talk" style="display:none;">
-   채팅 알람이 있습니다.
+   채팅 알림이 있습니다.
 </div>
 <div id="alarm_talk2" style="display:none;">
-   쪽지 알람이 있습니다.
+   쪽지 알림이 있습니다.
 </div>
 <script type="text/javascript">
    let user = '${user.mem_num}';
@@ -65,12 +65,12 @@
              if(param.count>0){
                 if(alarm_kind==1){//채팅
                    $('#alarm_talk').show();
-                   $('#alarm_talk').text(param.count+'개의 채팅 알람이 있습니다.')
+                   $('#alarm_talk').text(param.count+'개의 채팅 알림이 있습니다.')
                    $('#alarm_badge').show();
                    $('#alarm_badge').text(param.count);
                 }else if(alarm_kind==2){//쪽지
                	   $('#alarm_talk2').show();
-                   $('#alarm_talk2').text(param.count+'개의 쪽지 알람이 있습니다.')
+                   $('#alarm_talk2').text(param.count+'개의 쪽지 알림이 있습니다.')
                    $('#letter_bz').show();
                    $('#letter_bz').text(param.count);
                 }
