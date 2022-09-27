@@ -259,7 +259,65 @@ public class MemberController {
 			return "common/resultView";
 		}
 	
-	
+		//===========회원탈퇴===========//
+		//회원 탈퇴 폼
+		@GetMapping("/member/delete.do")
+		public String formDelete() {
+			return "memberDelete";
+		}
+		//회원 탈퇴 처리
+		@PostMapping("/member/delete.do")
+		public String submitDelete(
+				         @Valid MemberVO memberVO,
+				         BindingResult result,
+				         HttpSession session,
+				         Model model) {
+			logger.debug("<<회원탈퇴>> : " + memberVO);
+			
+			//유효성 체크 결과 오류가 있으면 폼 호출
+			//id,passwd 필드의 에러만 체크
+			if(result.hasFieldErrors("id") || 
+					result.hasFieldErrors("passwd")) {
+				return formDelete();
+			}
+			
+			MemberVO user = 
+				   (MemberVO)session.getAttribute("user");
+			memberVO.setMem_num(user.getMem_num());
+			
+			try {
+				//로그인 한 회원이 아이디 구하기
+				MemberVO db_member =
+						memberService.selectMember(
+								memberVO.getMem_num());
+				boolean check = false;
+				//로그인 한 회원 아이디와 입력한 아이디 대조
+				if(db_member!=null && memberVO.getMem_id().equals(
+						                     db_member.getMem_id())) {
+					//비밀번호 일치 여부 체크
+					check = db_member.isCheckedPasswd(
+							              memberVO.getMem_pw());
+				}
+				if(check) {
+					//인증성공, 회원정보 삭제
+					memberService.deleteMember(
+							      memberVO.getMem_num());
+					//로그아웃
+					session.invalidate();
+					
+					model.addAttribute(
+							"accessMsg", "회원탈퇴를 완료했습니다.");
+					//notice.jsp의 기본 이동이 /main/main.do로
+					//설정되어 있이서 그대로 사용
+					return "common/notice";
+				}
+				//인증 실패
+				throw new AuthCheckException();
+			}catch(AuthCheckException e) {
+				result.reject("invalidIdOrPassword");
+				return formDelete();
+			}
+		}
 	
 	
 }

@@ -3,6 +3,7 @@ package kr.spring.member.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -72,4 +73,9 @@ public interface MemberMapper {
 	//비밀번호 찾기
    @Update("UPDATE member_detail SET mem_pw=#{mem_pw} WHERE mem_num=#{mem_num}")
    public void updateRandomPassword(MemberVO member);
+
+   @Update("UPDATE member SET auth=0 WHERE mem_num=#{mem_num}")
+	public void deleteMember(Integer mem_num);
+	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
+	public void deleteMember_detail(Integer mem_num);
 }

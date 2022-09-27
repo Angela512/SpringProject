@@ -90,4 +90,11 @@ public class MemberServiceImpl implements MemberService{
 	public void updateRandomPassword(MemberVO member) {
 		memberMapper.updateRandomPassword(member);
 	}
+
+	public void deleteMember(Integer mem_num) {
+		memberMapper.deleteMember(mem_num);
+		memberMapper.deleteMember_detail(mem_num);
+	}
+
+	
 }
