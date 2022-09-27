@@ -338,13 +338,14 @@ textarea{
 	height:50px;
 	position:absolute;
 	left:420px;
-	top:50px;
+	top:30px;
 	border:1px solid grey;
 	border-radius:10px;
 	text-align:center;
 	line-height:51px;
 	background-color:lightyellow;
 	font-size: 10pt;
+	z-index: 10;
 }
 #alarm_badge{ /* 알림 배지 */
 	

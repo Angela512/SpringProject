@@ -119,7 +119,8 @@
 
 	   $('#alarm_talk2').click(function(){
 	      //채팅,페이지 이동시는 1 지정, 숨김 처리 0
-	      deleteAlarm(1,1);
+	      deleteAlarm(2,0);
+	      location.href='${pageContext.request.contextPath}/letter/main.do';
 	   });
 
 	   $('#ck_letter').click(function(){

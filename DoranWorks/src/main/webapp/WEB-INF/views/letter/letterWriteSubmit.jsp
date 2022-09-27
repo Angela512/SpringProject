@@ -8,7 +8,7 @@ $(function(){
 		type:'post',
 		dataType:'json',
 		success:function(param){
-			alarm_socket.send('msg:2');
+			alarm_socket.send('usg:2');
 			location.href='${url}';
 		},
 		error:function(){
