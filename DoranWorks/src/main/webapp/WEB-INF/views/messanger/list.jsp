@@ -18,7 +18,7 @@
 	<ul class="chat_search">
 		<li><input type="button" value="채팅방 생성" id="createroom_btn"></li>
 		<li>
-			<input type="search" name="keyword" id="chat_keyword" placeholder="채팅방 이름 검색">
+			<input type="search" name="keyword" id="chat_keyword" placeholder="채팅방 멤버 검색">
 		</li>
 	</ul>
 	<div class="chatroomMain">

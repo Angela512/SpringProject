@@ -412,7 +412,7 @@ $(function(){
 				chatUI += '<input type="hidden" name="chatroom_num" value="' + chatroom_num + '">';
 				chatUI += '<textarea rows="8" cols="60" name="msg_content" id="msg_content" class="msgContent"></textarea>';
 				chatUI += '<div id="msg_first"><span class="letter-count"></span></div>';
-				chatUI += '<input type="file" name="upload">';
+				chatUI += '<input type="file" name="upload" style="display:none;">';
 				chatUI += '<div id="msg_second" class="align-right"><input type="submit" value="전송" id="send_chat"></div>';
 				chatUI += '</form>';
 				
