@@ -43,13 +43,13 @@ li{
 		</li>
 		<li>
 			<label for="mem_zipcode">우편번호</label>
-			<form:input path="mem_zipcode" id="zipcode" class="underline" style="width:310px !important"/>
+			<form:input path="mem_zipcode" id="mem_zipcode" class="underline" style="width:310px !important"/>
 			<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" id="write_button">
 			<form:errors path="mem_zipcode" cssClass="error-color"/> 
 		</li>
 		<li>
 			<label for="mem_addr1">주소</label>
-			<form:input path="mem_addr1" id="address1" class="underline"/>
+			<form:input path="mem_addr1" id="mem_addr1" class="underline"/>
 			<form:errors path="mem_addr1" cssClass="error-color"/> 
 		</li>
 		<li>

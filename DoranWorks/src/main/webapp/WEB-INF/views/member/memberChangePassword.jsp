@@ -21,7 +21,7 @@
 
 	<h2>비밀번호변경</h2>
 	<br>
-	<form:form modelAttribute="memberVO" style="border:none; padding-top:50px; "
+	<form:form modelAttribute="memberVO" style="border:none; padding-top:50px;"
 	  action="changePassword.do" id="change_form">
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>

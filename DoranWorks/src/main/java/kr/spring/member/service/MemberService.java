@@ -28,4 +28,5 @@ public interface MemberService {
 	public List<MemberVO> selectSignList();
 	
 	public void updateRandomPassword(MemberVO member);
+	public void deleteMember(Integer mem_num);
 }

@@ -80,13 +80,13 @@ transform:translateY(2px)
 		</ul>
 	</form>
 	<c:if test="${!empty user && count == 0}">
-	<div class="new_write">
+	<div class="new_write" style="padding: 25px 0 0  225px">
 		<input type="button" value="+ 새 결재 진행 " class="btn btn-outline-primary"
 		          onclick="location.href='write.do'">
 	</div>
 	</c:if>
 	<c:if test="${count == 0}">
-	<div class="result-display">표시할 게시물이 없습니다.</div>	
+	<div class="result-display" style="margin-left:320px;">표시할 게시물이 없습니다.</div>	
 	</c:if>
 	<c:if test="${count > 0}">
 	
@@ -209,5 +209,5 @@ transform:translateY(2px)
 
 </div>
 <!-- 리스트 끝 -->
-<div class="align-center" style="bottom:0"" position: fixed;">${page}</div>
+<div style="padding-left:750px" >${page}</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

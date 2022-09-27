@@ -175,7 +175,6 @@
 		
 		</c:if>
 				
-		<input type="button" id="write_button" value="인쇄" onclick="window.print()" >
 		<input type="button" id="write_button" value="목록"
 		       onclick="location.href='list.do'">
 	</div>
